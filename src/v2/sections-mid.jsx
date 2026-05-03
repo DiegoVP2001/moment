@@ -242,7 +242,8 @@ function EnMediosSection({ theme }) {
   const isDark = theme === 'dark';
   const [openVideo, setOpenVideo] = useState(null);
   return (
-    <section id="medios" style={{ padding: '120px 48px', background: isDark ? '#0f0d17' : 'var(--cream)' }}>
+    <section id="medios" style={{ padding: '120px 48px', background: isDark ? '#0f0d17' : 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
+      <QC position="top-right" color="teal" size={160} style={{ opacity: .18 }}/>
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
         <Reveal>
           <SectionHeader eyebrow="/ en medios" title="Lo que dicen de nosotros." theme={theme}/>

@@ -57,6 +57,8 @@ function ServicesSection({ theme }) {
 
   return (
     <section id="servicios" style={{ padding: '120px 48px 100px', position: 'relative', overflow: 'hidden', background: isDark ? '#0f0d17' : 'var(--cream)' }}>
+      <QC position="top-right"    color="teal" size={160} style={{ opacity: .18 }}/>
+      <QC position="bottom-left"  color="teal" size={160} style={{ opacity: .18 }}/>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
           <SectionHeader eyebrow="/ servicios" title="Todo lo que tu cuerpo y mente necesitan." subtitle="Haz click en un servicio para ver más información y valores." theme={theme}/>

@@ -116,23 +116,14 @@ function ServiceDetail({ service: s, theme, onClose }) {
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 10 }}>Descripción del servicio</div>
               <p style={{ fontSize: 14, lineHeight: 1.55, margin: 0, fontFamily: "'Jost',sans-serif" }}>{s.detail}</p>
             </div>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a href={waGeneralLink(s.title)} target="_blank" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
-                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
-              }}>
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-                {s.cta} vía WhatsApp
-              </a>
-              <button onClick={() => setShowFull(true)} style={{
-                padding: '14px 26px', borderRadius: 999,
-                border: `1.5px solid ${isDark ? 'rgba(255,255,255,.2)' : 'rgba(26,24,35,.18)'}`,
-                color: isDark ? '#fff' : 'var(--ink)',
-                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, cursor: 'pointer',
-                background: 'transparent'
-              }}>Más detalles →</button>
-            </div>
+            <a href={waGeneralLink(s.title)} target="_blank" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
+              fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
+            }}>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+              {s.cta} vía WhatsApp
+            </a>
           </div>
           <div>
             <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores principales</div>

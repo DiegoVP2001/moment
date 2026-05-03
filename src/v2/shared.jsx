@@ -44,10 +44,10 @@ function QC({ position = 'top-right', color = 'teal', size = 120, style = {} }) 
     : { bottom: 0, left: 0 };
 
   // Filled ring sector (annulus quarter) — outer r=88, inner r=52, viewBox 100×100
-  // Center is at the corner. Arc curves inward into the section.
+  // Center is at the corner. Sweep flags corrected: short (90°) interior arc in each case.
   const paths = {
-    'top-right':    'M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z',
-    'top-left':     'M 0,88 A 88,88 0 0,1 88,0 L 52,0 A 52,52 0 0,0 0,52 Z',
+    'top-right':    'M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z',
+    'top-left':     'M 0,88 A 88,88 0 0,0 88,0 L 52,0 A 52,52 0 0,1 0,52 Z',
     'bottom-right': 'M 100,12 A 88,88 0 0,0 12,100 L 48,100 A 52,52 0 0,1 100,48 Z',
     'bottom-left':  'M 0,12 A 88,88 0 0,1 88,100 L 52,100 A 52,52 0 0,0 0,48 Z',
   };

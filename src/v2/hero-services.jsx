@@ -95,61 +95,183 @@ function ServicesSection({ theme }) {
 }
 
 function ServiceDetail({ service: s, theme, onClose }) {
+  const [showFull, setShowFull] = useState(false);
   const isDark = theme === 'dark';
   const ac = s.accent === 'teal' ? 'var(--teal)' : s.accent === 'blue' ? 'var(--blue)' : s.accent === 'pink' ? 'var(--pink)' : isDark ? '#fff' : 'var(--ink)';
   const cardBg = isDark ? '#1a1627' : '#fff';
   const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.06)';
 
   return (
-    <div style={{ marginTop: 32, background: cardBg, borderRadius: 28, border: `1px solid ${border}`, overflow: 'hidden', animation: 'fadeSlideUp .4s ease' }}>
-      <style>{`@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <div style={{ padding: '40px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, opacity: .5 }}>{s.n}</div>
-            <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 36, margin: 0, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.title}</h3>
-          </div>
-          <p style={{ fontSize: 16, lineHeight: 1.55, color: isDark ? 'rgba(255,255,255,.7)' : 'var(--ink-60)', fontFamily: "'Jost',sans-serif", margin: '0 0 20px' }}>{s.desc}</p>
-          <div style={{ background: isDark ? 'rgba(255,255,255,.04)' : 'var(--pink-50)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 10 }}>Detalle del plan</div>
-            <p style={{ fontSize: 14, lineHeight: 1.55, margin: 0, fontFamily: "'Jost',sans-serif" }}>{s.detail}</p>
-          </div>
-          <a href={waGeneralLink(s.title)} target="_blank" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
-            fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
-          }}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-            {s.cta} vía WhatsApp
-          </a>
-        </div>
-        <div>
-          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores</div>
-          <div style={{ borderRadius: 16, border: `1px solid ${border}`, overflow: 'hidden' }}>
-            {s.items.map((it, i) => (
-              <a key={i} href={waLink(s.title, it.k)} target="_blank" style={{
-                display: 'grid', gridTemplateColumns: '28px 1fr auto auto', gap: 14, alignItems: 'center',
-                padding: '16px 18px',
-                borderBottom: i < s.items.length - 1 ? `1px solid ${border}` : 'none',
-                textDecoration: 'none', color: 'inherit', transition: 'background .15s'
-              }}
-                onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.03)' : 'var(--pink-50)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-              >
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, opacity: .4 }}>{String(i + 1).padStart(2, '0')}</span>
-                <span style={{ fontFamily: "'Jost',sans-serif", fontSize: 14 }}>{it.k}</span>
-                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, fontSize: 15, color: ac }}>{it.v}</span>
-                <span style={{ fontSize: 10, fontFamily: "'Jost',sans-serif", color: '#25d366', fontWeight: 600 }}>WA →</span>
+    <>
+      <div style={{ marginTop: 32, background: cardBg, borderRadius: 28, border: `1px solid ${border}`, overflow: 'hidden', animation: 'fadeSlideUp .4s ease' }}>
+        <style>{`@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
+        <div style={{ padding: '40px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, opacity: .5 }}>{s.n}</div>
+              <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 36, margin: 0, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.title}</h3>
+            </div>
+            <p style={{ fontSize: 16, lineHeight: 1.55, color: isDark ? 'rgba(255,255,255,.7)' : 'var(--ink-60)', fontFamily: "'Jost',sans-serif", margin: '0 0 20px' }}>{s.desc}</p>
+            <div style={{ background: isDark ? 'rgba(255,255,255,.04)' : 'var(--pink-50)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 10 }}>Descripción del servicio</div>
+              <p style={{ fontSize: 14, lineHeight: 1.55, margin: 0, fontFamily: "'Jost',sans-serif" }}>{s.detail}</p>
+            </div>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a href={waGeneralLink(s.title)} target="_blank" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
+                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
+              }}>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                {s.cta} vía WhatsApp
               </a>
-            ))}
+              <button onClick={() => setShowFull(true)} style={{
+                padding: '14px 26px', borderRadius: 999,
+                border: `1.5px solid ${isDark ? 'rgba(255,255,255,.2)' : 'rgba(26,24,35,.18)'}`,
+                color: isDark ? '#fff' : 'var(--ink)',
+                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, cursor: 'pointer',
+                background: 'transparent'
+              }}>Más detalles →</button>
+            </div>
           </div>
+          <div>
+            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores principales</div>
+            <div style={{ borderRadius: 16, border: `1px solid ${border}`, overflow: 'hidden' }}>
+              {s.items.map((it, i) => (
+                <a key={i} href={waLink(s.title, it.k)} target="_blank" style={{
+                  display: 'grid', gridTemplateColumns: '28px 1fr auto auto', gap: 14, alignItems: 'center',
+                  padding: '16px 18px',
+                  borderBottom: i < s.items.length - 1 ? `1px solid ${border}` : 'none',
+                  textDecoration: 'none', color: 'inherit', transition: 'background .15s'
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.03)' : 'var(--pink-50)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                >
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, opacity: .4 }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontFamily: "'Jost',sans-serif", fontSize: 14 }}>{it.k}</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, fontSize: 15, color: ac }}>{it.v}</span>
+                  <span style={{ fontSize: 10, fontFamily: "'Jost',sans-serif", color: '#25d366', fontWeight: 600 }}>WA →</span>
+                </a>
+              ))}
+            </div>
+            <button onClick={() => setShowFull(true)} style={{
+              marginTop: 14, width: '100%', padding: '12px', borderRadius: 12,
+              border: `1px dashed ${isDark ? 'rgba(255,255,255,.15)' : 'rgba(26,24,35,.15)'}`,
+              color: isDark ? 'rgba(255,255,255,.55)' : 'var(--ink-60)',
+              fontFamily: "'Jost',sans-serif", fontSize: 13, cursor: 'pointer', background: 'transparent'
+            }}>Ver detalle completo de planes →</button>
+          </div>
+        </div>
+        <div style={{ padding: '16px 40px 20px', display: 'flex', justifyContent: 'flex-end' }}>
+          <button onClick={onClose} style={{ fontSize: 13, fontFamily: "'Jost',sans-serif", color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)' }}>Cerrar ×</button>
         </div>
       </div>
-      <div style={{ padding: '16px 40px 20px', display: 'flex', justifyContent: 'flex-end' }}>
-        <button onClick={onClose} style={{ fontSize: 13, fontFamily: "'Jost',sans-serif", color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)' }}>Cerrar ×</button>
+
+      {showFull && <ServiceFullModal service={s} theme={theme} onClose={() => setShowFull(false)}/>}
+    </>
+  );
+}
+
+// --- Full detail modal with all pricing sections ---
+function ServiceFullModal({ service: s, theme, onClose }) {
+  const isDark = theme === 'dark';
+  const ac = s.accent === 'teal' ? 'var(--teal)' : s.accent === 'blue' ? 'var(--blue)' : s.accent === 'pink' ? 'var(--pink)' : 'var(--teal)';
+  const fd = s.fullDetail;
+  const border = 'rgba(26,24,35,.08)';
+
+  useEffect(() => {
+    const h = e => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', h);
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', h); document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div onClick={onClose} style={{
+      position: 'fixed', inset: 0, background: 'rgba(15,13,23,.82)',
+      backdropFilter: 'blur(10px)', zIndex: 300,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px 16px'
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: '#fff', borderRadius: 28, width: '100%', maxWidth: 720,
+        maxHeight: '88vh', display: 'flex', flexDirection: 'column',
+        boxShadow: '0 40px 100px rgba(0,0,0,.35)', overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{ padding: '28px 32px 20px', borderBottom: `1px solid ${border}`, flexShrink: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: ac, marginBottom: 8 }}>{s.n} · Detalle completo</div>
+              <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 28, margin: 0, letterSpacing: '-0.02em', color: 'var(--ink)' }}>{s.title}</h2>
+            </div>
+            <button onClick={onClose} style={{
+              width: 36, height: 36, borderRadius: '50%', background: 'var(--pink-50)',
+              border: 'none', fontSize: 18, cursor: 'pointer', flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)'
+            }}>×</button>
+          </div>
+        </div>
+
+        {/* Scrollable body */}
+        <div style={{ overflowY: 'auto', padding: '24px 32px 8px', flex: 1 }}>
+          {/* Notes */}
+          {fd.notes && fd.notes.length > 0 && (
+            <div style={{ background: 'var(--pink-50)', borderRadius: 14, padding: '14px 18px', marginBottom: 28 }}>
+              {fd.notes.map((n, i) => (
+                <div key={i} style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, lineHeight: 1.5, color: 'var(--ink-60)', marginBottom: i < fd.notes.length - 1 ? 6 : 0 }}>
+                  · {n}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Sections */}
+          {fd.sections.map((sec, si) => (
+            <div key={si} style={{ marginBottom: 28 }}>
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 16, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: sec.subtitle ? 4 : 0 }}>{sec.title}</div>
+                {sec.subtitle && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)' }}>{sec.subtitle}</div>}
+              </div>
+              <div style={{ borderRadius: 14, border: `1px solid ${border}`, overflow: 'hidden' }}>
+                {sec.items.map((it, ii) => (
+                  <a key={ii} href={waLink(s.title, it.k)} target="_blank" style={{
+                    display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center',
+                    padding: '13px 18px',
+                    borderBottom: ii < sec.items.length - 1 ? `1px solid ${border}` : 'none',
+                    textDecoration: 'none', color: 'inherit', transition: 'background .12s'
+                  }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--pink-50)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    <div>
+                      <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: 'var(--ink)' }}>{it.k}</div>
+                      {it.note && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)', marginTop: 2 }}>{it.note}</div>}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                      <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, fontSize: 14, color: ac }}>{it.v}</span>
+                      <span style={{ fontSize: 10, color: '#25d366', fontWeight: 600, fontFamily: "'Jost',sans-serif" }}>WA →</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer CTA */}
+        <div style={{ padding: '16px 32px 24px', borderTop: `1px solid ${border}`, flexShrink: 0 }}>
+          <a href={waGeneralLink(s.title)} target="_blank" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            padding: '15px', borderRadius: 999, background: '#25d366', color: '#fff',
+            fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 15, textDecoration: 'none'
+          }}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            Consultar por {s.title} vía WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   );
 }
 
-Object.assign(window, { HeroVideo, ServicesSection, ServiceDetail });
+Object.assign(window, { HeroVideo, ServicesSection, ServiceDetail, ServiceFullModal });

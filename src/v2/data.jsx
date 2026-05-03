@@ -36,15 +36,45 @@ const SERVICES = [
     desc: 'Evaluación, rehabilitación y optimización del movimiento para deportistas y personas activas.',
     cta: 'Agendar evaluación',
     accent: 'teal',
-    detail: 'Diagnóstico funcional, tratamiento manual y ejercicios específicos para recuperar lesiones y mejorar el rendimiento. Los packs incluyen seguimiento progresivo y reevaluaciones intermedias.',
+    detail: 'Diagnóstico funcional, tratamiento manual y ejercicios específicos para recuperar lesiones y mejorar el rendimiento. Los packs permiten acceso a valor preferencial y seguimiento continuo del proceso.',
     items: [
-      { k: 'Evaluación inicial', v: '$35.000' },
-      { k: 'Reevaluación',       v: '$20.000' },
-      { k: 'Sesión individual',  v: '$30.000' },
-      { k: 'Pack 5 sesiones',    v: '$140.000' },
-      { k: 'Pack 8 sesiones',    v: '$215.000' },
-      { k: 'Pack 10 sesiones',   v: '$260.000' },
+      { k: 'Evaluación inicial',  v: '$35.000' },
+      { k: 'Sesión individual',   v: '$30.000' },
+      { k: 'Pack 5 sesiones',     v: '$139.500' },
+      { k: 'Pack 10 sesiones',    v: '$261.000' },
     ],
+    fullDetail: {
+      notes: [
+        'Atenciones realizadas por kinesiólogos deportivos.',
+        'Reembolsable en isapres y seguros complementarios. Se emite boleta por sesión.',
+        'Pago solo con efectivo o transferencia.',
+        'Pacientes FONASA: consultar condiciones de atención.',
+      ],
+      sections: [
+        {
+          title: 'Evaluación',
+          items: [
+            { k: 'Evaluación inicial (obligatoria)', v: '$35.000' },
+            { k: 'Reevaluación', v: '$20.000' },
+          ],
+        },
+        {
+          title: 'Sesiones',
+          items: [
+            { k: 'Sesión individual', v: '$30.000' },
+          ],
+        },
+        {
+          title: 'Paquetes de sesiones',
+          subtitle: 'Pago único — valor preferencial',
+          items: [
+            { k: 'Pack 5 sesiones', v: '$139.500', note: '7% de descuento' },
+            { k: 'Pack 8 sesiones', v: '$216.000', note: '10% de descuento' },
+            { k: 'Pack 10 sesiones', v: '$261.000', note: '13% de descuento' },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 'psico', n: '02',
@@ -53,48 +83,190 @@ const SERVICES = [
     desc: 'Programas personalizados para rendimiento mental, manejo de presión y foco competitivo.',
     cta: 'Definir objetivos',
     accent: 'blue',
-    detail: 'Manejo de ansiedad competitiva, concentración, visualización y recuperación post-competencia. El Programa Base cubre fundamentos; Pro y Alto Rendimiento suman sesiones y acompañamiento.',
+    detail: 'Manejo de ansiedad competitiva, concentración, visualización y recuperación post-competencia. Sesiones presenciales u online, con programas de acompañamiento mensual adaptados a cada etapa.',
     items: [
-      { k: 'Evaluación inicial',  v: '$20.000' },
+      { k: 'Evaluación inicial',  v: '$15.000' },
       { k: 'Sesión individual',   v: '$30.000' },
-      { k: 'Programa Base',       v: '$110.500' },
-      { k: 'Programa Pro',        v: '$180.000' },
-      { k: 'Alto Rendimiento',    v: '$270.000' },
+      { k: 'Plan Base (4 ses/mes)', v: '$110.500' },
+      { k: 'Plan Alto Rendimiento', v: '$270.000' },
     ],
+    fullDetail: {
+      notes: [
+        'Modalidad presencial u online.',
+        'Duración por sesión: 60 minutos.',
+      ],
+      sections: [
+        {
+          title: 'Evaluación y sesiones individuales',
+          items: [
+            { k: 'Evaluación inicial', v: '$15.000', note: 'Incluye definición de objetivos, recomendaciones e informe (opcional)' },
+            { k: 'Sesión individual', v: '$30.000', note: 'Intervención focalizada en necesidad específica' },
+          ],
+        },
+        {
+          title: 'Programas de acompañamiento mensual',
+          items: [
+            { k: 'Plan Base', v: '$110.500/mes', note: 'Hasta 4 sesiones — trabajo personalizado y orientación continua' },
+            { k: 'Plan Pro', v: '$200.000/mes', note: 'Hasta 8 sesiones — seguimiento entre sesiones, ajuste mensual de objetivos' },
+            { k: 'Plan Alto Rendimiento', v: '$270.000/mes', note: 'Hasta 12 sesiones — observación en entrenamientos/competencia, retroalimentación integrada' },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 'train', n: '03',
     title: 'Entrenamiento & Recovery',
     icon: 'assets/icon-training.png',
-    desc: 'Planes de entrenamiento personalizado, masoterapia, compresión y evaluación VO2.',
+    desc: 'Planes de entrenamiento personalizado, recovery con masoterapia y compresión, y evaluación cardiovascular.',
     cta: 'Ver planes',
     accent: 'ink',
-    detail: 'Planes mensuales con rutina personalizada según objetivo y frecuencia. Complementa con masoterapia, compresión para recovery y evaluación VO2.',
+    detail: 'Trabajamos desde las ciencias del deporte integrando entrenamiento y kinesiología. Planes individuales, grupales y familiares. Recovery con masoterapia, electropunción y compresión neumática.',
     items: [
-      { k: 'Plan 1 — 2 ses/sem',  v: '$90.000' },
-      { k: 'Plan 2 — 3 ses/sem',  v: '$130.000' },
-      { k: 'Plan 3 — ilimitado',  v: '$170.000' },
-      { k: 'Masoterapia',         v: '$28.000' },
-      { k: 'Compresión',          v: '$15.000' },
-      { k: 'Evaluación VO2',      v: '$45.000' },
+      { k: 'Plan Inicio (1 ses + 1 acceso/sem)', v: '$89.000/mes' },
+      { k: 'Plan 2 (2 ses + 2 accesos/sem)',     v: '$200.000/mes' },
+      { k: 'Recovery Moment (60 min)',            v: '$35.000' },
+      { k: 'Evaluación VO2',                      v: '$20.000' },
     ],
+    fullDetail: {
+      notes: [
+        'Evaluación inicial obligatoria: $35.000 · Reevaluación: $20.000.',
+        'Cualquier método de pago.',
+      ],
+      sections: [
+        {
+          title: 'Entrenamiento personalizado',
+          subtitle: 'Guiado por kinesióloga deportiva — planes mensuales',
+          items: [
+            { k: 'Plan Inicio', v: '$89.000/mes', note: '1 sesión + 1 acceso al gym por semana' },
+            { k: 'Plan 1', v: '$120.000/mes', note: '1 sesión + 2 accesos al gym por semana' },
+            { k: 'Plan 2', v: '$200.000/mes', note: '2 sesiones + 2 accesos al gym por semana' },
+            { k: 'Plan 3', v: '$280.000/mes', note: '3 sesiones + acceso libre al gym + 1 pase acompañante' },
+          ],
+        },
+        {
+          title: 'Plan familiar / Dúo',
+          subtitle: '2 a 4 integrantes · 16 sesiones mensuales + acceso libre al gym',
+          items: [
+            { k: '2 personas', v: '$360.000/mes' },
+            { k: 'Integrante adicional', v: '+$120.000 c/u' },
+          ],
+        },
+        {
+          title: 'Small Group',
+          subtitle: 'Entrenamiento grupal guiado · máx. 3 personas',
+          items: [
+            { k: '1 vez por semana', v: '$55.000/mes' },
+            { k: '2 veces por semana', v: '$85.000/mes' },
+            { k: '3 veces por semana', v: '$110.000/mes' },
+          ],
+        },
+        {
+          title: 'Recovery',
+          subtitle: '60 minutos por sesión',
+          items: [
+            { k: 'Recovery Moment', v: '$35.000', note: 'Masoterapia + compresión neumática (Terapress)' },
+            { k: 'Recovery Pro', v: '$45.000', note: 'Masoterapia + electropunción + compresión neumática' },
+            { k: 'Pack 2 sesiones/mes', v: '$68.000', note: '$34.000 por sesión' },
+            { k: 'Pack 4 sesiones/mes', v: '$130.000', note: '$32.500 por sesión' },
+          ],
+        },
+        {
+          title: 'Entrenamiento cardiovascular',
+          items: [
+            { k: 'Evaluación VO2 (indirecto)', v: '$20.000', note: 'Test + interpretación de resultados' },
+            { k: 'Plan Cardiovascular', v: '$65.000', note: 'Planificación basada en FTP para runners y ciclistas' },
+            { k: 'Plan Cardiovascular + VO2', v: '$75.000' },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 'climb', n: '04',
     title: 'Escalada · Climbing Wall',
     icon: 'assets/icon-climbing.png',
-    desc: 'Pases, clases grupales y bautizos de escalada en nuestro muro dedicado.',
+    desc: 'Pases, clases y bautizos de escalada en nuestro muro indoor con rutas renovadas periódicamente.',
     cta: 'Reservar sesión',
     accent: 'pink',
-    detail: 'Muro indoor con rutas renovadas periódicamente. Pase diario libre; mensuales/semestrales/anuales con acceso ilimitado. Clases incluyen arnés, instructor y técnicas de seguridad.',
+    detail: 'Muro indoor con rutas para todos los niveles. Horario bajo (09:00–16:00) y horario alto. Planes mensuales, semestrales y anuales con acceso libre. Clases con instructor, arnés incluido.',
     items: [
-      { k: 'Pase diario',        v: '$8.000' },
-      { k: 'Mensual',            v: '$38.000' },
-      { k: 'Semestral',          v: '$180.000' },
-      { k: 'Anual',              v: '$320.000' },
-      { k: 'Clase grupal',       v: '$12.000' },
-      { k: 'Bautizo escalada',   v: '$15.000' },
+      { k: 'Pase diario adulto',  v: 'desde $5.000' },
+      { k: 'Plan mensual adulto', v: 'desde $45.000' },
+      { k: 'Clase prueba',        v: '$12.000' },
+      { k: 'Bautizo de escalada', v: '$15.000' },
     ],
+    fullDetail: {
+      notes: [
+        'Arriendo de zapatillas de escalada: $2.000.',
+        'Horario bajo: 09:00–16:00 · Horario alto: resto del día.',
+        'Comunidad Moment: misma tarifa que menores de 22 en planes.',
+      ],
+      sections: [
+        {
+          title: 'Pase diario',
+          items: [
+            { k: 'Adulto — horario bajo', v: '$5.000' },
+            { k: 'Adulto — horario alto', v: '$6.500' },
+            { k: 'Menor de 22 — horario bajo', v: '$3.500' },
+            { k: 'Menor de 22 — horario alto', v: '$4.500' },
+          ],
+        },
+        {
+          title: 'Pack de pases',
+          subtitle: 'Duración 1 mes',
+          items: [
+            { k: '5 pases', v: '$22.500', note: '$4.500 por pase' },
+            { k: '10 pases', v: '$40.000', note: '$4.000 por pase' },
+          ],
+        },
+        {
+          title: 'Plan mensual (30 días)',
+          items: [
+            { k: 'Adulto — horario bajo', v: '$45.000' },
+            { k: 'Adulto — horario alto', v: '$65.000' },
+            { k: 'Adulto — full', v: '$80.000' },
+            { k: 'Menor / Comunidad Moment — horario bajo', v: '$31.500' },
+            { k: 'Menor / Comunidad Moment — horario alto', v: '$49.000' },
+            { k: 'Menor / Comunidad Moment — full', v: '$56.000' },
+          ],
+        },
+        {
+          title: 'Plan semestral (6 meses)',
+          items: [
+            { k: 'Adulto — horario bajo', v: '$230.000' },
+            { k: 'Adulto — horario alto', v: '$360.000' },
+            { k: 'Adulto — full', v: '$400.000' },
+            { k: 'Menor / Comunidad Moment — horario bajo', v: '$161.000' },
+            { k: 'Menor / Comunidad Moment — full', v: '$280.000' },
+          ],
+        },
+        {
+          title: 'Plan anual',
+          items: [
+            { k: 'Adulto — horario bajo', v: '$380.000' },
+            { k: 'Adulto — horario alto', v: '$600.000' },
+            { k: 'Adulto — full', v: '$700.000' },
+            { k: 'Menor / Comunidad Moment — horario bajo', v: '$266.000' },
+            { k: 'Menor / Comunidad Moment — full', v: '$490.000' },
+          ],
+        },
+        {
+          title: 'Clases mensuales',
+          subtitle: 'Con instructor — arnés incluido',
+          items: [
+            { k: '1 clase/semana — adulto (bajo/alto)', v: '$35.000 / $40.000' },
+            { k: '2 clases/semana — adulto (bajo/alto)', v: '$55.000 / $65.000' },
+            { k: '3 clases/semana — adulto (bajo/alto)', v: '$70.000 / $80.000' },
+            { k: '4 clases/semana — adulto (bajo/alto)', v: '$95.000 / $112.000' },
+            { k: 'Clase prueba', v: '$12.000' },
+            { k: 'Bautizo de escalada (adulto)', v: '$15.000' },
+            { k: 'Niños/as y adolescentes — 1 clase/sem', v: '$15.000' },
+            { k: 'Niños/as y adolescentes — 2 clases/sem', v: '$50.000' },
+          ],
+        },
+      ],
+    },
   },
 ];
 

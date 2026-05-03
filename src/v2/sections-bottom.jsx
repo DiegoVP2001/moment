@@ -218,10 +218,10 @@ function ContactSection({ theme }) {
             </div>
           </Reveal>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <Reveal delay={.15}><InfoCard icon="assets/icon-location.png" label="Dirección" lines={[BRAND.address, BRAND.region]}/></Reveal>
-            <Reveal delay={.2}><InfoCard icon="assets/icon-phone.png" label="Teléfono" lines={[BRAND.phone, 'WhatsApp disponible']}/></Reveal>
-            <Reveal delay={.25}><InfoCard icon="assets/icon-clock.png" label="Horarios" lines={BRAND.hours.map(h => `${h[0]} · ${h[1]}`)}/></Reveal>
-            <Reveal delay={.3}><InfoCard icon="assets/icon-support.png" label="Email & Instagram" lines={[BRAND.email, `@${BRAND.instagram}`]}/></Reveal>
+            <Reveal delay={.15}><InfoCard icon="assets/icon-location.png?v=2" label="Dirección" lines={[BRAND.address, BRAND.region]}/></Reveal>
+            <Reveal delay={.2}><InfoCard icon="assets/icon-phone.png?v=2" label="Teléfono" lines={[BRAND.phone, 'WhatsApp disponible']}/></Reveal>
+            <Reveal delay={.25}><InfoCard icon="assets/icon-clock.png?v=2" label="Horarios" lines={BRAND.hours.map(h => `${h[0]} · ${h[1]}`)}/></Reveal>
+            <Reveal delay={.3}><InfoCard icon="assets/icon-support.png?v=2" label="Email & Instagram" lines={[BRAND.email, `@${BRAND.instagram}`]}/></Reveal>
           </div>
         </div>
         <Reveal delay={.35}>

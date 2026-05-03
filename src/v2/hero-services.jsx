@@ -1,8 +1,7 @@
 // ============ HERO (Video) + SERVICES (Tabs/Modal) ============
 
-// --- Hero with fullscreen video ---
+// --- Hero with fullscreen video (no QC — video is visually rich enough) ---
 function HeroVideo({ theme }) {
-  const isDark = theme === 'dark';
   const [loaded, setLoaded] = useState(false);
   return (
     <section style={{ position: 'relative', height: '100vh', overflow: 'hidden', color: '#fff' }}>
@@ -14,7 +13,6 @@ function HeroVideo({ theme }) {
         <source src="assets/gym_video.mp4" type="video/mp4"/>
       </video>
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,13,23,.25) 0%, rgba(15,13,23,.8) 100%)' }}/>
-      <QC position="top-right" color="var(--pink)" size={180} style={{ opacity: .5 }}/>
       <div style={{ position: 'relative', zIndex: 2, maxWidth: 1400, margin: '0 auto', padding: '0 48px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: 80 }}>
         <Reveal>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32 }}>
@@ -42,7 +40,6 @@ function HeroVideo({ theme }) {
             <a href="#instalaciones" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: "'Jost',sans-serif", fontWeight: 500, fontSize: 14, border: '1.5px solid rgba(255,255,255,.4)', textDecoration: 'none' }}>Conocer el centro</a>
           </div>
         </Reveal>
-        {/* scroll indicator */}
         <div style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, opacity: .6 }}>
           <div style={{ width: 1, height: 40, background: 'linear-gradient(180deg, transparent, var(--pink))' }}/>
           <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase' }}>scroll</div>
@@ -52,15 +49,14 @@ function HeroVideo({ theme }) {
   );
 }
 
-// --- Services section with pill buttons → modal/tabs ---
-function ServicesSection({ theme, servicesLayout }) {
+// --- Services section ---
+function ServicesSection({ theme }) {
   const isDark = theme === 'dark';
   const [active, setActive] = useState(null);
-
   const accentFor = s => s.accent === 'teal' ? 'var(--teal)' : s.accent === 'blue' ? 'var(--blue)' : s.accent === 'pink' ? 'var(--pink)' : 'var(--ink)';
 
   return (
-    <section id="servicios" style={{ padding: '120px 48px', position: 'relative', overflow: 'hidden', background: isDark ? '#0f0d17' : 'var(--cream)' }}>
+    <section id="servicios" style={{ padding: '120px 48px 100px', position: 'relative', overflow: 'hidden', background: isDark ? '#0f0d17' : 'var(--cream)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
           <SectionHeader eyebrow="/ servicios" title="Todo lo que tu cuerpo y mente necesitan." subtitle="Haz click en un servicio para ver más información y valores." theme={theme}/>
@@ -83,12 +79,17 @@ function ServicesSection({ theme, servicesLayout }) {
             })}
           </div>
         </Reveal>
-
-        {/* Detail panel (accordion style) */}
         {active !== null && (
           <ServiceDetail service={SERVICES[active]} theme={theme} onClose={() => setActive(null)}/>
         )}
       </div>
+
+      {/* Visual divider into instalaciones */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: 6,
+        background: 'linear-gradient(90deg, var(--teal) 0%, var(--pink) 50%, var(--teal) 100%)',
+        opacity: .35
+      }}/>
     </section>
   );
 }
@@ -103,7 +104,6 @@ function ServiceDetail({ service: s, theme, onClose }) {
     <div style={{ marginTop: 32, background: cardBg, borderRadius: 28, border: `1px solid ${border}`, overflow: 'hidden', animation: 'fadeSlideUp .4s ease' }}>
       <style>{`@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
       <div style={{ padding: '40px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
-        {/* Left: info */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
             <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, opacity: .5 }}>{s.n}</div>
@@ -123,7 +123,6 @@ function ServiceDetail({ service: s, theme, onClose }) {
             {s.cta} vía WhatsApp
           </a>
         </div>
-        {/* Right: pricing table */}
         <div>
           <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores</div>
           <div style={{ borderRadius: 16, border: `1px solid ${border}`, overflow: 'hidden' }}>

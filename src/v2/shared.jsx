@@ -27,28 +27,36 @@ function Reveal({ children, delay = 0, direction = 'up', style = {}, className =
   );
 }
 
-// --- Quarter circle brand element (SVG, scalable) ---
-// Quarter circle: the arc always hugs the corner it's placed in.
-// "quadrant" selects which quarter of a full circle to draw.
-// For top-right corner → use bottom-left quadrant of the circle (default).
-function QC({ position = 'top-right', color = 'ink', size = 120, style = {} }) {
-  const c = color === 'ink' ? 'var(--ink)' : color === 'pink' ? 'var(--pink)' : color === 'pink-light' ? 'var(--pink-100)' : color;
-  const posStyle = position === 'top-right' ? { top: 0, right: 0 }
-    : position === 'top-left' ? { top: 0, left: 0 }
+// --- Quarter circle brand element (SVG, filled ring sector like the brand asset) ---
+// Placed at a corner, shows the opposite quadrant curving inward.
+// For top-right corner: shows the bottom-left quadrant of a circle.
+// color defaults to var(--teal) to match the page palette.
+function QC({ position = 'top-right', color = 'teal', size = 120, style = {} }) {
+  const c = color === 'ink' ? 'var(--ink)'
+    : color === 'pink' ? 'var(--pink)'
+    : color === 'pink-light' ? 'var(--pink-100)'
+    : color === 'teal' ? 'var(--teal)'
+    : color;
+
+  const posStyle = position === 'top-right'    ? { top: 0, right: 0 }
+    : position === 'top-left'    ? { top: 0, left: 0 }
     : position === 'bottom-right' ? { bottom: 0, right: 0 }
     : { bottom: 0, left: 0 };
-  // Arc path for each position: arc hugs INTO the corner
+
+  // Filled ring sector (annulus quarter) — outer r=88, inner r=52, viewBox 100×100
+  // Center is at the corner. Arc curves inward into the section.
   const paths = {
-    'top-right':    'M100,100 A100,100 0 0,1 0,0',   // arc from bottom-right to top-left
-    'top-left':     'M0,100 A100,100 0 0,0 100,0',    // arc from bottom-left to top-right  
-    'bottom-right': 'M0,100 A100,100 0 0,1 100,0',    // arc from left to top
-    'bottom-left':  'M100,100 A100,100 0 0,0 0,0',    // arc from right to top
+    'top-right':    'M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z',
+    'top-left':     'M 0,88 A 88,88 0 0,1 88,0 L 52,0 A 52,52 0 0,0 0,52 Z',
+    'bottom-right': 'M 100,12 A 88,88 0 0,0 12,100 L 48,100 A 52,52 0 0,1 100,48 Z',
+    'bottom-left':  'M 0,12 A 88,88 0 0,1 88,100 L 52,100 A 52,52 0 0,0 0,48 Z',
   };
+
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden style={{
       position: 'absolute', ...posStyle, zIndex: 0, pointerEvents: 'none', ...style
     }}>
-      <path d={paths[position]} fill="none" stroke={c} strokeWidth="18" strokeLinecap="round"/>
+      <path d={paths[position]} fill={c}/>
     </svg>
   );
 }
@@ -81,13 +89,15 @@ function LinkedInIcon({ size = 20, color = '#fff' }) {
   );
 }
 
-// --- Nav V2 ---
+// --- Nav V2 (with mobile hamburger) ---
 function Nav({ theme = 'light' }) {
   const isDark = theme === 'dark';
   const bg = isDark ? 'rgba(15,13,23,.7)' : 'rgba(250,245,242,.8)';
   const fg = isDark ? '#fff' : 'var(--ink)';
   const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.08)';
   const [moreOpen, setMoreOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const mainLinks = [
     ['#servicios', 'Servicios'],
     ['#instalaciones', 'Instalaciones'],
@@ -101,43 +111,67 @@ function Nav({ theme = 'light' }) {
     ['#calendario', 'Eventos'],
     ['#trabaja', 'Trabaja con nosotros'],
   ];
+  const allLinks = [...mainLinks, ...moreLinks];
+
   return (
     <nav style={{
       position: 'sticky', top: 0, zIndex: 50,
       backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
       background: bg, color: fg, borderBottom: `1px solid ${border}`,
-      padding: '12px 36px', display: 'flex', alignItems: 'center', gap: 24
     }}>
-      <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-        <img src={isDark ? 'assets/logo-isotype-pink.png' : 'assets/logo-isotype-dark.png'} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
-        <MomentWord theme={isDark ? 'pink' : 'ink'} style={{ fontSize: 22 }}/>
-      </a>
-      <div style={{ display: 'flex', gap: 22, marginLeft: 28, fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', alignItems: 'center' }}>
-        {mainLinks.map(([h, l]) => <a key={h} href={h}>{l}</a>)}
-        <div style={{ position: 'relative' }}>
-          <button onClick={() => setMoreOpen(!moreOpen)} style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', color: fg, display: 'flex', alignItems: 'center', gap: 4 }}>
-            Más <span style={{ fontSize: 10, transition: 'transform .2s', transform: moreOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+      <div style={{ padding: '12px 36px', display: 'flex', alignItems: 'center', gap: 24 }}>
+        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          <img src={isDark ? 'assets/logo-isotype-pink.png' : 'assets/logo-isotype-dark.png'} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
+          <MomentWord theme={isDark ? 'pink' : 'ink'} style={{ fontSize: 22 }}/>
+        </a>
+
+        {/* Desktop links */}
+        <div className="nav-links" style={{ display: 'flex', gap: 22, marginLeft: 28, fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', alignItems: 'center' }}>
+          {mainLinks.map(([h, l]) => <a key={h} href={h}>{l}</a>)}
+          <div style={{ position: 'relative' }}>
+            <button onClick={() => setMoreOpen(!moreOpen)} style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', color: fg, display: 'flex', alignItems: 'center', gap: 4 }}>
+              Más <span style={{ fontSize: 10, transition: 'transform .2s', transform: moreOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+            </button>
+            {moreOpen && (
+              <div style={{
+                position: 'absolute', top: '100%', right: 0, marginTop: 8,
+                background: isDark ? '#1a1627' : '#fff', borderRadius: 14, padding: 8,
+                boxShadow: '0 16px 40px rgba(0,0,0,.18)', border: `1px solid ${border}`,
+                minWidth: 200, zIndex: 60
+              }} onMouseLeave={() => setMoreOpen(false)}>
+                {moreLinks.map(([h, l]) => (
+                  <a key={h} href={h} style={{ display: 'block', padding: '10px 16px', borderRadius: 8, fontSize: 13, fontFamily: "'Jost',sans-serif", transition: 'background .15s' }}
+                    onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.06)' : 'var(--pink-50)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >{l}</a>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
+          <a href="#servicios" className="nav-cta" style={{ padding: '9px 18px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontWeight: 600, fontSize: 12, fontFamily: "'Jost',sans-serif" }}>Reservar</a>
+          {/* Hamburger */}
+          <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)}
+            style={{ display: 'none', flexDirection: 'column', gap: 5, padding: 6, background: 'none', border: 'none', cursor: 'pointer' }}
+            aria-label="Menú">
+            <span style={{ width: 22, height: 2, background: fg, display: 'block', transition: 'all .2s', transform: mobileOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }}/>
+            <span style={{ width: 22, height: 2, background: fg, display: 'block', opacity: mobileOpen ? 0 : 1, transition: 'opacity .2s' }}/>
+            <span style={{ width: 22, height: 2, background: fg, display: 'block', transition: 'all .2s', transform: mobileOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }}/>
           </button>
-          {moreOpen && (
-            <div style={{
-              position: 'absolute', top: '100%', right: 0, marginTop: 8,
-              background: isDark ? '#1a1627' : '#fff', borderRadius: 14, padding: 8,
-              boxShadow: '0 16px 40px rgba(0,0,0,.18)', border: `1px solid ${border}`,
-              minWidth: 200, zIndex: 60
-            }} onMouseLeave={() => setMoreOpen(false)}>
-              {moreLinks.map(([h, l]) => (
-                <a key={h} href={h} style={{ display: 'block', padding: '10px 16px', borderRadius: 8, fontSize: 13, fontFamily: "'Jost',sans-serif", transition: 'background .15s' }}
-                  onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.06)' : 'var(--pink-50)'}
-                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                >{l}</a>
-              ))}
-            </div>
-          )}
         </div>
       </div>
-      <div style={{ marginLeft: 'auto', display: 'flex', gap: 10, alignItems: 'center' }}>
-        <a href="#servicios" style={{ padding: '9px 18px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontWeight: 600, fontSize: 12, fontFamily: "'Jost',sans-serif" }}>Reservar</a>
-      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div style={{ padding: '8px 24px 20px', background: bg, borderTop: `1px solid ${border}`, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {allLinks.map(([h, l]) => (
+            <a key={h} href={h} onClick={() => setMobileOpen(false)}
+              style={{ padding: '12px 8px', fontSize: 15, fontFamily: "'Jost',sans-serif", color: fg, borderBottom: `1px solid ${border}` }}>{l}</a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
@@ -162,7 +196,7 @@ function Footer({ theme = 'light' }) {
   return (
     <footer style={{ background: isDark ? '#0f0d17' : 'var(--ink)', color: 'var(--pink-100)', padding: '80px 36px 32px' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr', gap: 48, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr', gap: 48, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
               <img src="assets/logo-isotype-pink.png" style={{ width: 42, height: 42 }}/>
@@ -195,7 +229,7 @@ function Footer({ theme = 'light' }) {
             </ul>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 28, fontSize: 12, color: 'rgba(230,198,199,.5)', fontFamily: "'JetBrains Mono',monospace" }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 28, fontSize: 12, color: 'rgba(230,198,199,.5)', fontFamily: "'JetBrains Mono',monospace", flexWrap: 'wrap', gap: 8 }}>
           <span>© 2026 Moment · Centro Deportivo</span><span>Isla de Maipo · Chile</span>
         </div>
       </div>
@@ -215,9 +249,6 @@ function YouTubeModal({ videoId, onClose }) {
     </div>
   );
 }
-
-// --- WhatsApp modal handler (injected in HTML) ---
-// Already in the HTML <script> block
 
 // --- Info card ---
 function InfoCard({ icon, label, lines }) {
@@ -240,6 +271,17 @@ const SHARED_CSS = `
 html{scroll-behavior:smooth}
 button{transition:transform .15s,opacity .15s}
 button:hover{opacity:.92}
+div::-webkit-scrollbar{display:none}
+
+@media(max-width:768px){
+  .nav-links{display:none!important}
+  .hamburger{display:flex!important}
+  .nav-cta{display:none!important}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr!important}
+}
 `;
 
 Object.assign(window, {

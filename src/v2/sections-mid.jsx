@@ -1,94 +1,164 @@
 // ============ CAROUSEL + TEAM + EN MEDIOS ============
 
-// --- Infinite carousel ---
+// --- Carousel lightbox ---
+function CarouselLightbox({ item, onClose }) {
+  useEffect(() => {
+    const handler = e => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+  return (
+    <div onClick={onClose} style={{
+      position: 'fixed', inset: 0, background: 'rgba(15,13,23,.92)',
+      backdropFilter: 'blur(12px)', zIndex: 200,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{ maxWidth: 960, width: '100%', borderRadius: 20, overflow: 'hidden', position: 'relative', background: '#000' }}>
+        <button onClick={onClose} style={{
+          position: 'absolute', top: 14, right: 14, zIndex: 2,
+          width: 38, height: 38, borderRadius: '50%',
+          background: 'rgba(0,0,0,.7)', color: '#fff', fontSize: 20, lineHeight: 1,
+          border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>×</button>
+        {item.type === 'image' ? (
+          <img src={item.src} style={{ width: '100%', display: 'block', maxHeight: '85vh', objectFit: 'contain' }}/>
+        ) : (
+          <video src={item.src} controls autoPlay style={{ width: '100%', display: 'block', maxHeight: '85vh', background: '#000' }}/>
+        )}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 20px 16px', background: 'linear-gradient(transparent, rgba(15,13,23,.8))' }}>
+          <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: '#fff', fontWeight: 500 }}>{item.label}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Infinite carousel with rAF auto-scroll, hover pause, drag, lightbox ---
 function CarouselSection({ theme }) {
   const isDark = theme === 'dark';
-  const [paused, setPaused] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const [lightbox, setLightbox] = useState(null);
   const trackRef = useRef(null);
+  const hoverRef = useRef(false);
+  const dragRef = useRef({ active: false, startX: 0, startScroll: 0, moved: false });
+  const rafRef = useRef(null);
+
   const items = [...CAROUSEL_ITEMS, ...CAROUSEL_ITEMS];
 
-  const onDown = (e) => {
-    setPaused(true); setDragging(true);
-    setStartX((e.touches ? e.touches[0].pageX : e.pageX));
-    setScrollLeft(trackRef.current.scrollLeft);
+  useEffect(() => {
+    const SPEED = 0.6;
+    function step() {
+      const t = trackRef.current;
+      if (t && !hoverRef.current && !dragRef.current.active) {
+        t.scrollLeft += SPEED;
+        if (t.scrollLeft >= t.scrollWidth / 2) t.scrollLeft = 0;
+      }
+      rafRef.current = requestAnimationFrame(step);
+    }
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  const onMouseEnter = () => { hoverRef.current = true; };
+  const onMouseLeave = () => { hoverRef.current = false; dragRef.current.active = false; };
+
+  const onMouseDown = e => {
+    dragRef.current = { active: true, startX: e.pageX, startScroll: trackRef.current.scrollLeft, moved: false };
+    e.preventDefault();
   };
-  const onMove = (e) => {
-    if (!dragging) return;
-    const x = (e.touches ? e.touches[0].pageX : e.pageX);
-    trackRef.current.scrollLeft = scrollLeft - (x - startX);
+  const onMouseMove = e => {
+    if (!dragRef.current.active) return;
+    const dx = e.pageX - dragRef.current.startX;
+    if (Math.abs(dx) > 4) dragRef.current.moved = true;
+    trackRef.current.scrollLeft = dragRef.current.startScroll - dx;
   };
-  const onUp = () => { setDragging(false); };
+  const onMouseUp = () => { dragRef.current.active = false; };
+
+  const onTouchStart = e => {
+    dragRef.current = { active: true, startX: e.touches[0].pageX, startScroll: trackRef.current.scrollLeft, moved: false };
+  };
+  const onTouchMove = e => {
+    if (!dragRef.current.active) return;
+    const dx = e.touches[0].pageX - dragRef.current.startX;
+    if (Math.abs(dx) > 4) dragRef.current.moved = true;
+    trackRef.current.scrollLeft = dragRef.current.startScroll - dx;
+  };
+  const onTouchEnd = () => { dragRef.current.active = false; };
+
+  const handleCardClick = item => {
+    if (!dragRef.current.moved) setLightbox(item);
+  };
 
   return (
-    <section id="instalaciones" style={{ padding: '120px 0 100px', overflow: 'hidden', background: isDark ? '#0f0d17' : 'var(--cream)', position: 'relative' }}>
+    <section id="instalaciones" style={{ padding: '120px 0 100px', overflow: 'hidden', background: isDark ? '#0f0d17' : '#fff', position: 'relative' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 48px' }}>
         <Reveal>
           <SectionHeader eyebrow="/ instalaciones" title="Un centro pensado para cada etapa." theme={theme}/>
         </Reveal>
+        <Reveal delay={.1}>
+          <p style={{ marginTop: 16, fontFamily: "'Jost',sans-serif", fontSize: 15, color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)' }}>
+            Pasa el cursor para pausar · Arrastra para navegar · Haz clic para ampliar
+          </p>
+        </Reveal>
       </div>
 
-      {/* Carousel: auto-scroll when not interacting, draggable */}
-      <div style={{ marginTop: 56, position: 'relative' }}>
-        {/* Auto-scrolling layer (hidden when paused, acts as visual) */}
-        {!paused && (
-          <div style={{
-            display: 'flex', gap: 20, width: 'max-content',
-            animation: 'carouselScroll 45s linear infinite',
-            paddingLeft: 48
-          }}>
-            {items.map((item, i) => <CarouselCard key={'a'+i} item={item}/>)}
-          </div>
-        )}
-        {/* Draggable layer (shown when paused) */}
-        {paused && (
-          <div
-            ref={trackRef}
-            onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={() => { onUp(); }}
-            onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}
-            style={{
-              display: 'flex', gap: 20, overflowX: 'auto', cursor: dragging ? 'grabbing' : 'grab',
-              scrollbarWidth: 'none', paddingLeft: 48, paddingRight: 48
-            }}
-          >
-            {items.map((item, i) => <CarouselCard key={'b'+i} item={item}/>)}
-          </div>
-        )}
-        {/* Pause/resume overlay */}
-        {!paused && (
-          <div onClick={() => setPaused(true)} style={{ position: 'absolute', inset: 0, cursor: 'grab' }}/>
-        )}
-        {paused && (
-          <button onClick={() => setPaused(false)} style={{
-            position: 'absolute', top: 12, right: 60, padding: '8px 16px', borderRadius: 999,
-            background: 'var(--ink)', color: 'var(--pink)', fontSize: 12, fontFamily: "'Jost',sans-serif", fontWeight: 600, zIndex: 2
-          }}>▶ Reanudar</button>
-        )}
-        <style>{`@keyframes carouselScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-        div::-webkit-scrollbar{display:none}`}</style>
+      <div
+        ref={trackRef}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{
+          marginTop: 48, display: 'flex', gap: 20,
+          overflowX: 'auto', scrollbarWidth: 'none',
+          cursor: dragRef.current?.active ? 'grabbing' : 'grab',
+          paddingLeft: 48, paddingRight: 48,
+          userSelect: 'none', WebkitUserSelect: 'none'
+        }}
+      >
+        {items.map((item, i) => (
+          <CarouselCard key={i} item={item} onClick={() => handleCardClick(item)}/>
+        ))}
       </div>
+
+      {lightbox && <CarouselLightbox item={lightbox} onClose={() => setLightbox(null)}/>}
     </section>
   );
 }
 
-function CarouselCard({ item }) {
+function CarouselCard({ item, onClick }) {
   return (
-    <div style={{ width: 380, height: 280, borderRadius: 20, overflow: 'hidden', flexShrink: 0, position: 'relative', background: 'var(--ink)' }}>
+    <div
+      onClick={onClick}
+      style={{ width: 380, height: 280, borderRadius: 20, overflow: 'hidden', flexShrink: 0, position: 'relative', background: 'var(--ink)', cursor: 'pointer' }}
+    >
       {item.type === 'image' ? (
-        <img src={item.src} draggable={false} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} loading="lazy"/>
+        <img src={item.src} draggable={false} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none', transition: 'transform .3s' }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+        />
       ) : (
         <video src={item.src} muted loop autoPlay playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}/>
       )}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 20px 16px', background: 'linear-gradient(transparent, rgba(15,13,23,.7))' }}>
+      {/* Play icon overlay for videos */}
+      {item.type === 'video' && (
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15,13,23,.25)' }}>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      )}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 20px 16px', background: 'linear-gradient(transparent, rgba(15,13,23,.75))' }}>
         <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: '#fff', fontWeight: 500 }}>{item.label}</div>
       </div>
     </div>
   );
 }
 
-// --- Team with LinkedIn ---
+// --- Team section ---
 function TeamSection({ theme }) {
   const isDark = theme === 'dark';
   return (
@@ -108,11 +178,10 @@ function TeamSection({ theme }) {
           </div>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 28 }}>
+        <div className="team-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 28 }}>
           {TEAM.map((m, i) => (
             <Reveal key={i} delay={i * .1}>
               <div style={{ background: 'rgba(255,255,255,.03)', border: '1px solid rgba(230,198,199,.1)', borderRadius: 20, overflow: 'hidden', position: 'relative' }}>
-                <QC position="top-right" color="var(--pink)" size={60} style={{ opacity: .3, zIndex: 2 }}/>
                 <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
                   <img src={m.photo} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'grayscale(.1) contrast(1.02)' }}/>
                 </div>
@@ -140,12 +209,35 @@ function TeamSection({ theme }) {
             </Reveal>
           ))}
         </div>
+
+        {/* "Conoce más de nosotros" link */}
+        <Reveal delay={.35}>
+          <div style={{ textAlign: 'center', marginTop: 64 }}>
+            <a href="Quienes Somos.html" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              padding: '17px 36px', borderRadius: 999,
+              background: 'rgba(255,255,255,.05)',
+              border: '1.5px solid rgba(230,198,199,.25)',
+              color: 'var(--pink-100)', fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 15,
+              textDecoration: 'none', transition: 'background .2s, border-color .2s'
+            }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(230,198,199,.1)'; e.currentTarget.style.borderColor = 'rgba(230,198,199,.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.05)'; e.currentTarget.style.borderColor = 'rgba(230,198,199,.25)'; }}
+            >
+              Conoce más de nosotros →
+            </a>
+          </div>
+        </Reveal>
+
+        <style>{`
+          @media(max-width:768px){.team-grid{grid-template-columns:1fr!important}}
+        `}</style>
       </div>
     </section>
   );
 }
 
-// --- En medios (YouTube modals) ---
+// --- En medios ---
 function EnMediosSection({ theme }) {
   const isDark = theme === 'dark';
   const [openVideo, setOpenVideo] = useState(null);
@@ -164,7 +256,7 @@ function EnMediosSection({ theme }) {
                   position: 'relative', borderRadius: 24, overflow: 'hidden', cursor: 'pointer',
                   aspectRatio: '16/9', background: '#000',
                   border: `1px solid ${isDark ? 'rgba(255,255,255,.06)' : 'rgba(26,24,35,.06)'}`,
-                  transition: 'transform .2s'
+                  transition: 'transform .25s'
                 }}
                 onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
                 onMouseLeave={e => e.currentTarget.style.transform = 'none'}
@@ -175,11 +267,12 @@ function EnMediosSection({ theme }) {
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg>
                   </div>
                 </div>
+                {/* QC strategic: top-right, subtle teal */}
+                <QC position="top-right" color="var(--teal)" size={50} style={{ opacity: .25 }}/>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px 24px 20px', background: 'linear-gradient(transparent, rgba(15,13,23,.8))' }}>
                   <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 6 }}>{m.source}</div>
                   <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 24, color: '#fff', margin: 0, letterSpacing: '-0.01em' }}>{m.title}</h3>
                 </div>
-                <QC position="top-right" color="var(--pink)" size={50} style={{ opacity: .4 }}/>
               </div>
             </Reveal>
           ))}
@@ -190,4 +283,4 @@ function EnMediosSection({ theme }) {
   );
 }
 
-Object.assign(window, { CarouselSection, TeamSection, EnMediosSection });
+Object.assign(window, { CarouselSection, CarouselCard, CarouselLightbox, TeamSection, EnMediosSection });

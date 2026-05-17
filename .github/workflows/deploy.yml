@@ -1,0 +1,17 @@
+name: Deploy a HostGator
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger pull en cPanel
+        run: |
+          curl -s -k \
+            -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
+            "https://sh00004.hostgator.cl:2083/execute/VersionControlDeployment/create" \
+            --data-urlencode "repository_root=/home2/jairoant/public_html"

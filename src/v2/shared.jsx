@@ -198,8 +198,8 @@ function useDeployDate() {
       .then(r => r.json())
       .then(d => {
         const dt = new Date(d.commit.author.date);
-        const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-        setDate(`${dt.getDate()} ${months[dt.getMonth()]}`);
+        const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        setDate(`${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`);
       })
       .catch(() => {});
   }, []);

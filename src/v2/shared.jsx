@@ -190,9 +190,26 @@ function FloatingContacts() {
   );
 }
 
+// --- Deploy date hook (reads last production commit from GitHub API) ---
+function useDeployDate() {
+  const [date, setDate] = useState('');
+  useEffect(() => {
+    fetch('https://api.github.com/repos/DiegoVP2001/moment/commits/production')
+      .then(r => r.json())
+      .then(d => {
+        const dt = new Date(d.commit.author.date);
+        const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+        setDate(`${dt.getDate()} ${months[dt.getMonth()]}`);
+      })
+      .catch(() => {});
+  }, []);
+  return date;
+}
+
 // --- Footer ---
 function Footer({ theme = 'light' }) {
   const isDark = theme === 'dark';
+  const deployDate = useDeployDate();
   return (
     <footer style={{ background: isDark ? '#0f0d17' : 'var(--ink)', color: 'var(--pink-100)', padding: '80px 36px 32px' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
@@ -230,7 +247,11 @@ function Footer({ theme = 'light' }) {
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 28, fontSize: 12, color: 'rgba(230,198,199,.5)', fontFamily: "'JetBrains Mono',monospace", flexWrap: 'wrap', gap: 8 }}>
-          <span>© 2026 Moment · Centro Deportivo</span><span>Isla de Maipo · Chile</span>
+          <span>
+            © 2026 Moment · Centro Deportivo
+            {deployDate && <span> · Última actualización: {deployDate}</span>}
+          </span>
+          <span>Isla de Maipo · Chile</span>
         </div>
       </div>
     </footer>

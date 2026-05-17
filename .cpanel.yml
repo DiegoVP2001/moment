@@ -1,5 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/jairoant/public_html/
-    - /bin/cp -R $TRAVIS_BUILD_DIR/* $DEPLOYPATH
+    - /usr/bin/git -C /home2/jairoant/public_html fetch origin
+    - /usr/bin/git -C /home2/jairoant/public_html checkout -f production
+    - /usr/bin/git -C /home2/jairoant/public_html reset --hard origin/production

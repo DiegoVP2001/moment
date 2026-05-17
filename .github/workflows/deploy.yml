@@ -12,13 +12,13 @@ jobs:
       - name: Pull desde GitHub a cPanel
         run: |
           curl -s -k \
-            -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
             "https://sh00004.hostgator.cl:2083/execute/VersionControl/update" \
             --data-urlencode "repository_root=/home2/jairoant/public_html"
 
       - name: Deploy en cPanel
         run: |
           curl -s -k \
-            -u "${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
             "https://sh00004.hostgator.cl:2083/execute/VersionControlDeployment/create" \
             --data-urlencode "repository_root=/home2/jairoant/public_html"

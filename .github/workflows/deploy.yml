@@ -9,16 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull desde GitHub a cPanel
-        run: |
-          curl -s -k \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
-            "https://sh00004.hostgator.cl:2083/execute/VersionControl/update" \
-            --data-urlencode "repository_root=/home2/jairoant/public_html"
+      - name: Checkout código
+        uses: actions/checkout@v4
 
-      - name: Deploy en cPanel
-        run: |
-          curl -s -k \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_PASS }}" \
-            "https://sh00004.hostgator.cl:2083/execute/VersionControlDeployment/create" \
-            --data-urlencode "repository_root=/home2/jairoant/public_html"
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .cpanel.yml
+            CLAUDE.md
+            Moment Landing.html

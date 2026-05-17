@@ -249,7 +249,7 @@ function Footer({ theme = 'light' }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 28, fontSize: 12, color: 'rgba(230,198,199,.5)', fontFamily: "'JetBrains Mono',monospace", flexWrap: 'wrap', gap: 8 }}>
           <span>
             © 2026 Moment · Centro Deportivo
-            {deployDate && <span> · Última actualización: {deployDate}</span>}
+            {deployDate && <span> · Última actualización ({deployDate})</span>}
           </span>
           <span>Isla de Maipo · Chile</span>
         </div>

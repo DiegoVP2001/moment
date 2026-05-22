@@ -108,6 +108,7 @@ function Nav({ theme = 'light' }) {
   ];
   const moreLinks = [
     ['Quienes Somos.html', 'Quiénes somos'],
+    ['psicologia-deportiva.html', 'Psicología Deportiva'],
     ['#calendario', 'Eventos'],
     ['#trabaja', 'Trabaja con nosotros'],
   ];

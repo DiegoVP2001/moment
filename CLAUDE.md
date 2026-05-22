@@ -65,15 +65,46 @@ Todo el contenido editable está en `src/v2/data.jsx`:
 - `TEAM` — 3 profesionales con foto, rol, bio y LinkedIn
 - `CAROUSEL_ITEMS` — imágenes y videos del carrusel
 - `MEDIOS` — videos de YouTube (youtubeId)
-- `SHOP` — 6 productos de la tienda
+- `SHOP` — 9 productos de la tienda (con campos `category` e `images[]`)
 - `EVENTS` — eventos próximos (hasta conectar Google Calendar)
 - `JOBS` — vacantes
+
+### Estructura SHOP
+Cada producto incluye `{ name, price, category, desc, images[] }`. Las categorías definidas son:
+`'Magnesios'`, `'Magnesera'`, `'Cepillos'`, `'Tape deportivo'`, `'Entrenamiento'`, `'Recuperación'`.
+El orden de renderizado está controlado por `SHOP_CATEGORY_ORDER` en `sections-bottom.jsx`.
+Las imágenes se guardan en `assets/productos/` con nombres descriptivos (`magnesio-mix-1.jpg`, etc.).
+
+La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez de una lista larga. El cambio de imagen en cada producto tiene una animación slide (`shopSlideRight`/`shopSlideLeft` en 220ms). Ambos están implementados en `ShopSection` y `ProductCard` en `sections-bottom.jsx`.
+
+---
+
+## Subpágina: Psicología Deportiva
+- Archivo: `psicologia-deportiva.html` (raíz del repo, mismo nivel que `index.html`)
+- No usa React — es HTML/CSS/JS puro (igual que `Quienes Somos.html`)
+- Hero con `assets/hero-psicologia.jpg` (imagen royalty-free, Unsplash)
+- Acento de color: `--blue: #6aa6da`
+- Agendamiento: botón directo a TUU Reserva de Jairo (`espacio.haulmer.com/...`)
+- WhatsApp interceptor idéntico al de las otras páginas
+- El Nav del `index.html` (React) enlaza a esta página desde el dropdown "Más"
+- En `ServiceFullModal` para psicología (`s.id === 'psico'`), hay un botón extra que abre esta subpágina
+
+### TUU Reserva — integración de agendamiento
+- URL pública de reservas de Moment: `https://tuu.cl/centrodeportivomoment`
+- Todos los servicios del main (`ServiceDetail`) tienen doble CTA: **"Consultar vía WhatsApp"** + **"Agenda online"** (→ tuu.cl/centrodeportivomoment). Jairo y Kary configuran qué servicios aparecen ahí según su disponibilidad.
+- Haulmer/TUU **no tiene API pública para reservas**. La única integración posible es link directo.
+- TUU **sí tiene "Link de Pago"** para cobros online (adelanto) — se crea manualmente en `espacio.haulmer.com`
+- La API de developers.tuu.cl es solo para pagos POS (requiere Device físico) y facturación electrónica
+
+### WA links — sin interceptor
+- El interceptor de WhatsApp fue eliminado de `index.html`, `Quienes Somos.html` y `psicologia-deportiva.html` en mayo 2026.
+- Los links `wa.me` con `target="_blank"` funcionan nativamente: en móvil abren la app, en desktop abren WhatsApp Web. No se necesita popup intermedio.
 
 ---
 
 ## Contacto / WhatsApp
 - Número: `56998928078`
-- Modal interceptor en `index.html` y `Quienes Somos.html`: captura clicks en links de WhatsApp y ofrece abrir en app, web, o copiar
+- Modal interceptor en `index.html`, `Quienes Somos.html` y `psicologia-deportiva.html`: captura clicks en links de WhatsApp y ofrece abrir en app, web, o copiar
 
 ---
 

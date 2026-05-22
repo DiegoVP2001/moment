@@ -118,14 +118,25 @@ function ServiceDetail({ service: s, theme, onClose }) {
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 10 }}>Descripción del servicio</div>
               <p style={{ fontSize: 14, lineHeight: 1.55, margin: 0, fontFamily: "'Jost',sans-serif" }}>{s.detail}</p>
             </div>
-            <a href={waGeneralLink(s.title)} target="_blank" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
-              fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
-            }}>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-              {s.cta} vía WhatsApp
-            </a>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <a href={waGeneralLink(s.title)} target="_blank" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '14px 26px', borderRadius: 999, background: '#25d366', color: '#fff',
+                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
+              }}>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                Consultar vía WhatsApp
+              </a>
+              <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '14px 26px', borderRadius: 999,
+                background: 'var(--blue)', color: '#fff',
+                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
+              }}>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
+                Agenda online
+              </a>
+            </div>
           </div>
           <div>
             <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores principales</div>
@@ -147,12 +158,21 @@ function ServiceDetail({ service: s, theme, onClose }) {
                 </a>
               ))}
             </div>
-            <button onClick={() => setShowFull(true)} style={{
-              marginTop: 14, width: '100%', padding: '12px', borderRadius: 12,
-              border: `1px dashed ${isDark ? 'rgba(255,255,255,.15)' : 'rgba(26,24,35,.15)'}`,
-              color: isDark ? 'rgba(255,255,255,.55)' : 'var(--ink-60)',
-              fontFamily: "'Jost',sans-serif", fontSize: 13, cursor: 'pointer', background: 'transparent'
-            }}>Ver detalle completo de planes →</button>
+            {s.id === 'psico' ? (
+              <a href="psicologia-deportiva.html" style={{
+                display: 'block', marginTop: 14, width: '100%', padding: '12px', borderRadius: 12,
+                border: `1px dashed ${isDark ? 'rgba(106,166,218,.4)' : 'rgba(106,166,218,.5)'}`,
+                color: 'var(--blue)', textAlign: 'center',
+                fontFamily: "'Jost',sans-serif", fontSize: 13, textDecoration: 'none', boxSizing: 'border-box'
+              }}>Ver sección completa de Psicología Deportiva →</a>
+            ) : (
+              <button onClick={() => setShowFull(true)} style={{
+                marginTop: 14, width: '100%', padding: '12px', borderRadius: 12,
+                border: `1px dashed ${isDark ? 'rgba(255,255,255,.15)' : 'rgba(26,24,35,.15)'}`,
+                color: isDark ? 'rgba(255,255,255,.55)' : 'var(--ink-60)',
+                fontFamily: "'Jost',sans-serif", fontSize: 13, cursor: 'pointer', background: 'transparent'
+              }}>Ver detalle completo de planes →</button>
+            )}
           </div>
         </div>
         <div style={{ padding: '16px 40px 20px', display: 'flex', justifyContent: 'flex-end' }}>
@@ -252,7 +272,22 @@ function ServiceFullModal({ service: s, theme, onClose }) {
         </div>
 
         {/* Footer CTA */}
-        <div style={{ padding: '16px 32px 24px', borderTop: `1px solid ${border}`, flexShrink: 0 }}>
+        <div style={{ padding: '16px 32px 24px', borderTop: `1px solid ${border}`, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {s.id === 'psico' && (
+            <a href="psicologia-deportiva.html" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              padding: '13px', borderRadius: 999,
+              background: 'transparent', color: 'var(--blue)',
+              border: '1.5px solid var(--blue)',
+              fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none',
+              transition: 'background .15s'
+            }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(106,166,218,.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              Ver sección completa de Psicología Deportiva →
+            </a>
+          )}
           <a href={waGeneralLink(s.title)} target="_blank" style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             padding: '15px', borderRadius: 999, background: '#25d366', color: '#fff',

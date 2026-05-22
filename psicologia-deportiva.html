@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Psicología Deportiva — Moment</title>
+<meta name="description" content="Psicología Deportiva en Moment: concentración, ansiedad, motivación y 9 áreas de trabajo para deportistas, entrenadores, padres y equipos. Isla de Maipo."/>
+<link rel="icon" href="assets/logo-isotype-dark.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#e6c6c7;--pink-50:#f6e6e7;--pink-100:#efd7d8;--pink-200:#e6c6c7;--pink-300:#d7a8a9;
+  --ink:#1a1823;--ink-80:#2a2735;--ink-60:#4a4655;
+  --teal:#7bbfbf;--teal-dark:#5fa8a8;
+  --blue:#6aa6da;--blue-dark:#4d8fc7;--blue-light:rgba(106,166,218,.12);
+  --cream:#faf5f2;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* QC */
+.qc{position:absolute;pointer-events:none;z-index:0}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(250,245,242,.88);border-bottom:1px solid rgba(26,24,35,.08)}
+.nav-inner{padding:12px 36px;display:flex;align-items:center;gap:24}
+.nav-logo{display:flex;align-items:center;gap:10;flex-shrink:0}
+.nav-logo img{width:32px;height:32px;object-fit:contain}
+.nav-logo span{font-family:'Playfair Display',serif;font-weight:500;font-style:italic;letter-spacing:-0.02em;font-size:22px}
+.nav-links{display:flex;gap:20px;margin-left:28px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.02em;align-items:center}
+.nav-links a:hover{opacity:.7}
+.nav-links a,.nav-links button{color:var(--ink)}
+.nav-cta{margin-left:auto;padding:9px 18px;border-radius:999px;background:var(--blue);color:#fff!important;font-weight:600;font-size:12px;font-family:'Jost',sans-serif;transition:opacity .2s;flex-shrink:0}
+.nav-cta:hover{opacity:.85}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;margin-left:auto;cursor:pointer}
+.hamburger span{width:22px;height:2px;background:var(--ink);display:block;transition:all .2s}
+.mobile-menu{display:none;flex-direction:column;gap:0;padding:8px 24px 20px;background:rgba(250,245,242,.96);border-top:1px solid rgba(26,24,35,.08)}
+.mobile-menu a{padding:12px 8px;font-size:15px;font-family:'Jost',sans-serif;border-bottom:1px solid rgba(26,24,35,.07)}
+.mobile-menu.open{display:flex}
+
+/* More dropdown */
+#more-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:14px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.18);border:1px solid rgba(26,24,35,.08);min-width:210px;z-index:60;display:none}
+#more-dropdown.open{display:block}
+#more-dropdown a{display:block;padding:10px 16px;border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;transition:background .15s}
+#more-dropdown a:hover{background:var(--pink-50)}
+
+/* Cards */
+.card-base{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(26,24,35,.06);transition:transform .2s,box-shadow .2s}
+.card-base:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(26,24,35,.09)}
+
+/* Grids */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.problem-card{background:#fff;border-radius:16px;padding:20px 22px;border:1px solid rgba(26,24,35,.07);cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.problem-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(106,166,218,.18);border-color:var(--blue)}
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.program-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.audience-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.sports-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sport-item{padding:18px 14px;text-align:center;background:#fff;border-radius:14px;border:1px solid rgba(26,24,35,.07);cursor:pointer;transition:transform .15s,background .15s,border-color .15s;font-family:'Jost',sans-serif;font-size:14px;font-weight:500}
+.sport-item:hover{background:var(--blue-light);border-color:var(--blue);transform:translateY(-2px)}
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+
+/* Program highlighted */
+.program-highlight{background:var(--ink);color:#fff;border-color:transparent}
+.program-highlight h3,.program-highlight .prog-price{color:#fff}
+.program-highlight p,.program-highlight li{color:rgba(255,255,255,.7)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,13,23,.8);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:24px;max-width:520px;width:100%;padding:36px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.3)}
+
+/* Section inner */
+.section-inner{max-width:1200px;margin:0 auto}
+
+/* Floating contacts */
+.float-bar{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:12px;z-index:80}
+.wa-float,.ig-float{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.wa-float{background:#25d366;box-shadow:0 8px 24px rgba(37,211,102,.35)}
+.ig-float{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);box-shadow:0 8px 24px rgba(220,39,67,.3)}
+.wa-float:hover,.ig-float:hover{transform:scale(1.08)}
+
+/* Footer */
+footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;border-bottom:1px solid rgba(230,198,199,.15)}
+.footer-col h4{font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);margin-bottom:18px;margin-top:0}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:28px;font-size:12px;color:rgba(230,198,199,.5);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
+
+/* Responsive */
+@media(max-width:900px){
+  .program-grid,.service-cards,.audience-grid,.sports-grid{grid-template-columns:repeat(2,1fr)!important}
+  .area-grid{grid-template-columns:repeat(2,1fr)!important}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .nav-inner{padding:12px 20px}
+  section{padding-left:20px!important;padding-right:20px!important}
+  .problem-grid,.area-grid,.tools-grid{grid-template-columns:1fr 1fr!important}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
+  .fitness-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:520px){
+  .problem-grid,.sports-grid{grid-template-columns:1fr 1fr!important}
+  .service-cards,.audience-grid,.program-grid{grid-template-columns:1fr!important}
+  .footer-grid{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-isotype-dark.png" alt="Moment"/>
+      <span>moment</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#instalaciones">Instalaciones</a>
+      <a href="index.html#equipo">Equipo</a>
+      <a href="index.html#medios">En medios</a>
+      <a href="index.html#tienda">Tienda</a>
+      <a href="index.html#contacto">Contacto</a>
+      <div style="position:relative">
+        <button id="more-btn" style="display:flex;align-items:center;gap:4px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.02em;padding:0">
+          Más <span id="more-chevron" style="font-size:10px;transition:transform .2s">▾</span>
+        </button>
+        <div id="more-dropdown">
+          <a href="Quienes Somos.html">Quiénes somos</a>
+          <a href="psicologia-deportiva.html" style="color:var(--blue);font-weight:600">Psicología Deportiva</a>
+          <a href="index.html#calendario">Eventos</a>
+          <a href="index.html#trabaja">Trabaja con nosotros</a>
+        </div>
+      </div>
+    </div>
+    <a href="https://tuu.cl/centrodeportivomoment" target="_blank" class="nav-cta">Agendar evaluación</a>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#servicios">Servicios</a>
+    <a href="index.html#instalaciones">Instalaciones</a>
+    <a href="index.html#equipo">Equipo</a>
+    <a href="index.html#medios">En medios</a>
+    <a href="index.html#tienda">Tienda</a>
+    <a href="index.html#contacto">Contacto</a>
+    <a href="Quienes Somos.html">Quiénes somos</a>
+    <a href="index.html#calendario">Eventos</a>
+    <a href="index.html#trabaja">Trabaja con nosotros</a>
+    <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="color:var(--blue);font-weight:600">Agendar evaluación →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden;background:#111">
+  <img src="assets/hero-psicologia.jpg" alt="Psicología Deportiva" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42"/>
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,13,23,.88) 0%,rgba(15,13,23,.58) 60%,rgba(15,13,23,.36) 100%)"></div>
+  <!-- QC top-right -->
+  <svg class="qc" viewBox="0 0 100 100" width="260" height="260" style="top:0;right:0;opacity:.12" aria-hidden>
+    <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--blue)"/>
+  </svg>
+  <div style="position:relative;z-index:1;padding:100px 48px;max-width:1200px;margin:0 auto;width:100%">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:18px">/ psicología deportiva · Moment</div>
+    <h1 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(44px,8vw,100px);line-height:.9;letter-spacing:-0.04em;margin:0;color:#fff;transition-delay:.06s">
+      Entrena<br><span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:var(--blue)">también</span><br>tu mente.
+    </h1>
+    <p class="reveal" style="font-family:'Jost',sans-serif;font-size:18px;line-height:1.6;color:rgba(255,255,255,.72);margin-top:24px;max-width:540px;transition-delay:.12s">
+      Trabajo psicológico especializado para deportistas, entrenadores y equipos. Porque el rendimiento empieza antes de la competencia.
+    </p>
+    <div class="reveal" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;transition-delay:.18s">
+      <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="padding:15px 30px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:15px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Agendar evaluación</a>
+      <a href="#programas" style="padding:15px 30px;border-radius:999px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);font-family:'Jost',sans-serif;font-weight:600;font-size:15px;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.75)'" onmouseout="this.style.borderColor='rgba(255,255,255,.35)'">Ver programas →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ¿Qué necesitas trabajar? -->
+<section style="padding:72px 48px;background:var(--cream);position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="180" height="180" style="top:0;right:0;opacity:.12" aria-hidden>
+    <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--teal)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ identifica tu desafío</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 36px;transition-delay:.06s">¿Qué necesitas trabajar?</h2>
+    <div class="problem-grid reveal" style="transition-delay:.1s">
+      <div class="problem-card" onclick="openProblemModal(0)"><div style="font-size:20px;margin-bottom:8px">🎯</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Me desconcentro en competencia</div><div style="font-size:12px;color:var(--ink-60)">Foco atencional y control de distractores</div></div>
+      <div class="problem-card" onclick="openProblemModal(1)"><div style="font-size:20px;margin-bottom:8px">⚡</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Entreno bien pero compito mal</div><div style="font-size:12px;color:var(--ink-60)">Transferencia entrenamiento-competencia</div></div>
+      <div class="problem-card" onclick="openProblemModal(2)"><div style="font-size:20px;margin-bottom:8px">💪</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Pierdo confianza rápidamente</div><div style="font-size:12px;color:var(--ink-60)">Autoconfianza y diálogo interno</div></div>
+      <div class="problem-card" onclick="openProblemModal(3)"><div style="font-size:20px;margin-bottom:8px">🧊</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Me bloqueo bajo presión</div><div style="font-size:12px;color:var(--ink-60)">Regulación emocional y fortaleza mental</div></div>
+      <div class="problem-card" onclick="openProblemModal(4)"><div style="font-size:20px;margin-bottom:8px">😰</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Tengo ansiedad competitiva</div><div style="font-size:12px;color:var(--ink-60)">Manejo de ansiedad pre-competencia</div></div>
+      <div class="problem-card" onclick="openProblemModal(5)"><div style="font-size:20px;margin-bottom:8px">🔥</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">No logro mantener la motivación</div><div style="font-size:12px;color:var(--ink-60)">Motivación y adherencia deportiva</div></div>
+      <div class="problem-card" onclick="openProblemModal(6)"><div style="font-size:20px;margin-bottom:8px">🩹</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Dificultades para volver tras lesión</div><div style="font-size:12px;color:var(--ink-60)">Acompañamiento en rehabilitación</div></div>
+      <div class="problem-card" onclick="openProblemModal(7)"><div style="font-size:20px;margin-bottom:8px">🤝</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">El equipo no tiene cohesión</div><div style="font-size:12px;color:var(--ink-60)">Trabajo grupal y comunicación</div></div>
+      <div class="problem-card" onclick="openProblemModal(8)"><div style="font-size:20px;margin-bottom:8px">👨‍👩‍👧</div><div style="font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-0.01em;margin-bottom:4px">Mi hijo/a sufre mucho al competir</div><div style="font-size:12px;color:var(--ink-60)">Orientación para padres y jóvenes</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal problemas -->
+<div id="problem-modal" class="modal-overlay" onclick="if(event.target===this)closeProblemModal()">
+  <div class="modal-box">
+    <button onclick="closeProblemModal()" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:var(--pink-50);font-size:18px;display:flex;align-items:center;justify-content:center">×</button>
+    <div id="pm-icon" style="font-size:30px;margin-bottom:12px"></div>
+    <h3 id="pm-title" style="font-family:'Archivo Black',sans-serif;font-size:22px;margin:0 0 10px;letter-spacing:-0.02em"></h3>
+    <p id="pm-desc" style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.6;color:var(--ink-60);margin:0 0 20px"></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a id="pm-wa" href="#" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:999px;background:#25d366;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:14px">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.337 22l1.535-5.537A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.962 9.962 0 01-5.33-1.54L2 22l3.337.002z"/></svg>
+        Consultar
+      </a>
+      <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:14px">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
+        Agenda online
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Áreas de trabajo -->
+<section style="padding:72px 48px;background:var(--ink);color:#fff;position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="200" height="200" style="bottom:0;right:0;opacity:.08" aria-hidden>
+    <path d="M 100,12 A 88,88 0 0,0 12,100 L 48,100 A 52,52 0 0,1 100,48 Z" fill="var(--pink)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px">/ en qué trabajamos</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 36px;transition-delay:.06s">Áreas de trabajo psicológico.</h2>
+    <div class="area-grid">
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.04s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Atención y concentración</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Foco atencional y control de distractores.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.07s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Motivación</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Adherencia, compromiso deportivo y orientación a objetivos.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.10s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Autoconfianza</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Seguridad personal y confianza competitiva.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.13s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Fortaleza mental</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Resiliencia y estabilidad emocional bajo presión.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.16s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Activación y relajación</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Respiración, relajación y control fisiológico.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.19s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Visualización</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Imaginería y simulación competitiva.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.22s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Autohabla y rutinas</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Diálogo interno y rutinas precompetitivas.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.25s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Retorno tras lesión</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Acompañamiento en rehabilitación y reintegración.</p></div>
+      <div class="reveal card-base" style="background:#1a1627;border-color:rgba(255,255,255,.07);transition-delay:.28s"><div style="width:32px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px"></div><h3 style="font-family:'Archivo Black',sans-serif;font-size:16px;margin:0 0 6px;color:#fff;letter-spacing:-0.01em">Cohesión de equipo</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;color:rgba(255,255,255,.5);margin:0">Comunicación y funcionamiento grupal.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ¿Para quién? -->
+<section style="padding:72px 48px;background:var(--cream);position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="180" height="180" style="top:0;right:0;opacity:.14" aria-hidden>
+    <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--teal)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ audiencia</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 36px;transition-delay:.06s">¿Para quién está dirigido?</h2>
+    <div class="audience-grid">
+      <div class="reveal card-base" style="transition-delay:.06s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;letter-spacing:-0.01em">Deportistas</h3><p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 18px">Trabajo psicológico aplicado al rendimiento, la competencia y el desarrollo deportivo. Sesiones individuales y programas con precios visibles.</p><a href="#servicios" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Ver servicios y programas →</a></div>
+      <div class="reveal card-base" style="transition-delay:.09s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;letter-spacing:-0.01em">Entrenadores</h3><p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 18px">Liderazgo, comunicación efectiva y herramientas psicológicas aplicadas al trabajo con deportistas.</p><a href="https://wa.me/56998928078?text=Hola%2C%20soy%20entrenador%2Fa%20y%20quiero%20informaci%C3%B3n%20sobre%20Psicolog%C3%ADa%20Deportiva." target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Solicitar información →</a></div>
+      <div class="reveal card-base" style="transition-delay:.12s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;letter-spacing:-0.01em">Padres y madres</h3><p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 18px">Orientación para acompañar emocionalmente a hijos e hijas deportistas, especialmente en etapas de alta exigencia.</p><a href="https://wa.me/56998928078?text=Hola%2C%20soy%20padre%2Fmadre%20y%20busco%20orientaci%C3%B3n%20para%20acompa%C3%B1ar%20a%20mi%20hijo%2Fa%20deportista." target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Consultar modalidades →</a></div>
+      <div class="reveal card-base" style="transition-delay:.15s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;letter-spacing:-0.01em">Equipos y organizaciones</h3><p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 18px">Cohesión grupal, cultura deportiva y funcionamiento organizacional. Sin precios publicados — cotización a medida.</p><a href="https://wa.me/56998928078?text=Hola%2C%20represento%20un%20equipo%2Forganizaci%C3%B3n%20y%20quiero%20informaci%C3%B3n." target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Solicitar propuesta →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Especialidades por deporte -->
+<section style="padding:72px 48px;background:var(--ink);color:#fff;position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="160" height="160" style="bottom:0;left:0;opacity:.08" aria-hidden>
+    <path d="M 0,12 A 88,88 0 0,1 88,100 L 48,100 A 52,52 0 0,0 0,48 Z" fill="var(--teal)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px">/ especialización</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 10px;transition-delay:.06s">Especialidades por deporte.</h2>
+    <p class="reveal" style="font-family:'Jost',sans-serif;font-size:15px;color:rgba(255,255,255,.5);margin:0 0 32px;max-width:560px;transition-delay:.09s">Cada disciplina tiene sus propias demandas psicológicas. Haz clic para consultar tu deporte.</p>
+    <div class="sports-grid reveal" style="transition-delay:.12s">
+      <a href="https://wa.me/56998928078?text=Hola%2C%20soy%20futbolista%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Fútbol</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20juego%20tenis%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Tenis</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20juego%20golf%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Golf</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20practico%20escalada%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Escalada</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20practico%20deportes%20de%20combate%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Deportes de combate</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20juego%20v%C3%B3ley%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Vóley</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20juego%20hockey%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Hockey Césped</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20juego%20baloncesto%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Baloncesto</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20practico%20atletismo%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Atletismo</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20soy%20deportista%20ol%C3%ADmpico%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Deporte Olímpico y Paralímpico</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20practico%20deportes%20de%20motor%20y%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="sport-item" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)">Deportes de Motor</a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Psicolog%C3%ADa%20Deportiva%20en%20Moment." target="_blank" class="sport-item" style="color:rgba(255,255,255,.45);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);font-style:italic">Otro deporte →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Centros Fitness -->
+<section style="padding:72px 48px;background:var(--cream);position:relative;overflow:hidden">
+  <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center" class="fitness-grid">
+    <div>
+      <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ centros fitness</div>
+      <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(24px,3.5vw,40px);line-height:.95;letter-spacing:-0.03em;margin:0 0 16px;transition-delay:.06s">Servicios para gimnasios y centros de entrenamiento.</h2>
+      <p class="reveal" style="font-family:'Jost',sans-serif;font-size:15px;line-height:1.6;color:var(--ink-60);margin:0 0 24px;transition-delay:.1s">Trabajo psicológico aplicado a espacios de entrenamiento orientados al rendimiento, la adherencia y el bienestar deportivo. Sin precios publicados — cotización a medida.</p>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20represento%20un%20gimnasio%20y%20quiero%20informaci%C3%B3n%20sobre%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="reveal" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:var(--ink);color:var(--pink);font-family:'Jost',sans-serif;font-weight:600;font-size:14px;transition-delay:.14s">Solicitar información →</a>
+    </div>
+    <div class="reveal" style="transition-delay:.1s">
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
+        <li style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-radius:12px;border:1px solid rgba(26,24,35,.07)"><span style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0"></span><span style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60)">Talleres psicológicos para usuarios</span></li>
+        <li style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-radius:12px;border:1px solid rgba(26,24,35,.07)"><span style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0"></span><span style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60)">Motivación y adherencia al entrenamiento</span></li>
+        <li style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-radius:12px;border:1px solid rgba(26,24,35,.07)"><span style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0"></span><span style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60)">Manejo de ansiedad y frustración deportiva</span></li>
+        <li style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-radius:12px;border:1px solid rgba(26,24,35,.07)"><span style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0"></span><span style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60)">Capacitaciones para staff y entrenadores</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Herramientas y Metodología -->
+<section style="padding:72px 48px;background:var(--pink-50);position:relative;overflow:hidden">
+  <div class="section-inner">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ metodología</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 36px;transition-delay:.06s">Herramientas que usamos.</h2>
+    <div class="tools-grid">
+      <div class="reveal card-base" style="transition-delay:.06s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:18px;margin:0 0 8px;letter-spacing:-0.01em">Evaluación psicológica deportiva</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.5;color:var(--ink-60);margin:0 0 14px">Instrumentos validados para medir concentración, ansiedad, motivación y rendimiento mental.</p><a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20evaluaci%C3%B3n%20psicol%C3%B3gica%20deportiva." target="_blank" style="font-family:'Jost',sans-serif;font-size:13px;color:var(--blue-dark);font-weight:600">Consultar →</a></div>
+      <div class="reveal card-base" style="transition-delay:.09s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:18px;margin:0 0 8px;letter-spacing:-0.01em">Biorretroalimentación</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.5;color:var(--ink-60);margin:0 0 14px">Monitoreo de señales fisiológicas para entrenar la autorregulación bajo presión competitiva.</p><a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20biorretroalimentaci%C3%B3n." target="_blank" style="font-family:'Jost',sans-serif;font-size:13px;color:var(--blue-dark);font-weight:600">Consultar →</a></div>
+      <div class="reveal card-base" style="transition-delay:.12s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:18px;margin:0 0 8px;letter-spacing:-0.01em">Coaching Deportivo</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.5;color:var(--ink-60);margin:0 0 14px">Acompañamiento orientado a metas y autoconocimiento para la toma de decisiones deportivas.</p><a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Coaching%20Deportivo." target="_blank" style="font-family:'Jost',sans-serif;font-size:13px;color:var(--blue-dark);font-weight:600">Consultar →</a></div>
+      <div class="reveal card-base" style="transition-delay:.15s"><h3 style="font-family:'Archivo Black',sans-serif;font-size:18px;margin:0 0 8px;letter-spacing:-0.01em">PNL aplicada al deporte</h3><p style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.5;color:var(--ink-60);margin:0 0 14px">Reprogramación de patrones mentales que limitan el rendimiento deportivo.</p><a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20PNL%20aplicada%20al%20deporte." target="_blank" style="font-family:'Jost',sans-serif;font-size:13px;color:var(--blue-dark);font-weight:600">Consultar →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Servicios para deportistas individuales -->
+<section id="servicios" style="padding:72px 48px;background:var(--cream);position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="170" height="170" style="top:0;right:0;opacity:.1" aria-hidden>
+    <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--blue)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ servicios · solo deportistas individuales</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 10px;transition-delay:.06s">Empieza por donde corresponde.</h2>
+    <p class="reveal" style="font-family:'Jost',sans-serif;font-size:15px;color:var(--ink-60);margin:0 0 36px;max-width:580px;transition-delay:.1s">Los valores mostrados corresponden exclusivamente a atenciones individuales de deportistas. Para entrenadores, equipos y organizaciones, consulta directamente.</p>
+    <div class="service-cards">
+      <div class="reveal card-base" style="transition-delay:.1s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:18px">Evaluación inicial</div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:24px;margin:0 0 14px;letter-spacing:-0.02em">Evaluación en Psicología Deportiva</h3>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-60)">45–55 min</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-60)">Online / Presencial</span>
+        </div>
+        <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 14px">Primera sesión para conocer en profundidad tu contexto deportivo, objetivos y desafíos. Incluye retroalimentación y recomendaciones.</p>
+        <ul style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.65;color:var(--ink-60);margin:0 0 20px;padding-left:16px">
+          <li>Análisis del contexto deportivo</li>
+          <li>Definición de objetivos de trabajo</li>
+          <li>Retroalimentación e informe opcional</li>
+        </ul>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:18px;border-top:1px solid rgba(26,24,35,.07)">
+          <span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:var(--blue-dark)">$25.000</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20Evaluaci%C3%B3n%20Inicial%20de%20Psicolog%C3%ADa%20Deportiva." target="_blank" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;background:#25d366;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.337 22l1.535-5.537A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.962 9.962 0 01-5.33-1.54L2 22l3.337.002z"/></svg>
+              Consultar
+            </a>
+            <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
+              Agenda online
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal card-base" style="transition-delay:.15s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:18px">Sesión individual</div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:24px;margin:0 0 14px;letter-spacing:-0.02em">Sesión de Psicología Deportiva</h3>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-60)">45–55 min</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-60)">Online / Presencial</span>
+        </div>
+        <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.55;color:var(--ink-60);margin:0 0 14px">Sesión focalizada en una necesidad específica. Ideal como intervención puntual o complemento a un proceso continuo.</p>
+        <ul style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.65;color:var(--ink-60);margin:0 0 20px;padding-left:16px">
+          <li>Manejo emocional y regulación</li>
+          <li>Concentración y motivación</li>
+          <li>Preparación para competencia</li>
+        </ul>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:18px;border-top:1px solid rgba(26,24,35,.07)">
+          <span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:var(--blue-dark)">$30.000</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20una%20Sesi%C3%B3n%20Individual%20de%20Psicolog%C3%ADa%20Deportiva." target="_blank" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;background:#25d366;color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.337 22l1.535-5.537A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.962 9.962 0 01-5.33-1.54L2 22l3.337.002z"/></svg>
+              Consultar
+            </a>
+            <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
+              Agenda online
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programas de acompañamiento -->
+<section id="programas" style="padding:72px 48px;background:var(--pink-50);position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="180" height="180" style="bottom:0;left:0;opacity:.1" aria-hidden>
+    <path d="M 0,12 A 88,88 0 0,1 88,100 L 48,100 A 52,52 0 0,0 0,48 Z" fill="var(--ink)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px">/ compromiso mensual</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.5vw,52px);line-height:.95;letter-spacing:-0.03em;margin:0 0 10px;transition-delay:.06s">Programas de acompañamiento.</h2>
+    <p class="reveal" style="font-family:'Jost',sans-serif;font-size:15px;color:var(--ink-60);margin:0 0 36px;max-width:580px;transition-delay:.1s">Para deportistas que quieren un proceso continuo, estructurado y con seguimiento real.</p>
+    <div class="program-grid">
+      <div class="reveal card-base" style="transition-delay:.08s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);margin-bottom:14px">Plan base</div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:22px;margin:0 0 8px;letter-spacing:-0.02em">Evaluación y Bases</h3>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:28px;color:var(--blue-dark);margin-bottom:18px">$115.000<span style="font-size:14px;font-family:'Jost',sans-serif;font-weight:400;color:var(--ink-60)">/mes</span></div>
+        <ul style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.65;color:var(--ink-60);margin:0 0 24px;padding-left:16px">
+          <li>Hasta 4 sesiones mensuales</li>
+          <li>Definición de objetivos psicológicos</li>
+          <li>Ejercicios entre sesiones</li>
+          <li>Revisión y ajuste de progreso</li>
+        </ul>
+        <a href="https://wa.me/56998928078?text=Hola%2C%20me%20interesa%20el%20programa%20Evaluaci%C3%B3n%20y%20Bases%20de%20Psicolog%C3%ADa%20Deportiva." target="_blank" style="display:block;text-align:center;padding:12px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Solicitar información</a>
+      </div>
+      <div class="reveal card-base" style="transition-delay:.12s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);margin-bottom:14px">Plan desarrollo</div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:22px;margin:0 0 8px;letter-spacing:-0.02em">Desarrollo Psicológico</h3>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:28px;color:var(--blue-dark);margin-bottom:18px">$210.000<span style="font-size:14px;font-family:'Jost',sans-serif;font-weight:400;color:var(--ink-60)">/mes</span></div>
+        <ul style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.65;color:var(--ink-60);margin:0 0 24px;padding-left:16px">
+          <li>Hasta 8 sesiones mensuales</li>
+          <li>Plan progresivo por etapa competitiva</li>
+          <li>Seguimiento entre sesiones</li>
+          <li>1 observación mensual</li>
+        </ul>
+        <a href="https://wa.me/56998928078?text=Hola%2C%20me%20interesa%20el%20programa%20Desarrollo%20Psicol%C3%B3gico%20en%20Moment." target="_blank" style="display:block;text-align:center;padding:12px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Solicitar información</a>
+      </div>
+      <div class="reveal card-base program-highlight" style="transition-delay:.16s;border:none">
+        <div style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--blue);color:#fff;padding:4px 10px;border-radius:6px;margin-bottom:14px">Más completo</div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:22px;margin:0 0 8px;letter-spacing:-0.02em">Intervención en Competencia</h3>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:28px;color:var(--blue);margin-bottom:18px">$300.000<span style="font-size:14px;font-family:'Jost',sans-serif;font-weight:400;color:rgba(255,255,255,.55)">/mes</span></div>
+        <ul style="font-family:'Jost',sans-serif;font-size:13px;line-height:1.65;color:rgba(255,255,255,.7);margin:0 0 24px;padding-left:16px">
+          <li>Hasta 12 sesiones mensuales</li>
+          <li>Rutinas precompetitivas</li>
+          <li>Control de presión y decisiones</li>
+          <li>1 a 2 observaciones mensuales</li>
+          <li>Ajuste continuo de estrategias</li>
+        </ul>
+        <a href="https://wa.me/56998928078?text=Hola%2C%20me%20interesa%20el%20programa%20Intervenci%C3%B3n%20en%20Competencia." target="_blank" style="display:block;text-align:center;padding:12px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:13px">Solicitar información</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA + Agendamiento -->
+<section id="agendar" style="padding:80px 48px;background:var(--ink);color:#fff;position:relative;overflow:hidden">
+  <svg class="qc" viewBox="0 0 100 100" width="240" height="240" style="bottom:0;right:0;opacity:.08" aria-hidden>
+    <path d="M 100,12 A 88,88 0 0,0 12,100 L 48,100 A 52,52 0 0,1 100,48 Z" fill="var(--blue)"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px">/ siguiente paso</div>
+    <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(30px,5vw,60px);line-height:.92;letter-spacing:-0.04em;margin:0 0 40px;transition-delay:.06s">El rendimiento mental también se entrena.</h2>
+    <div class="reveal" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;display:flex;gap:20px;align-items:center;margin-bottom:36px;max-width:680px;transition-delay:.1s">
+      <img src="assets/team-jairo.jpg" alt="Jairo Pinto" style="width:68px;height:68px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--blue)"/>
+      <div>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff;margin-bottom:3px">Jairo Pinto</div>
+        <div style="font-family:'Jost',sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:6px">Psicólogo Deportivo — Moment</div>
+        <div style="font-family:'Jost',sans-serif;font-size:13px;color:rgba(255,255,255,.4)">Programas personalizados para el rendimiento psicológico.</div>
+      </div>
+    </div>
+    <div class="reveal" style="display:flex;gap:14px;flex-wrap:wrap;transition-delay:.14s">
+      <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style="display:flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;background:var(--blue);color:#fff;font-family:'Jost',sans-serif;font-weight:600;font-size:15px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
+        Agenda online
+      </a>
+      <a href="https://wa.me/56998928078?text=Hola%2C%20me%20interesa%20la%20Psicolog%C3%ADa%20Deportiva%20en%20Moment.%20%C2%BFCu%C3%A1les%20son%20los%20pr%C3%B3ximos%20horarios?" target="_blank" style="display:flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);font-family:'Jost',sans-serif;font-weight:600;font-size:15px;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.7)'" onmouseout="this.style.borderColor='rgba(255,255,255,.3)'">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.337 22l1.535-5.537A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.962 9.962 0 01-5.33-1.54L2 22l3.337.002z"/></svg>
+        Consultar por WhatsApp
+      </a>
+    </div>
+    <p class="reveal" style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.28);transition-delay:.18s">Atención online y presencial · Isla de Maipo</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div style="max-width:1320px;margin:0 auto">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <img src="assets/logo-isotype-pink.png" style="width:38px;height:38px"/>
+          <span style="font-family:'Playfair Display',serif;font-weight:500;font-style:italic;letter-spacing:-0.02em;color:var(--pink);font-size:28px">moment</span>
+        </div>
+        <p style="font-size:13px;line-height:1.6;color:rgba(230,198,199,.65);max-width:280px">Centro deportivo integral en Isla de Maipo. Kinesiología, psicología, entrenamiento, recovery y escalada.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Psicología</h4>
+        <ul>
+          <li><a href="#servicios">Evaluación Inicial</a></li>
+          <li><a href="#servicios">Sesión Individual</a></li>
+          <li><a href="#programas">Programas</a></li>
+          <li><a href="#agendar">Agendar con Jairo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Moment</h4>
+        <ul>
+          <li><a href="index.html#servicios">Todos los servicios</a></li>
+          <li><a href="index.html#equipo">El equipo</a></li>
+          <li><a href="index.html#tienda">Tienda</a></li>
+          <li><a href="Quienes Somos.html">Quiénes somos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li>Calle Cortes 41, Isla de Maipo</li>
+          <li>+56 9 9892 8078</li>
+          <li>momentcentrodeportivo@gmail.com</li>
+          <li>@moment.csd</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Moment · Centro Deportivo</span>
+      <span>Última actualización (17 mayo 2026)</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating contacts -->
+<div class="float-bar">
+  <a href="https://www.instagram.com/moment.csd/" target="_blank" class="ig-float" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c0-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 2.1c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zm0 6.9a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zm5.3-7.1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+  </a>
+  <a href="https://wa.me/56998928078" target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 32 32" width="24" height="24" fill="#fff"><path d="M16 3C9 3 3 9 3 16c0 2.5.7 4.9 2 7L3 29l6.3-2c2 1 4.3 1.6 6.7 1.6 7 0 13-6 13-13S23 3 16 3zm7.5 18.3c-.3.9-1.6 1.7-2.3 1.8-.6.1-1.3.1-2.1-.1-.5-.2-1.1-.3-1.9-.7-3.3-1.4-5.5-4.7-5.7-5-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.6-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.5 1.4 1.3 2.7 1.7 3 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.3.1.2.1.9-.2 1.8z"/></svg>
+  </a>
+</div>
+
+<script>
+// Problem modals
+const PROBLEMS = [
+  { icon:'🎯', title:'Me desconcentro en competencia', desc:'La concentración es una habilidad entrenable. Trabajamos técnicas de foco atencional, manejo de distractores y rutinas de activación pre-competencia.' },
+  { icon:'⚡', title:'Entreno bien pero compito mal', desc:'La diferencia entre entrenamiento y competencia tiene explicación psicológica. Trabajamos la transferencia, el manejo de presión real y la confianza en condiciones adversas.' },
+  { icon:'💪', title:'Pierdo confianza rápidamente', desc:'La autoconfianza se construye. Trabajamos el diálogo interno, los registros de logros y la preparación mental para mantener la confianza ante la adversidad.' },
+  { icon:'🧊', title:'Me bloqueo bajo presión', desc:'El bloqueo tiene raíces psicológicas concretas. Trabajamos la regulación emocional, las rutinas precompetitivas y las estrategias de afrontamiento.' },
+  { icon:'😰', title:'Tengo ansiedad competitiva', desc:'Cuando la ansiedad se vuelve paralizante, necesita trabajo específico. Combinamos técnicas cognitivas, de respiración y de exposición gradual.' },
+  { icon:'🔥', title:'No logro mantener la motivación', desc:'La motivación depende de cómo están estructurados tus objetivos y creencias. Trabajamos la orientación motivacional y la adherencia a largo plazo.' },
+  { icon:'🩹', title:'Dificultades para volver tras lesión', desc:'El retorno es tanto físico como psicológico. Trabajamos el miedo a la recaída, la incertidumbre y la reconexión con la identidad deportiva.' },
+  { icon:'🤝', title:'El equipo no tiene cohesión', desc:'La cohesión grupal se trabaja activamente. Abordamos comunicación, roles, confianza entre compañeros y cultura deportiva del equipo.' },
+  { icon:'👨‍👩‍👧', title:'Mi hijo/a sufre mucho al competir', desc:'Ayudamos a padres a entender la ansiedad competitiva de sus hijos y a acompañarles sin aumentar la presión. También trabajamos directamente con los jóvenes si corresponde.' }
+];
+const WA = '56998928078';
+function openProblemModal(i){
+  const p = PROBLEMS[i];
+  document.getElementById('pm-icon').textContent = p.icon;
+  document.getElementById('pm-title').textContent = p.title;
+  document.getElementById('pm-desc').textContent = p.desc;
+  document.getElementById('pm-wa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent('Hola, quiero saber más sobre: ' + p.title);
+  document.getElementById('problem-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeProblemModal(){
+  document.getElementById('problem-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeProblemModal(); });
+
+// Hamburger
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobile-menu');
+if(ham && mob){
+  ham.addEventListener('click', () => mob.classList.toggle('open'));
+  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+}
+
+// "Más" dropdown
+const moreBtn = document.getElementById('more-btn');
+const moreDrop = document.getElementById('more-dropdown');
+const moreChevron = document.getElementById('more-chevron');
+if(moreBtn && moreDrop){
+  moreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = moreDrop.classList.toggle('open');
+    moreChevron.style.transform = open ? 'rotate(180deg)' : 'none';
+  });
+  document.addEventListener('click', () => {
+    moreDrop.classList.remove('open');
+    moreChevron.style.transform = 'none';
+  });
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Fitness grid responsive
+const fg = document.querySelector('.fitness-grid');
+if(fg){
+  const fix = () => { fg.style.gridTemplateColumns = window.innerWidth <= 768 ? '1fr' : '1fr 1fr'; };
+  fix(); window.addEventListener('resize', fix);
+}
+</script>
+</body>
+</html>

@@ -187,6 +187,12 @@ function ShopSection({ theme }) {
   const [slideDirs, setSlideDirs] = React.useState({});
   const [activeCategory, setActiveCategory] = React.useState(SHOP_CATEGORY_ORDER[0]);
 
+  // Precargar imágenes de la categoría activa para que el slide no lag en el primer swipe
+  React.useEffect(() => {
+    SHOP.filter(p => p.category === activeCategory)
+      .forEach(p => (p.images || []).forEach(src => { new Image().src = src; }));
+  }, [activeCategory]);
+
   const move = (shopIdx, dir) => {
     const len = SHOP[shopIdx].images.length;
     setSlideDirs(prev => ({ ...prev, [shopIdx]: dir > 0 ? 'right' : 'left' }));

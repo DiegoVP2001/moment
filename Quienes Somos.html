@@ -30,7 +30,7 @@
   .reveal-right.visible{opacity:1;transform:translateX(0)}
 
   /* Nav */
-  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(250,245,242,.88);border-bottom:1px solid rgba(26,24,35,.08)}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(250,245,242,.88);border-bottom:1px solid rgba(26,24,35,.08);transition:transform .3s cubic-bezier(.4,0,.2,1)}
   .nav-inner{padding:12px 36px;display:flex;align-items:center;gap:24}
   .nav-logo{display:flex;align-items:center;gap:10;flex-shrink:0}
   .nav-logo img{width:32px;height:32px;object-fit:contain}
@@ -128,7 +128,7 @@
 <section style="padding:100px 48px 80px;position:relative;overflow:hidden;background:var(--cream)">
   <!-- QC top-right, teal, strategic -->
   <svg class="qc" viewBox="0 0 100 100" width="220" height="220" style="top:0;right:0;opacity:.18" aria-hidden>
-    <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--teal)"/>
+    <path d="M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z" fill="var(--teal)"/>
   </svg>
   <div style="max-width:1000px;margin:0 auto;position:relative;z-index:1">
     <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:18px">/ quiénes somos</div>
@@ -136,7 +136,7 @@
       Un espacio donde el <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:var(--teal-dark)">bienestar</span> es integral.
     </h1>
     <p class="reveal" style="font-family:'Jost',sans-serif;font-size:20px;line-height:1.55;color:var(--ink-60);margin-top:28px;max-width:680px;transition-delay:.1s">
-      Moment nació en 2019 en Isla de Maipo con una idea simple: que un deportista no debería tener que ir a cinco lugares distintos para cuidar su cuerpo, su mente y su rendimiento. Reunimos kinesiología, psicología, entrenamiento y escalada bajo un mismo techo.
+      Moment nació en Isla de Maipo con una idea simple: que un deportista no debería tener que ir a cinco lugares distintos para cuidar su cuerpo, su mente y su rendimiento. Reunimos kinesiología, psicología, entrenamiento y escalada bajo un mismo techo.
     </p>
   </div>
 </section>
@@ -148,7 +148,7 @@
 
       <div class="card">
         <svg class="qc" viewBox="0 0 100 100" width="70" height="70" style="top:0;right:0;opacity:.2" aria-hidden>
-          <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--teal)"/>
+          <path d="M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z" fill="var(--teal)"/>
         </svg>
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:16px">Misión</div>
         <h2 style="font-family:'Archivo Black',sans-serif;font-size:26px;margin:0 0 14px;letter-spacing:-0.01em">Cuidar al deportista completo</h2>
@@ -159,7 +159,7 @@
 
       <div class="card" style="transition-delay:.08s">
         <svg class="qc" viewBox="0 0 100 100" width="70" height="70" style="top:0;right:0;opacity:.2" aria-hidden>
-          <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--pink)"/>
+          <path d="M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z" fill="var(--pink)"/>
         </svg>
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:16px">Visión</div>
         <h2 style="font-family:'Archivo Black',sans-serif;font-size:26px;margin:0 0 14px;letter-spacing:-0.01em">Referente regional en bienestar deportivo</h2>
@@ -170,7 +170,7 @@
 
       <div class="card" style="transition-delay:.16s">
         <svg class="qc" viewBox="0 0 100 100" width="70" height="70" style="top:0;right:0;opacity:.12" aria-hidden>
-          <path d="M 100,88 A 88,88 0 0,0 12,0 L 48,0 A 52,52 0 0,1 100,52 Z" fill="var(--ink)"/>
+          <path d="M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z" fill="var(--ink)"/>
         </svg>
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:16px">Valores</div>
         <h2 style="font-family:'Archivo Black',sans-serif;font-size:26px;margin:0 0 14px;letter-spacing:-0.01em">Lo que nos mueve</h2>
@@ -194,44 +194,33 @@
   </svg>
 
   <div style="max-width:1000px;margin:0 auto;position:relative;z-index:1">
-    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:18px">/ nuestra historia</div>
     <h2 class="reveal" style="font-family:'Archivo Black',sans-serif;font-size:clamp(36px,5vw,60px);line-height:.95;letter-spacing:-0.03em;margin:0 0 16px;color:#fff">De una idea a un centro real.</h2>
     <p class="reveal" style="font-family:'Jost',sans-serif;font-size:17px;line-height:1.6;color:rgba(230,198,199,.7);margin:0 0 64px;max-width:640px;transition-delay:.05s">
-      Moment comenzó como un proyecto entre profesionales del deporte que veían un problema claro: los deportistas tenían que ir a un kinesiólogo por un lado, a un psicólogo por otro, a un gimnasio por otro. Nadie conectaba las piezas.
+      Moment nació con una convicción: que kinesiología, psicología, entrenamiento y escalada deberían compartir el mismo techo. No como servicios separados, sino como un sistema que trabaja en conjunto por el bienestar de cada persona.
     </p>
 
     <div class="historia-grid reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:72px;transition-delay:.1s">
       <!-- Columna izquierda: contexto -->
       <div style="font-family:'Jost',sans-serif;font-size:16px;line-height:1.65;color:rgba(230,198,199,.75)">
         <p style="margin:0 0 20px">
-          En 2019 abrimos las puertas en Calle Cortes 41, Isla de Maipo. Empezamos con kinesiología y un muro de escalada. Hoy tenemos cuatro áreas integradas, un equipo multidisciplinario y una comunidad que crece cada semana.
+          En 2026 abrimos las puertas en Calle Cortes 41, Isla de Maipo, con las cuatro áreas ya funcionando desde el primer día. Kinesiología, psicología deportiva, entrenamiento & recovery y escalada — todo integrado, todo en un mismo espacio.
         </p>
         <p style="margin:0">
-          Cada área que sumamos al centro respondió a una necesidad real de nuestros usuarios. No crecemos por crecer — crecemos porque la comunidad nos lo pide.
+          Somos un equipo multidisciplinario que cree que el rendimiento y el bienestar no se dividen: se construyen juntos.
         </p>
       </div>
 
       <!-- Columna derecha: timeline visual -->
       <div class="timeline">
         <div class="timeline-item reveal" style="transition-delay:.12s">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--teal);margin-bottom:6px">2019</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--teal);margin-bottom:6px">2026</div>
           <h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;color:#fff;letter-spacing:-0.01em">Apertura del centro</h3>
-          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Kinesiología deportiva y muro de escalada indoor. La base de todo.</p>
+          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Cuatro áreas integradas desde el día uno: kinesiología, psicología, entrenamiento y escalada indoor.</p>
         </div>
-        <div class="timeline-item reveal" style="transition-delay:.18s">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--teal);margin-bottom:6px">2021</div>
-          <h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;color:#fff;letter-spacing:-0.01em">Psicología deportiva</h3>
-          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Se suma Jairo Pinto y el área de rendimiento mental. El deporte también es cabeza.</p>
-        </div>
-        <div class="timeline-item reveal" style="transition-delay:.24s">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--teal);margin-bottom:6px">2023</div>
-          <h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;color:#fff;letter-spacing:-0.01em">Entrenamiento y recovery</h3>
-          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Planes personalizados, masoterapia, compresión y evaluación VO2.</p>
-        </div>
-        <div class="timeline-item highlight reveal" style="transition-delay:.3s">
+        <div class="timeline-item highlight reveal" style="transition-delay:.2s">
           <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--pink);margin-bottom:6px">Hoy</div>
-          <h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;color:#fff;letter-spacing:-0.01em">Cuatro áreas integradas</h3>
-          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Tienda, eventos, comunidad activa y un equipo que no para de crecer.</p>
+          <h3 style="font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 8px;color:#fff;letter-spacing:-0.01em">Comunidad en crecimiento</h3>
+          <p style="font-family:'Jost',sans-serif;font-size:14px;line-height:1.5;color:rgba(230,198,199,.65);margin:0">Tienda, eventos, atenciones semanales y una comunidad activa que ya es parte del centro.</p>
         </div>
       </div>
     </div>
@@ -251,9 +240,9 @@
         <div style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60);line-height:1.4">Kinesiología, psicología, entrenamiento y escalada bajo un mismo techo.</div>
       </div>
       <div style="text-align:center;padding:36px 24px;background:#fff;border-radius:24px;border:1px solid rgba(26,24,35,.06)">
-        <div style="font-family:'Archivo Black',sans-serif;font-size:56px;line-height:1;letter-spacing:-0.04em;color:var(--pink-300)">+5</div>
-        <div style="font-family:'Jost',sans-serif;font-size:16px;font-weight:600;margin:8px 0 6px">Años de experiencia</div>
-        <div style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60);line-height:1.4">Desde 2019 acompañando a deportistas y personas activas de la zona.</div>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:56px;line-height:1;letter-spacing:-0.04em;color:var(--pink-300)">2026</div>
+        <div style="font-family:'Jost',sans-serif;font-size:16px;font-weight:600;margin:8px 0 6px">Año de apertura</div>
+        <div style="font-family:'Jost',sans-serif;font-size:14px;color:var(--ink-60);line-height:1.4">Abrimos con las 4 áreas integradas desde el primer día, en Isla de Maipo.</div>
       </div>
       <div style="text-align:center;padding:36px 24px;background:#fff;border-radius:24px;border:1px solid rgba(26,24,35,.06)">
         <div style="font-family:'Archivo Black',sans-serif;font-size:56px;line-height:1;letter-spacing:-0.04em;color:var(--teal)">100%</div>
@@ -310,11 +299,15 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Moment · Centro Deportivo</span>
+      <span>© 2026 Moment · Centro Deportivo<span id="deploy-date"></span></span>
       <span>Isla de Maipo · Chile</span>
     </div>
   </div>
 </footer>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba"
+  style="opacity:0;pointer-events:none;transition:opacity .25s;position:fixed;bottom:165px;right:24px;z-index:90;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--pink);border:1px solid rgba(230,198,199,.25);box-shadow:0 4px 20px rgba(0,0,0,.3);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">↑</button>
 
 <!-- Floating contacts -->
 <div class="float-bar">
@@ -351,6 +344,28 @@ document.querySelectorAll('.card').forEach((el, i) => {
     if(e.isIntersecting){ el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }
   }, { threshold: 0.12 }).observe(el);
 });
+
+// Nav scroll-inteligente + back to top
+const navEl = document.querySelector('nav');
+const bttEl = document.getElementById('btt');
+let lastScroll = window.scrollY;
+window.addEventListener('scroll', () => {
+  const curr = window.scrollY;
+  if(navEl) navEl.style.transform = (curr > lastScroll && curr > 80) ? 'translateY(-110%)' : 'translateY(0)';
+  if(bttEl){ bttEl.style.opacity = curr > 150 ? '1' : '0'; bttEl.style.pointerEvents = curr > 150 ? 'auto' : 'none'; }
+  lastScroll = curr;
+}, { passive: true });
+
+// Footer: deploy date desde GitHub API
+fetch('https://api.github.com/repos/DiegoVP2001/moment/commits/production')
+  .then(r => r.json())
+  .then(d => {
+    const dt = new Date(d.commit.author.date);
+    const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const el = document.getElementById('deploy-date');
+    if(el) el.textContent = ` · Última actualización (${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()})`;
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>

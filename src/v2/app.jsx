@@ -40,6 +40,7 @@ function App() {
       <ContactSection theme={theme}/>
       <Footer theme={theme}/>
       <FloatingContacts/>
+      <BackToTop/>
     </>
   );
 }

@@ -292,7 +292,7 @@ function JobsSection({ theme }) {
           <Reveal><div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 24, letterSpacing: '-0.01em', marginBottom: 8 }}>Vacantes disponibles</div></Reveal>
           {JOBS.map((j, i) => (
             <Reveal key={i} delay={i * .1}>
-              <div style={{
+              <div className="job-card-grid" style={{
                 background: isDark ? '#0f0d17' : '#fff', borderRadius: 20, padding: 28,
                 border: `1px solid ${isDark ? 'rgba(255,255,255,.06)' : 'rgba(26,24,35,.06)'}`,
                 display: 'grid', gridTemplateColumns: '1fr auto', gap: 24, alignItems: 'center'
@@ -304,9 +304,9 @@ function JobsSection({ theme }) {
                   </div>
                   <p style={{ fontSize: 14, lineHeight: 1.5, color: isDark ? 'rgba(255,255,255,.6)' : 'var(--ink-60)', margin: 0, fontFamily: "'Jost',sans-serif" }}>{j.desc}</p>
                 </div>
-                <a href={`mailto:${BRAND.email}?subject=Postulación: ${j.title}&body=Adjunto mi CV para el cargo de ${j.title}.`} style={{
+                <a className="job-card-cta" href={`mailto:${BRAND.email}?subject=Postulación: ${j.title}&body=Adjunto mi CV para el cargo de ${j.title}.`} style={{
                   padding: '14px 24px', borderRadius: 999, background: 'var(--ink)', color: 'var(--pink)',
-                  fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap'
+                  fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', textAlign: 'center'
                 }}>Enviar CV →</a>
               </div>
             </Reveal>
@@ -327,6 +327,7 @@ function JobsSection({ theme }) {
           </div>
         </Reveal>
       </div>
+      <style>{`@media(max-width:768px){.job-card-grid{grid-template-columns:1fr!important}.job-card-cta{width:100%}}`}</style>
     </section>
   );
 }

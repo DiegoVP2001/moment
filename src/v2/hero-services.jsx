@@ -106,12 +106,16 @@ function ServiceDetail({ service: s, theme, onClose }) {
   return (
     <>
       <div style={{ marginTop: 32, background: cardBg, borderRadius: 28, border: `1px solid ${border}`, overflow: 'hidden', animation: 'fadeSlideUp .4s ease' }}>
-        <style>{`@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
-        <div style={{ padding: '40px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
+        <style>{`
+          @keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+          @media(max-width:768px){.service-detail-grid{grid-template-columns:1fr!important;padding:24px 20px 0!important;gap:28px!important}}
+          @media(max-width:480px){.service-price-row{grid-template-columns:24px 1fr auto!important;gap:8px!important;padding:14px 14px!important}.service-price-wa{display:none}}
+        `}</style>
+        <div className="service-detail-grid" style={{ padding: '40px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, opacity: .5 }}>{s.n}</div>
-              <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 36, margin: 0, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.title}</h3>
+              <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(26px,6vw,36px)', margin: 0, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.title}</h3>
             </div>
             <p style={{ fontSize: 16, lineHeight: 1.55, color: isDark ? 'rgba(255,255,255,.7)' : 'var(--ink-60)', fontFamily: "'Jost',sans-serif", margin: '0 0 20px' }}>{s.desc}</p>
             <div style={{ background: isDark ? 'rgba(255,255,255,.04)' : 'var(--pink-50)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
@@ -142,7 +146,7 @@ function ServiceDetail({ service: s, theme, onClose }) {
             <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Valores principales</div>
             <div style={{ borderRadius: 16, border: `1px solid ${border}`, overflow: 'hidden' }}>
               {s.items.map((it, i) => (
-                <a key={i} href={waLink(s.title, it.k)} target="_blank" style={{
+                <a key={i} href={waLink(s.title, it.k)} target="_blank" className="service-price-row" style={{
                   display: 'grid', gridTemplateColumns: '28px 1fr auto auto', gap: 14, alignItems: 'center',
                   padding: '16px 18px',
                   borderBottom: i < s.items.length - 1 ? `1px solid ${border}` : 'none',
@@ -154,7 +158,7 @@ function ServiceDetail({ service: s, theme, onClose }) {
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, opacity: .4 }}>{String(i + 1).padStart(2, '0')}</span>
                   <span style={{ fontFamily: "'Jost',sans-serif", fontSize: 14 }}>{it.k}</span>
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, fontSize: 15, color: ac }}>{it.v}</span>
-                  <span style={{ fontSize: 10, fontFamily: "'Jost',sans-serif", color: '#25d366', fontWeight: 600 }}>WA →</span>
+                  <span className="service-price-wa" style={{ fontSize: 10, fontFamily: "'Jost',sans-serif", color: '#25d366', fontWeight: 600 }}>WA →</span>
                 </a>
               ))}
             </div>

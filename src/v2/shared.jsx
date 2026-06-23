@@ -341,6 +341,8 @@ div::-webkit-scrollbar{display:none}
   .hamburger{display:flex!important}
   .nav-cta{display:none!important}
   .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
+  section{padding-top:80px!important;padding-bottom:64px!important}
+  section:not(#instalaciones):not(#calendario){padding-left:20px!important;padding-right:20px!important}
 }
 @media(max-width:480px){
   .footer-grid{grid-template-columns:1fr!important}

@@ -28,7 +28,7 @@ src/
     shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard…)
     hero-services.jsx   ← Hero video + ServicesSection + ServiceDetail + ServiceFullModal
     sections-mid.jsx    ← CarouselSection + TeamSection + EnMediosSection
-    sections-bottom.jsx ← CalendarSection + ShopSection + JobsSection + ContactSection
+    sections-bottom.jsx ← ShopSection + JobsSection + ContactSection
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
 ```
@@ -52,10 +52,6 @@ Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.
 - Pausa en hover, drag manual en ambas direcciones
 - Click en card → lightbox (imagen full o video con sonido)
 
-### CalendarSection
-Actualmente usa datos estáticos desde `EVENTS` en `data.jsx`.
-**Pendiente**: conectar a Google Calendar vía Google Apps Script JSON endpoint.
-
 ---
 
 ## Datos editables (data.jsx)
@@ -66,7 +62,6 @@ Todo el contenido editable está en `src/v2/data.jsx`:
 - `CAROUSEL_ITEMS` — imágenes y videos del carrusel
 - `MEDIOS` — videos de YouTube (youtubeId)
 - `SHOP` — 9 productos de la tienda (con campos `category` e `images[]`)
-- `EVENTS` — eventos próximos (hasta conectar Google Calendar)
 - `JOBS` — vacantes
 
 ### Estructura SHOP
@@ -84,17 +79,13 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - No usa React — es HTML/CSS/JS puro (igual que `Quienes Somos.html`)
 - Hero con `assets/hero-psicologia.jpg` (imagen royalty-free, Unsplash)
 - Acento de color: `--blue: #6aa6da`
-- Agendamiento: botón directo a TUU Reserva de Jairo (`espacio.haulmer.com/...`)
+- Agendamiento: botón "Agenda tu hora" → WhatsApp (la integración con TUU Reserva se eliminó en junio 2026)
 - WhatsApp interceptor idéntico al de las otras páginas
 - El Nav del `index.html` (React) enlaza a esta página desde el dropdown "Más"
 - En `ServiceFullModal` para psicología (`s.id === 'psico'`), hay un botón extra que abre esta subpágina
 
-### TUU Reserva — integración de agendamiento
-- URL pública de reservas de Moment: `https://tuu.cl/centrodeportivomoment`
-- Todos los servicios del main (`ServiceDetail`) tienen doble CTA: **"Consultar vía WhatsApp"** + **"Agenda online"** (→ tuu.cl/centrodeportivomoment). Jairo y Kary configuran qué servicios aparecen ahí según su disponibilidad.
-- Haulmer/TUU **no tiene API pública para reservas**. La única integración posible es link directo.
-- TUU **sí tiene "Link de Pago"** para cobros online (adelanto) — se crea manualmente en `espacio.haulmer.com`
-- La API de developers.tuu.cl es solo para pagos POS (requiere Device físico) y facturación electrónica
+### Agendamiento — solo WhatsApp
+- Se eliminó la integración con TUU Reserva (`tuu.cl/centrodeportivomoment`) en junio 2026. Todos los CTA de agendamiento (main y subpágina de psicología) usan únicamente links `wa.me` con texto **"Agenda tu hora"**.
 
 ### WA links — sin interceptor
 - El interceptor de WhatsApp fue eliminado de `index.html`, `Quienes Somos.html` y `psicologia-deportiva.html` en mayo 2026.
@@ -141,13 +132,11 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ### Alta prioridad
 - [ ] **Deploy en HostGator** — merge `main` → `production`, luego subir a `public_html/` o esperar FTP workflow. El cliente debe aprobar el sitio antes.
-- [ ] **Calendario dinámico** — pendiente de definir con el cliente: Google Sheets CSV (sin API key, admin edita spreadsheet) vs Google Calendar (más intuitivo, requiere Apps Script). Actualmente usa `EVENTS` estático en `data.jsx`.
 
 ### Media prioridad
 - [ ] **Formulario de contacto funcional** — actualmente muestra `alert()`. Conectar a Formspree o EmailJS.
 - [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
 - [ ] **Imágenes carrusel** — actualmente repite 2 imágenes + 1 video (6 items = 3 únicos duplicados).
-- [ ] **Kary TUU** — Karinna aún no configura su agenda en TUU Reserva.
 
 ### Baja prioridad
 - [ ] **Migrar a Vite** — eliminar Babel en browser (mejora ~2s de carga inicial)

@@ -85,11 +85,11 @@ styles — there's no separate global stylesheet besides `SHARED_CSS` in
 Breakpoints: **768px** (tablet/mobile) and **480px** (small mobile).
 `!important` is required because it overrides an inline style.
 
-`#instalaciones` (carousel) and `#calendario` sections intentionally use
+`#instalaciones` (carousel) section intentionally uses
 `padding: '... 0 ...'` on the `<section>` itself (horizontal padding is
-0) so their horizontal-scroll strips can bleed full-width — any global
-mobile padding rule in `SHARED_CSS` must exclude them
-(`section:not(#instalaciones):not(#calendario)`).
+0) so its horizontal-scroll strip can bleed full-width — any global
+mobile padding rule in `SHARED_CSS` must exclude it
+(`section:not(#instalaciones)`).
 
 ## Gotcha: Windows CRLF false positives
 

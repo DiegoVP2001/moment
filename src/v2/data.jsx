@@ -369,19 +369,12 @@ const SHOP = [
   },
 ];
 
-const EVENTS = [
-  { date: '2026-05-10', time: '10:00', title: 'Competencia Boulder Open', desc: 'Categorías principiante a avanzado. Inscripciones abiertas.', tag: 'Escalada' },
-  { date: '2026-05-17', time: '09:00', title: 'Taller de Respiración & Foco', desc: 'Con Jairo Pinto. Técnicas de concentración para competidores.', tag: 'Psicología' },
-  { date: '2026-05-24', time: '11:00', title: 'Clase Abierta de Escalada', desc: 'Sesión gratuita para nuevos. Incluye arnés e instructor.', tag: 'Escalada' },
-  { date: '2026-06-07', time: '08:00', title: 'Evaluación VO2 Grupal', desc: 'Cupos limitados. Mide tu capacidad aeróbica.', tag: 'Entreno' },
-];
-
 const JOBS = [
   { title: 'Kinesiólogo/a Deportivo/a', type: 'Part-time', desc: 'Buscamos kinesiólogo/a con experiencia en rehabilitación deportiva para atender pacientes y diseñar planes de recuperación.' },
   { title: 'Profesor/a de Calistenia', type: 'Part-time', desc: 'Instructor/a de calistenia con conocimiento en progresiones de fuerza y planificación de clases grupales.' },
 ];
 
 Object.assign(window, {
-  BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, EVENTS, JOBS,
+  BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink
 });

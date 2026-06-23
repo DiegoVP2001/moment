@@ -129,16 +129,7 @@ function ServiceDetail({ service: s, theme, onClose }) {
                 fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
               }}>
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-                Consultar vía WhatsApp
-              </a>
-              <a href="https://tuu.cl/centrodeportivomoment" target="_blank" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '14px 26px', borderRadius: 999,
-                background: 'var(--blue)', color: '#fff',
-                fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
-              }}>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 4H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg>
-                Agenda online
+                Agenda tu hora
               </a>
             </div>
           </div>

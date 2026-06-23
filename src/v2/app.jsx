@@ -34,7 +34,6 @@ function App() {
       <CarouselSection theme={theme}/>
       <TeamSection theme={theme}/>
       <EnMediosSection theme={theme}/>
-      <CalendarSection theme={theme}/>
       <ShopSection theme={theme}/>
       <JobsSection theme={theme}/>
       <ContactSection theme={theme}/>

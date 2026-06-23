@@ -120,7 +120,6 @@ function Nav({ theme = 'light' }) {
   const moreLinks = [
     ['Quienes Somos.html', 'Quiénes somos'],
     ['psicologia-deportiva.html', 'Psicología Deportiva'],
-    ['#calendario', 'Eventos'],
     ['#trabaja', 'Trabaja con nosotros'],
   ];
   const allLinks = [...mainLinks, ...moreLinks];
@@ -273,7 +272,6 @@ function Footer({ theme = 'light' }) {
             <h4 style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 }}>Centro</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
               <li><a href="Quienes Somos.html">Quiénes somos</a></li>
-              <li><a href="#calendario">Eventos</a></li>
               <li><a href="#tienda">Tienda</a></li>
               <li><a href="#trabaja">Trabaja con nosotros</a></li>
             </ul>
@@ -342,7 +340,7 @@ div::-webkit-scrollbar{display:none}
   .nav-cta{display:none!important}
   .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
   section{padding-top:80px!important;padding-bottom:64px!important}
-  section:not(#instalaciones):not(#calendario){padding-left:20px!important;padding-right:20px!important}
+  section:not(#instalaciones){padding-left:20px!important;padding-right:20px!important}
 }
 @media(max-width:480px){
   .footer-grid{grid-template-columns:1fr!important}

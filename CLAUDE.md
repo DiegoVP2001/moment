@@ -123,17 +123,31 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ---
 
+## UX global implementada (mayo 2026)
+
+### Nav scroll-inteligente
+- `shared.jsx` Nav: `useEffect` con scroll listener — `transform: translateY(-110%)` al bajar, `translateY(0)` al subir. Threshold: 80px.
+- `Quienes Somos.html` y `psicologia-deportiva.html`: mismo comportamiento en JS vanilla. El `<nav>` tiene `transition: transform .3s` en CSS.
+
+### BackToTop (↑)
+- `shared.jsx`: componente `BackToTop` exportado vía `window`. Usa `opacity` (no `display`) para mostrar/ocultar con fade. `bottom: 165px, right: 24px, z-index: 90`.
+- `app.jsx`: `<BackToTop/>` montado al final del render (después de FloatingContacts).
+- HTML pages: botón con `opacity:0` inicial, JS cambia `opacity` y `pointerEvents`.
+- **CRÍTICO**: z-index del BTT debe ser > 80 (float-bar). Position `bottom: 165px` para quedar sobre el float-bar (WA + IG ocupan ~22px–138px). No usar `bottom < 145px` o queda tapado.
+
+---
+
 ## Tareas pendientes
 
 ### Alta prioridad
-- [ ] **Deploy en HostGator** — subir archivos a `public_html/`, verificar dominio
-- [ ] **Google Calendar → Eventos** — Google Apps Script como JSON endpoint; la página hace `fetch()` al cargar y reemplaza `EVENTS` estáticos
+- [ ] **Deploy en HostGator** — merge `main` → `production`, luego subir a `public_html/` o esperar FTP workflow. El cliente debe aprobar el sitio antes.
+- [ ] **Calendario dinámico** — pendiente de definir con el cliente: Google Sheets CSV (sin API key, admin edita spreadsheet) vs Google Calendar (más intuitivo, requiere Apps Script). Actualmente usa `EVENTS` estático en `data.jsx`.
 
 ### Media prioridad
-- [ ] **Fotos del equipo actualizadas** — Miguel solo tiene nombre, sin apellido en `data.jsx`
-- [ ] **Formulario de contacto funcional** — conectar a email real (Formspree, EmailJS o similar) en lugar del `alert()` actual
-- [ ] **Fotos de productos en Tienda** — actualmente muestra placeholder "▢ Foto producto"
-- [ ] **Imágenes carrusel adicionales** — actualmente repite 2 imágenes + 1 video (6 items = 3 únicos duplicados)
+- [ ] **Formulario de contacto funcional** — actualmente muestra `alert()`. Conectar a Formspree o EmailJS.
+- [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
+- [ ] **Imágenes carrusel** — actualmente repite 2 imágenes + 1 video (6 items = 3 únicos duplicados).
+- [ ] **Kary TUU** — Karinna aún no configura su agenda en TUU Reserva.
 
 ### Baja prioridad
 - [ ] **Migrar a Vite** — eliminar Babel en browser (mejora ~2s de carga inicial)
@@ -147,3 +161,4 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - Para editar: abrir archivos `src/v2/*.jsx` directamente; cambios en `data.jsx` actualizan todo el contenido
 - **Hash scroll**: app.jsx tiene retry loop para manejar el caso de llegar desde Quienes Somos con `index.html#seccion`
 - **Cache-busting**: los íconos de contacto tienen `?v=2` — al reemplazar assets futuros, incrementar el número
+- **QC SVG paths correctos** (corregidos mayo 2026): top-right = `M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z`. El error original tenía los sweep-flags invertidos.

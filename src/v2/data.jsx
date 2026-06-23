@@ -9,7 +9,7 @@ function waGeneralLink(serviceTitle) {
   return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Me gustaría más información sobre ${serviceTitle}.`)}`;
 }
 function waBuyLink(productName) {
-  return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Me interesa comprar ${productName}. ¿Tienen disponibilidad?`)}`;
+  return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Consulto disponibilidad de ${productName} en Moment. ¿Tienen stock?`)}`;
 }
 
 const BRAND = {
@@ -80,35 +80,37 @@ const SERVICES = [
     id: 'psico', n: '02',
     title: 'Psicología Deportiva',
     icon: 'assets/icon-psychology.png',
-    desc: 'Programas personalizados para rendimiento mental, manejo de presión y foco competitivo.',
-    cta: 'Definir objetivos',
+    desc: 'Trabajo psicológico especializado para deportistas, entrenadores, padres y equipos. Concentración, ansiedad, motivación, autoconfianza y 9 áreas de intervención aplicadas al deporte.',
+    cta: 'Consultar disponibilidad',
     accent: 'blue',
-    detail: 'Manejo de ansiedad competitiva, concentración, visualización y recuperación post-competencia. Sesiones presenciales u online, con programas de acompañamiento mensual adaptados a cada etapa.',
+    detail: 'Intervención en 9 áreas: concentración, motivación, autoconfianza, fortaleza mental, activación, visualización, autohabla, retorno tras lesión y cohesión de equipo. Sesiones individuales y 3 programas de acompañamiento mensual (desde $115.000). Atención a deportistas, entrenadores, padres y organizaciones.',
     items: [
-      { k: 'Evaluación inicial',  v: '$15.000' },
-      { k: 'Sesión individual',   v: '$30.000' },
-      { k: 'Plan Base (4 ses/mes)', v: '$110.500' },
-      { k: 'Plan Alto Rendimiento', v: '$270.000' },
+      { k: 'Evaluación inicial',         v: '$25.000' },
+      { k: 'Sesión individual',          v: '$30.000' },
+      { k: 'Evaluación y Bases',         v: '$115.000/mes' },
+      { k: 'Intervención en Competencia', v: '$300.000/mes' },
     ],
     fullDetail: {
       notes: [
         'Modalidad presencial u online.',
-        'Duración por sesión: 60 minutos.',
+        'Duración por sesión: 45 a 55 minutos.',
+        'Los valores con precios visibles corresponden exclusivamente a deportistas individuales.',
+        'Para entrenadores, equipos y organizaciones: consultar directamente.',
       ],
       sections: [
         {
           title: 'Evaluación y sesiones individuales',
           items: [
-            { k: 'Evaluación inicial', v: '$15.000', note: 'Incluye definición de objetivos, recomendaciones e informe (opcional)' },
+            { k: 'Evaluación inicial', v: '$25.000', note: 'Análisis del contexto deportivo, objetivos y recomendaciones iniciales' },
             { k: 'Sesión individual', v: '$30.000', note: 'Intervención focalizada en necesidad específica' },
           ],
         },
         {
           title: 'Programas de acompañamiento mensual',
           items: [
-            { k: 'Plan Base', v: '$110.500/mes', note: 'Hasta 4 sesiones — trabajo personalizado y orientación continua' },
-            { k: 'Plan Pro', v: '$200.000/mes', note: 'Hasta 8 sesiones — seguimiento entre sesiones, ajuste mensual de objetivos' },
-            { k: 'Plan Alto Rendimiento', v: '$270.000/mes', note: 'Hasta 12 sesiones — observación en entrenamientos/competencia, retroalimentación integrada' },
+            { k: 'Evaluación y Bases', v: '$115.000/mes', note: 'Hasta 4 sesiones — inicio del proceso psicológico deportivo' },
+            { k: 'Desarrollo Psicológico', v: '$210.000/mes', note: 'Hasta 8 sesiones — plan progresivo + seguimiento entre sesiones' },
+            { k: 'Intervención en Competencia', v: '$300.000/mes', note: 'Hasta 12 sesiones — rutinas precompetitivas, control de presión y observaciones' },
           ],
         },
       ],
@@ -314,19 +316,57 @@ const MEDIOS = [
 ];
 
 const SHOP = [
-  { name: 'Bolsa de Magnesio', price: '$20.000', desc: 'Bolsa premium para escalada y calistenia.' },
-  { name: 'Magnesio suelto', price: '$2.000', desc: 'Magnesio en polvo para grip máximo.' },
-  { name: 'Grips', price: '$6.000', desc: 'Protección para manos en barra y muro.' },
-  { name: 'Creatina 300g', price: '$15.000', desc: 'Monohidrato de creatina para rendimiento.' },
-  { name: 'Botella deportiva 750ml', price: '$8.000', desc: 'Botella reutilizable con logo Moment.' },
-  { name: 'Toalla microfibra', price: '$5.000', desc: 'Secado rápido, compacta y liviana.' },
-];
-
-const EVENTS = [
-  { date: '2026-05-10', time: '10:00', title: 'Competencia Boulder Open', desc: 'Categorías principiante a avanzado. Inscripciones abiertas.', tag: 'Escalada' },
-  { date: '2026-05-17', time: '09:00', title: 'Taller de Respiración & Foco', desc: 'Con Jairo Pinto. Técnicas de concentración para competidores.', tag: 'Psicología' },
-  { date: '2026-05-24', time: '11:00', title: 'Clase Abierta de Escalada', desc: 'Sesión gratuita para nuevos. Incluye arnés e instructor.', tag: 'Escalada' },
-  { date: '2026-06-07', time: '08:00', title: 'Evaluación VO2 Grupal', desc: 'Cupos limitados. Mide tu capacidad aeróbica.', tag: 'Entreno' },
+  // --- Magnesios ---
+  {
+    name: 'Magnesio Titan Mix 60g', price: '$4.990', category: 'Magnesios',
+    desc: 'Combinación 50/50 de polvo y roca para agarre óptimo. Sin químicos agresivos, libre de GMO.',
+    images: ['assets/productos/magnesio-mix-1.jpg','assets/productos/magnesio-mix-2.jpg','assets/productos/magnesio-mix-3.jpg'],
+  },
+  {
+    name: 'Magnesio Líquido 60ml', price: '$4.990', category: 'Magnesios',
+    desc: 'Seca el sudor al instante y mejora la adherencia. Con alcohol etanol 70% que desinfecta en cada uso.',
+    images: ['assets/productos/magnesio-liq60-1.jpg','assets/productos/magnesio-liq60-2.jpg','assets/productos/magnesio-liq60-3.jpg'],
+  },
+  {
+    name: 'Magnesio Líquido 250ml', price: '$9.990', category: 'Magnesios',
+    desc: 'Mismo rendimiento profesional en formato grande. Mayor duración por uso, ideal para entrenamientos frecuentes.',
+    images: ['assets/productos/magnesio-liq250-1.jpg','assets/productos/magnesio-liq250-2.jpg','assets/productos/magnesio-liq250-3.jpg'],
+  },
+  // --- Magnesera ---
+  {
+    name: 'Bolsa de Magnesio Sloth', price: '$25.000', category: 'Magnesera',
+    desc: 'Abertura amplia estructurada, cierre con cordón y bolsillo con cremallera. Soporte para cepillo y forro de vellón interior.',
+    images: ['assets/productos/bolsa-sloth-1.webp','assets/productos/bolsa-sloth-2.webp','assets/productos/bolsa-sloth-3.webp','assets/productos/bolsa-sloth-4.webp'],
+  },
+  // --- Cepillos ---
+  {
+    name: 'Cepillo Regleta Escalada', price: '$9.990', category: 'Cepillos',
+    desc: 'Cerdas resistentes para limpiar agarres y presas. Devuelve la fricción natural de la roca o presa y mejora la adherencia.',
+    images: ['assets/productos/cepillo-1.jpg','assets/productos/cepillo-2.jpg','assets/productos/cepillo-3.jpg'],
+  },
+  // --- Tape deportivo ---
+  {
+    name: 'Tape Prostick 3,8cm × 10mts', price: '$7.990', category: 'Tape deportivo',
+    desc: 'MicroPlaster + MaxGlue: transpirable, resistente al sudor y se rasga a mano. Para dedos, articulaciones y zonas de carga.',
+    images: ['assets/productos/tape-1.jpg','assets/productos/tape-2.jpg','assets/productos/tape-3.jpg'],
+  },
+  // --- Entrenamiento ---
+  {
+    name: 'Pinza Power Gripper 4Grip', price: '$44.990', category: 'Entrenamiento',
+    desc: '4 tipos de agarre para entrenar fuerza de pinza. Ideal para escalada y rehabilitación de dedos. Carga máx. 100 kg.',
+    images: ['assets/productos/grip-1.jpg','assets/productos/grip-2.jpg','assets/productos/grip-3.jpg'],
+  },
+  {
+    name: 'Tabla Titan Grip 4Grip', price: '$24.990', category: 'Entrenamiento',
+    desc: 'Regleta multitoma para tracción y suspensiones. 3 profundidades: 25mm, 15mm y 10mm. Resistencia 150 kg.',
+    images: ['assets/productos/tabla-1.jpg','assets/productos/tabla-2.jpg','assets/productos/tabla-3.jpg'],
+  },
+  // --- Recuperación ---
+  {
+    name: 'Anillos Masajeadores', price: '$1.990', category: 'Recuperación',
+    desc: 'Estimulan la circulación y alivian tensión en dedos. Usados en acupuntura y rehabilitación de manos.',
+    images: ['assets/productos/anillos-1.jpg','assets/productos/anillos-2.jpg','assets/productos/anillos-3.jpg'],
+  },
 ];
 
 const JOBS = [
@@ -335,6 +375,6 @@ const JOBS = [
 ];
 
 Object.assign(window, {
-  BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, EVENTS, JOBS,
+  BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink
 });

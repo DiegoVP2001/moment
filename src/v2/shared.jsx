@@ -89,7 +89,7 @@ function LinkedInIcon({ size = 20, color = '#fff' }) {
   );
 }
 
-// --- Nav V2 (with mobile hamburger) ---
+// --- Nav V2 (with mobile hamburger + scroll-hide) ---
 function Nav({ theme = 'light' }) {
   const isDark = theme === 'dark';
   const bg = isDark ? 'rgba(15,13,23,.7)' : 'rgba(250,245,242,.8)';
@@ -97,6 +97,17 @@ function Nav({ theme = 'light' }) {
   const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.08)';
   const [moreOpen, setMoreOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const curr = window.scrollY;
+      setHidden(curr > last && curr > 80);
+      last = curr;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const mainLinks = [
     ['#servicios', 'Servicios'],
@@ -108,7 +119,7 @@ function Nav({ theme = 'light' }) {
   ];
   const moreLinks = [
     ['Quienes Somos.html', 'Quiénes somos'],
-    ['#calendario', 'Eventos'],
+    ['psicologia-deportiva.html', 'Psicología Deportiva'],
     ['#trabaja', 'Trabaja con nosotros'],
   ];
   const allLinks = [...mainLinks, ...moreLinks];
@@ -118,6 +129,8 @@ function Nav({ theme = 'light' }) {
       position: 'sticky', top: 0, zIndex: 50,
       backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
       background: bg, color: fg, borderBottom: `1px solid ${border}`,
+      transform: hidden ? 'translateY(-110%)' : 'translateY(0)',
+      transition: 'transform .3s cubic-bezier(.4,0,.2,1)',
     }}>
       <div style={{ padding: '12px 36px', display: 'flex', alignItems: 'center', gap: 24 }}>
         <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
@@ -176,6 +189,34 @@ function Nav({ theme = 'light' }) {
   );
 }
 
+// --- Back to top button ---
+function BackToTop() {
+  const [show, setShow] = useState(window.scrollY > 150);
+  useEffect(() => {
+    const h = () => setShow(window.scrollY > 150);
+    window.addEventListener('scroll', h, { passive: true });
+    return () => window.removeEventListener('scroll', h);
+  }, []);
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      aria-label="Volver al inicio"
+      style={{
+        position: 'fixed', bottom: 165, right: 24, zIndex: 90,
+        width: 44, height: 44, borderRadius: '50%',
+        background: 'var(--ink)', color: 'var(--pink)',
+        border: '1px solid rgba(230,198,199,.25)',
+        boxShadow: '0 4px 20px rgba(0,0,0,.3)',
+        fontSize: 18, cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        opacity: show ? 1 : 0,
+        pointerEvents: show ? 'auto' : 'none',
+        transition: 'opacity .25s',
+      }}
+    >↑</button>
+  );
+}
+
 // --- Floating contacts ---
 function FloatingContacts() {
   return (
@@ -231,7 +272,6 @@ function Footer({ theme = 'light' }) {
             <h4 style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 }}>Centro</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
               <li><a href="Quienes Somos.html">Quiénes somos</a></li>
-              <li><a href="#calendario">Eventos</a></li>
               <li><a href="#tienda">Tienda</a></li>
               <li><a href="#trabaja">Trabaja con nosotros</a></li>
             </ul>
@@ -299,6 +339,8 @@ div::-webkit-scrollbar{display:none}
   .hamburger{display:flex!important}
   .nav-cta{display:none!important}
   .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
+  section{padding-top:80px!important;padding-bottom:64px!important}
+  section:not(#instalaciones){padding-left:20px!important;padding-right:20px!important}
 }
 @media(max-width:480px){
   .footer-grid{grid-template-columns:1fr!important}
@@ -307,5 +349,5 @@ div::-webkit-scrollbar{display:none}
 
 Object.assign(window, {
   useScrollReveal, Reveal, QC, MomentWord, SectionHeader, LinkedInIcon,
-  Nav, FloatingContacts, Footer, YouTubeModal, InfoCard, SHARED_CSS
+  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, SHARED_CSS
 });

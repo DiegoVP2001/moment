@@ -133,7 +133,7 @@ function CarouselCard({ item, onClick }) {
   return (
     <div
       onClick={onClick}
-      style={{ width: 380, height: 280, borderRadius: 20, overflow: 'hidden', flexShrink: 0, position: 'relative', background: 'var(--ink)', cursor: 'pointer' }}
+      style={{ width: 'clamp(260px,80vw,380px)', height: 280, borderRadius: 20, overflow: 'hidden', flexShrink: 0, position: 'relative', background: 'var(--ink)', cursor: 'pointer' }}
     >
       {item.type === 'image' ? (
         <img src={item.src} draggable={false} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none', transition: 'transform .3s' }}
@@ -165,7 +165,7 @@ function TeamSection({ theme }) {
     <section id="equipo" style={{ padding: '120px 48px', background: isDark ? '#1a1627' : 'var(--ink)', color: 'var(--pink-100)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
         <Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 72, alignItems: 'end' }}>
+          <div className="team-header-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 72, alignItems: 'end' }}>
             <div>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 18 }}>/ equipo</div>
               <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(40px,5vw,72px)', lineHeight: .95, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>
@@ -230,7 +230,7 @@ function TeamSection({ theme }) {
         </Reveal>
 
         <style>{`
-          @media(max-width:768px){.team-grid{grid-template-columns:1fr!important}}
+          @media(max-width:768px){.team-grid{grid-template-columns:1fr!important}.team-header-grid{grid-template-columns:1fr!important;gap:24px!important}}
         `}</style>
       </div>
     </section>
@@ -248,7 +248,7 @@ function EnMediosSection({ theme }) {
         <Reveal>
           <SectionHeader eyebrow="/ en medios" title="Lo que dicen de nosotros." theme={theme}/>
         </Reveal>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 28, marginTop: 56 }}>
+        <div className="medios-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 28, marginTop: 56 }}>
           {MEDIOS.map((m, i) => (
             <Reveal key={i} delay={i * .1}>
               <div
@@ -279,6 +279,7 @@ function EnMediosSection({ theme }) {
           ))}
         </div>
       </div>
+      <style>{`@media(max-width:768px){.medios-grid{grid-template-columns:1fr!important}}`}</style>
       <YouTubeModal videoId={openVideo} onClose={() => setOpenVideo(null)}/>
     </section>
   );

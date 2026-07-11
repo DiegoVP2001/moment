@@ -22,9 +22,10 @@ const BRAND = {
   instagram: 'moment.csd',
   instagramUrl: 'https://www.instagram.com/moment.csd/',
   hours: [
-    ['Lun — Vie', '07:00 — 22:00'],
-    ['Sábado',    '09:00 — 18:00'],
-    ['Domingo',   '10:00 — 14:00'],
+    ['Lun — Vie', '07:30 — 22:00'],
+    ['Sábado',    '09:00 — 22:30'],
+    ['Domingo',   '09:00 — 16:00'],
+    ['Festivos',  '09:00 — 19:00'],
   ]
 };
 
@@ -123,7 +124,7 @@ const SERVICES = [
     desc: 'Planes de entrenamiento personalizado, recovery con masoterapia y compresión, y evaluación cardiovascular.',
     cta: 'Ver planes',
     accent: 'ink',
-    detail: 'Trabajamos desde las ciencias del deporte integrando entrenamiento y kinesiología. Planes individuales, grupales y familiares. Recovery con masoterapia, electropunción y compresión neumática.',
+    detail: 'Trabajamos desde las ciencias del deporte integrando entrenamiento y kinesiología. Planes individuales y grupales. Recovery con masoterapia, electropunción y compresión neumática.',
     items: [
       { k: 'Plan Inicio (1 ses + 1 acceso/sem)', v: '$89.000/mes' },
       { k: 'Plan 2 (2 ses + 2 accesos/sem)',     v: '$200.000/mes' },
@@ -144,14 +145,6 @@ const SERVICES = [
             { k: 'Plan 1', v: '$120.000/mes', note: '1 sesión + 2 accesos al gym por semana' },
             { k: 'Plan 2', v: '$200.000/mes', note: '2 sesiones + 2 accesos al gym por semana' },
             { k: 'Plan 3', v: '$280.000/mes', note: '3 sesiones + acceso libre al gym + 1 pase acompañante' },
-          ],
-        },
-        {
-          title: 'Plan familiar / Dúo',
-          subtitle: '2 a 4 integrantes · 16 sesiones mensuales + acceso libre al gym',
-          items: [
-            { k: '2 personas', v: '$360.000/mes' },
-            { k: 'Integrante adicional', v: '+$120.000 c/u' },
           ],
         },
         {
@@ -191,7 +184,7 @@ const SERVICES = [
     desc: 'Pases, clases y bautizos de escalada en nuestro muro indoor con rutas renovadas periódicamente.',
     cta: 'Reservar sesión',
     accent: 'pink',
-    detail: 'Muro indoor con rutas para todos los niveles. Horario bajo (09:00–16:00) y horario alto. Planes mensuales, semestrales y anuales con acceso libre. Clases con instructor, arnés incluido.',
+    detail: 'Muro indoor con rutas para todos los niveles. Horario bajo (L–V 7:30–16:00) y horario alto (16:00–22:00; fines de semana y festivos). Planes mensuales y semestrales con acceso libre. Clases con instructor, arnés incluido.',
     items: [
       { k: 'Pase diario adulto',  v: 'desde $5.000' },
       { k: 'Plan mensual adulto', v: 'desde $45.000' },
@@ -201,7 +194,8 @@ const SERVICES = [
     fullDetail: {
       notes: [
         'Arriendo de zapatillas de escalada: $2.000.',
-        'Horario bajo: 09:00–16:00 · Horario alto: resto del día.',
+        'Horario bajo: lunes a viernes 7:30–16:00 · Horario alto: lunes a viernes 16:00–22:00; sábados, domingos y festivos todo el día.',
+        'Horarios boulder: Sáb 9:00–22:30 · Dom 9:00–16:00 · Festivos 9:00–19:00.',
         'Comunidad Moment: misma tarifa que menores de 22 en planes.',
       ],
       sections: [
@@ -210,8 +204,8 @@ const SERVICES = [
           items: [
             { k: 'Adulto — horario bajo', v: '$5.000' },
             { k: 'Adulto — horario alto', v: '$6.500' },
-            { k: 'Menor de 22 — horario bajo', v: '$3.500' },
-            { k: 'Menor de 22 — horario alto', v: '$4.500' },
+            { k: 'Menor de 22 / Comunidad Moment — horario bajo', v: '$3.500' },
+            { k: 'Menor de 22 / Comunidad Moment — horario alto', v: '$4.500' },
           ],
         },
         {
@@ -228,9 +222,9 @@ const SERVICES = [
             { k: 'Adulto — horario bajo', v: '$45.000' },
             { k: 'Adulto — horario alto', v: '$65.000' },
             { k: 'Adulto — full', v: '$80.000' },
-            { k: 'Menor / Comunidad Moment — horario bajo', v: '$31.500' },
+            { k: 'Menor / Comunidad Moment — horario bajo', v: '$33.500' },
             { k: 'Menor / Comunidad Moment — horario alto', v: '$49.000' },
-            { k: 'Menor / Comunidad Moment — full', v: '$56.000' },
+            { k: 'Menor / Comunidad Moment — full', v: '$60.000' },
           ],
         },
         {
@@ -239,32 +233,32 @@ const SERVICES = [
             { k: 'Adulto — horario bajo', v: '$230.000' },
             { k: 'Adulto — horario alto', v: '$360.000' },
             { k: 'Adulto — full', v: '$400.000' },
-            { k: 'Menor / Comunidad Moment — horario bajo', v: '$161.000' },
-            { k: 'Menor / Comunidad Moment — full', v: '$280.000' },
-          ],
-        },
-        {
-          title: 'Plan anual',
-          items: [
-            { k: 'Adulto — horario bajo', v: '$380.000' },
-            { k: 'Adulto — horario alto', v: '$600.000' },
-            { k: 'Adulto — full', v: '$700.000' },
-            { k: 'Menor / Comunidad Moment — horario bajo', v: '$266.000' },
-            { k: 'Menor / Comunidad Moment — full', v: '$490.000' },
+            { k: 'Menor / Comunidad Moment — horario bajo', v: '$184.000' },
+            { k: 'Menor / Comunidad Moment — horario alto', v: '$288.000' },
+            { k: 'Menor / Comunidad Moment — full', v: '$320.000' },
           ],
         },
         {
           title: 'Clases mensuales',
-          subtitle: 'Con instructor — arnés incluido',
+          subtitle: 'Con instructor — arnés incluido · 10% dcto. menores de 22 y Comunidad Moment · 10% extra al 2º hermano/a (NNA)',
           items: [
-            { k: '1 clase/semana — adulto (bajo/alto)', v: '$35.000 / $40.000' },
-            { k: '2 clases/semana — adulto (bajo/alto)', v: '$55.000 / $65.000' },
-            { k: '3 clases/semana — adulto (bajo/alto)', v: '$70.000 / $80.000' },
-            { k: '4 clases/semana — adulto (bajo/alto)', v: '$95.000 / $112.000' },
+            { k: '4 clases al mes', v: '$49.900' },
+            { k: '8 clases al mes', v: '$79.900' },
+            { k: '12 clases al mes', v: '$109.000' },
             { k: 'Clase prueba', v: '$12.000' },
             { k: 'Bautizo de escalada (adulto)', v: '$15.000' },
-            { k: 'Niños/as y adolescentes — 1 clase/sem', v: '$15.000' },
-            { k: 'Niños/as y adolescentes — 2 clases/sem', v: '$50.000' },
+          ],
+        },
+        {
+          title: 'Horarios de clases',
+          subtitle: 'Actualizados junio 2026',
+          items: [
+            { k: 'Adultos — Lu · Mi · Vi', v: '7:30–9:30 · 9:30–11:30 · 19:45–21:45' },
+            { k: 'Adultos — Ma · Ju', v: '17:30–19:30' },
+            { k: 'Niños/as 5–8 años — Ma · Ju', v: '17:00–18:30' },
+            { k: 'Niños/as 5–8 años — Sáb', v: '10:00–11:30' },
+            { k: 'Niños/as 9–14 años — Lu · Mi · Vi', v: '17:00–18:30' },
+            { k: 'Niños/as 9–14 años — Sáb', v: '11:45–13:15' },
           ],
         },
       ],

@@ -95,22 +95,17 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ## Contacto / WhatsApp
 - Número: `56998928078`
-- Modal interceptor en `index.html`, `Quienes Somos.html` y `psicologia-deportiva.html`: captura clicks en links de WhatsApp y ofrece abrir en app, web, o copiar
+- Links `wa.me` nativos con `target="_blank"` (el modal interceptor se eliminó en mayo 2026 — ver sección "WA links — sin interceptor")
 
 ---
 
-## Deploy actual
-- **GitHub Pages**: https://diegovp2001.github.io/moment/ (branch `main`, root)
+## Deploy
+- **Producción**: https://centrodeportivomoment.cl — HostGator Chile (cuenta momentcentrodeportivo@gmail.com)
+- **Pipeline**: push a la rama `production` dispara `.github/workflows/deploy.yml` (FTP-Deploy-Action, secretos `FTP_HOST/FTP_USER/FTP_PASS` ya configurados; solo sube diffs, ~20s). Excluye `.git*`, `CLAUDE.md`, `.cpanel.yml` y `Moment Landing.html`.
+- **Flujo**: commit en `main` → push → merge `main` en `production` → push. GitHub Pages (https://diegovp2001.github.io/moment/) se actualiza solo con el push a `main`.
 - **Repo**: https://github.com/DiegoVP2001/moment
-
----
-
-## Deploy pendiente — HostGator
-- **Hosting**: HostGator Chile (cuenta momentcentrodeportivo@gmail.com)
-- **Método recomendado**: subir archivos vía cPanel File Manager o FTP a `public_html/`
-- **Dominio**: pendiente de confirmar nombre de dominio activo en la cuenta
-- El sitio es 100% estático — no requiere PHP, Node.js ni base de datos
-- Los `.mp4` son pesados (~varios MB); si el plan tiene límite de almacenamiento, considerar servir desde CDN externo
+- **Verificar el deploy**: pedir `https://centrodeportivomoment.cl/src/v2/data.jsx?nocache=<n>` — ojo: el servidor entrega `.jsx` como binario, en PowerShell `$r.Content` es `byte[]`; decodificar con `[Text.Encoding]::UTF8.GetString()` antes de buscar texto.
+- Sitio 100% estático — no requiere PHP, Node.js ni base de datos.
 
 ---
 
@@ -130,10 +125,8 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ## Tareas pendientes
 
-### Alta prioridad
-- [ ] **Deploy en HostGator** — merge `main` → `production`, luego subir a `public_html/` o esperar FTP workflow. El cliente debe aprobar el sitio antes.
-
 ### Media prioridad
+- [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Avisar al cliente si los comparte impresos o por WhatsApp.
 - [ ] **Formulario de contacto funcional** — actualmente muestra `alert()`. Conectar a Formspree o EmailJS.
 - [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
 - [ ] **Imágenes carrusel** — actualmente repite 2 imágenes + 1 video (6 items = 3 únicos duplicados).

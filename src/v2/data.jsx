@@ -507,7 +507,7 @@ const SHOP = [
 
 const JOBS = [
   { title: 'Kinesiólogo/a Deportivo/a', type: 'Part-time', desc: 'Buscamos kinesiólogo/a con experiencia en rehabilitación deportiva para atender pacientes y diseñar planes de recuperación.' },
-  { title: 'Profesor/a de Calistenia', type: 'Part-time', desc: 'Instructor/a de calistenia con conocimiento en progresiones de fuerza y planificación de clases grupales.' },
+  { title: 'Profesor/a de Escalada', type: 'Part-time', desc: 'Instructor/a de escalada con conocimiento en progresiones y planificación de clases grupales.' },
 ];
 
 Object.assign(window, {

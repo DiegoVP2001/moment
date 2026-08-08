@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Quiénes Somos — Moment</title>
-<meta name="description" content="Conoce al equipo de Moment Centro Deportivo en Isla de Maipo: misión, visión, historia y las personas detrás del centro de escalada."/>
+<title>Contacto — Moment</title>
+<meta name="description" content="Contacto de Moment Centro Deportivo en Isla de Maipo: correo, teléfono, dirección y vacantes disponibles para trabajar con nosotros."/>
 <link rel="icon" href="assets/logo-isotype-dark.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,8 +33,7 @@
 
 <script type="text/babel" src="src/v2/data.jsx"></script>
 <script type="text/babel" src="src/v2/shared.jsx"></script>
-<script type="text/babel" src="src/v2/sections-mid.jsx"></script>
-<script type="text/babel" src="src/v2/sections-nosotros.jsx"></script>
+<script type="text/babel" src="src/v2/sections-bottom.jsx"></script>
 
 <script type="text/babel">
 function App() {
@@ -45,7 +44,7 @@ function App() {
     document.head.appendChild(el);
     return () => el.remove();
   }, []);
-  // psicologia-deportiva.html enlaza a Quienes Somos.html#equipo / #medios — React monta
+  // Footer de todas las páginas del sitio enlaza a contacto.html#trabaja — React monta
   // async, así que el navegador pierde el scroll-to-anchor nativo (mismo caso que
   // app.jsx en index.html).
   useEffect(() => {
@@ -65,11 +64,8 @@ function App() {
   return (
     <>
       <Nav/>
-      <TeamSection/>
-      <EnMediosSection/>
-      <MissionValuesSection/>
-      <HistorySection/>
-      <WhyMomentSection/>
+      <ContactBannerSection/>
+      <JobsSection/>
       <Footer/>
       <FloatingContacts/>
       <BackToTop/>

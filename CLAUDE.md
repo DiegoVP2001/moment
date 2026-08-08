@@ -1,8 +1,10 @@
 # Moment Centro Deportivo — Landing Page
 
 ## Resumen
-Landing page estática para **Moment Centro Deportivo** (Isla de Maipo, Chile).
-Servicios: Kinesiología, Psicología Deportiva, Entrenamiento & Recovery, Escalada.
+Sitio estático multi-página para **Moment Centro Deportivo** (Isla de Maipo, Chile),
+gimnasio de escalada. Servicio principal: escalada (muro, clases, entrenamiento
+funcional). Kinesiología, psicología y nutrición deportiva se ofrecen como
+"Especialidades Deportivas" complementarias.
 
 ---
 
@@ -19,7 +21,9 @@ Servicios: Kinesiología, Psicología Deportiva, Entrenamiento & Recovery, Escal
 
 ```
 index.html                    ← Entry point principal (GitHub Pages / HostGator)
-Quienes Somos.html            ← Página secundaria (nav + footer idénticos al landing)
+Quienes Somos.html            ← Sesión C — mini-app React (Equipo + En medios + Misión/Visión/Historia)
+tienda.html                   ← Sesión C — mini-app React (reusa ShopSection tal cual)
+contacto.html                 ← Sesión C — mini-app React (banner 3 íconos + JobsSection)
 psicologia-deportiva.html     ← Subpágina HTML/JS puro (no React), ver sección propia abajo
 clases-escalada.html          ← Sesión B — mini-app React
 entrenamiento-funcional.html  ← Sesión B — mini-app React
@@ -34,31 +38,38 @@ src/
     shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard…)
     hero-services.jsx   ← Hero video + ServicesSection (viejo grid de tabs, código muerto — ver nota abajo) + ServiceDetail + ServiceFullModal
     sections-mid.jsx    ← CarouselSection + TeamSection + EnMediosSection
-    sections-bottom.jsx ← ShopSection + JobsSection + ContactSection
+    sections-bottom.jsx ← ShopSection + JobsSection + ContactBannerSection (Sesión C) + ContactSection (código muerto)
     sections-home.jsx   ← InfoSection + LocationSection + ServicesGridSection (secciones nuevas del home: #informacion, #ubicacion, #servicios)
     sections-escalada.jsx ← Sesión B: PageHero/PriceRows/PriceSections/MuroPricingTable (compartidos) + contenido de las 5 páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología/Nutrición
+    sections-nosotros.jsx ← Sesión C: MissionValuesSection + HistorySection + WhyMomentSection (contenido migrado tal cual de la vieja Quienes Somos.html, ver PLAN-rediseno.md 7.1)
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
 ```
 
-**Rediseño 2026 (en curso, rama `rediseno-2026`)**: el sitio pasó de una sola
-página a multi-página (nav/footer con rutas completas, no anchors pelados).
-`index.html` hoy monta solo Hero → `#instalaciones` → `#informacion` →
-`#ubicacion` → `#servicios` (grid) → Footer. `TeamSection`, `EnMediosSection`,
-`ShopSection` y `JobsSection` ya no están montados en `app.jsx` — se reutilizan
-tal cual desde las páginas nuevas de la Sesión C. `ContactSection` también
-está huérfano (se reemplaza por un banner nuevo en `contacto.html`, Sesión C).
+**Rediseño 2026 (Sesiones A/B/C completas en rama `rediseno-2026`, pendiente
+aprobación final de Diego para merge a `production`)**: el sitio pasó de una
+sola página a multi-página (nav/footer con rutas completas, no anchors
+pelados). `index.html` hoy monta solo Hero → `#instalaciones` →
+`#informacion` → `#ubicacion` → `#servicios` (grid) → Footer. `TeamSection` y
+`EnMediosSection` se montan en `Quienes Somos.html`, `ShopSection` en
+`tienda.html` y `JobsSection` en `contacto.html` (todas Sesión C) — ninguna
+vive ya en `app.jsx`. El viejo `ContactSection` (formulario + mapa) fue
+reemplazado por `ContactBannerSection` (3 íconos: correo/teléfono/dirección)
+en `contacto.html` — el formulario de contacto fue **eliminado a propósito**,
+no quedó pendiente de arreglar (ver "Tareas pendientes" más abajo).
 
-**`ServicesSection`/`ServiceDetail`/`ServiceFullModal` (en `hero-services.jsx`)
-y el array `SERVICES` en `data.jsx` son código muerto** desde la Sesión B: no
-se montan en ninguna página, y sus precios quedaron obsoletos con este
-rediseño (planes personalizados de Entrenamiento, escalada con precios
-viejos). El plan original de Sesión A asumía que se reutilizarían en las
-páginas nuevas, pero no calzaba (son un selector de 4 tabs, no una página de
-un solo servicio) — las 5 páginas de la Sesión B usan datos y componentes
-propios en `sections-escalada.jsx` en su lugar. Queda pendiente decidir si se
-elimina `SERVICES`/`ServicesSection` del todo (ver
-`nuevo/sesiones/notas-sesion-b.md`).
+**`ServicesSection`/`ServiceDetail`/`ServiceFullModal` (en `hero-services.jsx`),
+el array `SERVICES` en `data.jsx`, y `ContactSection` (en `sections-bottom.jsx`)
+son código muerto**: no se montan en ninguna página, y sus precios quedaron
+obsoletos con este rediseño (planes personalizados de Entrenamiento, escalada
+con precios viejos). El plan original de Sesión A asumía que `ServicesSection`
+se reutilizaría en las páginas nuevas, pero no calzaba (es un selector de 4
+tabs, no una página de un solo servicio) — las páginas de Sesión B/C usan
+datos y componentes propios en `sections-escalada.jsx`/`sections-nosotros.jsx`/
+`sections-bottom.jsx` en su lugar. QA de Sesión C confirmó que este código
+realmente no se renderiza en ningún lado (no es un bug activo). Queda
+pendiente decidir si se elimina del todo (ver `nuevo/sesiones/notas-sesion-b.md`)
+— no se borró en Sesión C por no ser parte del alcance explícito de esa sesión.
 
 Detalle completo del plan en `nuevo/PLAN-rediseno.md` y decisiones de cada
 sesión en `nuevo/sesiones/notas-sesion-*.md`.
@@ -165,10 +176,13 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 ## Tareas pendientes
 
 ### Media prioridad
-- [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Avisar al cliente si los comparte impresos o por WhatsApp.
-- [ ] **Formulario de contacto funcional** — actualmente muestra `alert()`. Conectar a Formspree o EmailJS.
+- [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Con el rediseño 2026 el modelo de precios cambió completo, así que ahora están aún más desactualizados. Avisar al cliente si los comparte impresos o por WhatsApp.
 - [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
+- [ ] **Copy "4 áreas" desactualizado** — el Hero de `index.html` (`hero-services.jsx`) y ahora también `Quienes Somos.html` (`sections-nosotros.jsx`, Historia y "Por qué Moment") siguen describiendo "kinesiología, psicología, entrenamiento & recovery y escalada" como 4 áreas iguales. Contradice el nuevo posicionamiento 100% escalada (kinesiología/psicología/nutrición pasaron a "Especialidades Deportivas" complementarias). En Sesión C el contenido de Quienes Somos se migró literal a propósito (no se reescribió) — pendiente una decisión de Diego sobre si actualizar el copy.
+- [ ] **Flotante de WhatsApp/Instagram tapa CTAs de WhatsApp en mobile al hacer scroll** — `FloatingContacts` (`shared.jsx`, fixed, z-index 80) puede solaparse con filas de precio ("WA →"), el pill "Cómo llegar →" o el botón "Consultar" de un producto en `tienda.html`, dependiendo de dónde quede el scroll — confirmado con QA de Sesión C en 375px. Un tap en esa zona activa el flotante genérico en vez del link específico. No es nuevo de Sesión C (componente compartido, afecta cualquier página con esos elementos), pero conviene decidir un ajuste (reposicionar, reducir tamaño, o subir el z-index de los CTAs) antes de que un cliente lo reporte.
+- [ ] **Tabla de precios del Muro sin indicio de scroll en mobile** — `MuroPricingTable` (`sections-escalada.jsx`) hace scroll horizontal dentro de su propia tarjeta en vez de desbordar la página (correcto), pero en 375px solo se ven 3 de 5 columnas sin ninguna pista visual (sombra/flecha) de que "10 tickets" y "Mensualidad" están más a la derecha. Mismo patrón ya existente en las tablas de `#informacion` en `index.html`. Cosmético, no bloqueante.
 - [x] **Imágenes carrusel** — resuelto en sesión A del rediseño 2026: se agregaron 3 fotos nuevas (`img_carrusel_instalacion_muro`, `img_carrusel_comunidad_1/2`) y se sacaron los 3 duplicados. 6 items, todos únicos.
+- [x] **Formulario de contacto** — no se arregló, se **eliminó a propósito** en Sesión C del rediseño 2026 (decisión del plan, sección 7.3): `contacto.html` ya no tiene formulario ni mapa, solo banner de contacto directo + vacantes. El viejo `ContactSection` con el `alert()` quedó como código muerto sin montar.
 
 ### Baja prioridad
 - [ ] **Migrar a Vite** — eliminar Babel en browser (mejora ~2s de carga inicial)

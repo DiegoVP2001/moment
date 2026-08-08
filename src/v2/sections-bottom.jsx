@@ -235,6 +235,49 @@ function JobsSection({ theme }) {
   );
 }
 
+// --- Banner de contacto (3 íconos) — usado en contacto.html (sesión C), reemplaza el
+// formulario+mapa del viejo ContactSection de abajo (huérfano, ver repo/CLAUDE.md) ---
+function ContactBannerSection({ theme }) {
+  const isDark = theme === 'dark';
+  const cardStyle = { display: 'block', textAlign: 'center', background: '#fff', borderRadius: 24, padding: '40px 28px', border: '1px solid rgba(26,24,35,.06)', textDecoration: 'none', color: 'inherit' };
+  const labelStyle = { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 8 };
+  const valueStyle = { fontFamily: "'Jost',sans-serif", fontSize: 16, fontWeight: 600 };
+  return (
+    <section id="contacto" style={{ padding: '160px 48px 120px', background: isDark ? '#1a1627' : 'var(--pink-50)', position: 'relative', overflow: 'hidden' }}>
+      <QC position="top-right" color={isDark ? 'rgba(230,198,199,.06)' : 'var(--pink-200)'} size={180}/>
+      <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <Reveal>
+          <SectionHeader eyebrow="/ contacto" title="Hablemos." subtitle="Escríbenos por cualquiera de estos medios y te respondemos a la brevedad." align="center" theme={theme}/>
+        </Reveal>
+        <div className="contact-banner-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24, marginTop: 56 }}>
+          <Reveal delay={.08}>
+            <a href={`mailto:${BRAND.email}`} className="glow-card" style={cardStyle}>
+              <img src="assets/icon-support.png?v=2" style={{ width: 56, height: 56, objectFit: 'contain', margin: '0 auto 20px' }}/>
+              <div style={labelStyle}>Correo electrónico</div>
+              <div style={valueStyle}>{BRAND.email}</div>
+            </a>
+          </Reveal>
+          <Reveal delay={.14}>
+            <a href={`tel:+${WA_NUM}`} className="glow-card" style={cardStyle}>
+              <img src="assets/icon-phone.png?v=2" style={{ width: 56, height: 56, objectFit: 'contain', margin: '0 auto 20px' }}/>
+              <div style={labelStyle}>Teléfono</div>
+              <div style={valueStyle}>{BRAND.phone}</div>
+            </a>
+          </Reveal>
+          <Reveal delay={.2}>
+            <a href="https://maps.app.goo.gl/9SdguuCr2wLYyhTT6" target="_blank" className="glow-card" style={cardStyle}>
+              <img src="assets/icon-location.png?v=2" style={{ width: 56, height: 56, objectFit: 'contain', margin: '0 auto 20px' }}/>
+              <div style={labelStyle}>Dirección</div>
+              <div style={valueStyle}>{BRAND.address}</div>
+            </a>
+          </Reveal>
+        </div>
+      </div>
+      <style>{`@media(max-width:768px){.contact-banner-grid{grid-template-columns:1fr!important}}`}</style>
+    </section>
+  );
+}
+
 // --- Contact ---
 function ContactSection({ theme }) {
   const isDark = theme === 'dark';
@@ -281,4 +324,4 @@ function ContactSection({ theme }) {
   );
 }
 
-Object.assign(window, { ShopSection, JobsSection, ContactSection });
+Object.assign(window, { ShopSection, JobsSection, ContactBannerSection, ContactSection });

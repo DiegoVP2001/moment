@@ -18,18 +18,25 @@ Servicios: Kinesiología, Psicología Deportiva, Entrenamiento & Recovery, Escal
 ## Estructura de archivos
 
 ```
-index.html              ← Entry point principal (GitHub Pages / HostGator)
-Quienes Somos.html      ← Página secundaria (nav + footer idénticos al landing)
-Moment Landing.html     ← Versión legacy v1 (no usar)
-assets/                 ← Imágenes, íconos, videos, PDFs
+index.html                    ← Entry point principal (GitHub Pages / HostGator)
+Quienes Somos.html            ← Página secundaria (nav + footer idénticos al landing)
+psicologia-deportiva.html     ← Subpágina HTML/JS puro (no React), ver sección propia abajo
+clases-escalada.html          ← Sesión B — mini-app React
+entrenamiento-funcional.html  ← Sesión B — mini-app React
+muro-escalada.html            ← Sesión B — mini-app React
+kinesiologia.html             ← Sesión B — mini-app React (antes era tab+modal dentro de #servicios)
+nutricion.html                ← Sesión B — mini-app React, placeholder sin precios
+Moment Landing.html           ← Versión legacy v1 (no usar)
+assets/                       ← Imágenes, íconos, videos, PDFs
 src/
   v2/
     data.jsx            ← Constantes de marca, datos de servicios, precios, equipo, horarios
     shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard…)
-    hero-services.jsx   ← Hero video + ServicesSection (viejo grid de tabs, sin montar en index.html) + ServiceDetail + ServiceFullModal
+    hero-services.jsx   ← Hero video + ServicesSection (viejo grid de tabs, código muerto — ver nota abajo) + ServiceDetail + ServiceFullModal
     sections-mid.jsx    ← CarouselSection + TeamSection + EnMediosSection
     sections-bottom.jsx ← ShopSection + JobsSection + ContactSection
     sections-home.jsx   ← InfoSection + LocationSection + ServicesGridSection (secciones nuevas del home: #informacion, #ubicacion, #servicios)
+    sections-escalada.jsx ← Sesión B: PageHero/PriceRows/PriceSections/MuroPricingTable (compartidos) + contenido de las 5 páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología/Nutrición
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
 ```
@@ -37,12 +44,24 @@ src/
 **Rediseño 2026 (en curso, rama `rediseno-2026`)**: el sitio pasó de una sola
 página a multi-página (nav/footer con rutas completas, no anchors pelados).
 `index.html` hoy monta solo Hero → `#instalaciones` → `#informacion` →
-`#ubicacion` → `#servicios` (grid) → Footer — `TeamSection`, `EnMediosSection`,
-`ShopSection`, `JobsSection`, `ContactSection` y el viejo `ServicesSection` de
-tabs siguen existiendo como componentes pero ya no están montados en
-`app.jsx`; se reutilizan desde las páginas nuevas de las sesiones B/C. Detalle
-completo del plan en `nuevo/PLAN-rediseno.md` y decisiones de cada sesión en
-`nuevo/sesiones/notas-sesion-*.md`.
+`#ubicacion` → `#servicios` (grid) → Footer. `TeamSection`, `EnMediosSection`,
+`ShopSection` y `JobsSection` ya no están montados en `app.jsx` — se reutilizan
+tal cual desde las páginas nuevas de la Sesión C. `ContactSection` también
+está huérfano (se reemplaza por un banner nuevo en `contacto.html`, Sesión C).
+
+**`ServicesSection`/`ServiceDetail`/`ServiceFullModal` (en `hero-services.jsx`)
+y el array `SERVICES` en `data.jsx` son código muerto** desde la Sesión B: no
+se montan en ninguna página, y sus precios quedaron obsoletos con este
+rediseño (planes personalizados de Entrenamiento, escalada con precios
+viejos). El plan original de Sesión A asumía que se reutilizarían en las
+páginas nuevas, pero no calzaba (son un selector de 4 tabs, no una página de
+un solo servicio) — las 5 páginas de la Sesión B usan datos y componentes
+propios en `sections-escalada.jsx` en su lugar. Queda pendiente decidir si se
+elimina `SERVICES`/`ServicesSection` del todo (ver
+`nuevo/sesiones/notas-sesion-b.md`).
+
+Detalle completo del plan en `nuevo/PLAN-rediseno.md` y decisiones de cada
+sesión en `nuevo/sesiones/notas-sesion-*.md`.
 
 ---
 

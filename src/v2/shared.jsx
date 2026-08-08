@@ -395,6 +395,14 @@ div::-webkit-scrollbar{display:none}
 @media(max-width:480px){
   .footer-grid{grid-template-columns:1fr!important}
 }
+
+/* Fila de precio clickeable (link a WhatsApp con el ítem precargado) — usada en el
+   detalle de servicios del home y en las páginas nuevas de precios (sesión B/C) */
+.price-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:14px;align-items:center;padding:16px 18px;text-decoration:none;color:inherit;transition:background .15s}
+@media(max-width:480px){
+  .price-row{grid-template-columns:1fr auto!important;gap:8px!important;padding:14px 16px!important}
+  .price-row-num,.price-row-wa{display:none!important}
+}
 `;
 
 Object.assign(window, {

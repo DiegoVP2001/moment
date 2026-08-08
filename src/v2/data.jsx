@@ -90,6 +90,87 @@ const SERVICES_GRID = [
   },
 ];
 
+// Datos de precios de las páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología (sesión B del rediseño).
+// Independientes del viejo SERVICES (tabs) de abajo — ese array ya no se monta en ninguna página
+// y sus precios quedaron obsoletos con este rediseño (ver notas-sesion-b.md).
+const PAGE_CLASES_ESCALADA = {
+  title: 'Clases de Escalada',
+  items: [
+    { k: '4 clases al mes', v: '$49.990' },
+    { k: '8 clases al mes', v: '$88.990' },
+    { k: '12 clases al mes', v: '$109.000' },
+    { k: 'Clase de prueba', v: '$15.000' },
+  ],
+  benefit: 'Ser alumno o alumna de Moment da acceso a múltiples beneficios, entre ellos descuentos en mensualidades, entrenamientos funcionales y marcas asociadas.',
+};
+
+const PAGE_ENTRENAMIENTO_FUNCIONAL = {
+  title: 'Entrenamiento Funcional',
+  items: [
+    { k: '4 sesiones al mes', v: '$65.000' },
+    { k: '8 sesiones al mes', v: '$80.000' },
+    { k: '12 sesiones al mes', v: '$110.000' },
+    { k: 'Clase de prueba', v: '$20.000' },
+  ],
+};
+
+const PAGE_MURO_ESCALADA = {
+  title: 'Muro de Escalada',
+  pricing: [
+    { category: 'General', schedule: 'Bloque alto', entry: '$6.500', tickets10: '$52.000', monthly: '$65.000' },
+    { category: 'General', schedule: 'Bloque bajo', entry: '$5.000', tickets10: '$40.000', monthly: '$50.000' },
+    { category: 'Estudiante', schedule: 'Bloque alto', entry: '$5.500', tickets10: '$47.000', monthly: '$59.000' },
+    { category: 'Estudiante', schedule: 'Bloque bajo', entry: '$3.500', tickets10: '$36.000', monthly: '$45.000' },
+  ],
+  conditions: [
+    'La calidad de estudiante se acredita con certificado de alumno regular vigente.',
+    'Permanencia máxima 4 horas por ingreso diario.',
+    'Tickets y mensualidades intransferibles, con 1 mes para hacer uso.',
+    'El acceso incluye toda la instalación: zona de escalada, zona de entrenamiento y zona de cardio.',
+  ],
+};
+
+const PAGE_KINESIOLOGIA = {
+  title: 'Kinesiología Deportiva',
+  notes: [
+    'Atenciones realizadas por kinesiólogos deportivos.',
+    'Reembolsable en isapres y seguros complementarios. Se emite boleta por sesión.',
+    'Pago solo con efectivo o transferencia.',
+    'Pacientes FONASA: consultar condiciones de atención.',
+  ],
+  sections: [
+    {
+      title: 'Evaluación',
+      items: [
+        { k: 'Evaluación inicial (obligatoria)', v: '$35.000' },
+        { k: 'Reevaluación', v: '$20.000' },
+      ],
+    },
+    {
+      title: 'Sesiones',
+      items: [
+        { k: 'Sesión individual', v: '$30.000' },
+      ],
+    },
+    {
+      title: 'Paquetes de sesiones',
+      subtitle: 'Pago único — valor preferencial',
+      items: [
+        { k: 'Pack 5 sesiones', v: '$139.500', note: '7% de descuento' },
+        { k: 'Pack 8 sesiones', v: '$216.000', note: '10% de descuento' },
+        { k: 'Pack 10 sesiones', v: '$261.000', note: '13% de descuento' },
+      ],
+    },
+    {
+      title: 'Recovery',
+      subtitle: '1 hora por sesión',
+      items: [
+        { k: 'Recovery', v: '$35.000', note: 'Masoterapia, punción seca y compresión en botas' },
+      ],
+    },
+  ],
+};
+
 const SERVICES = [
   {
     id: 'kine', n: '01',
@@ -432,5 +513,6 @@ const JOBS = [
 Object.assign(window, {
   BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
+  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA,
   WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink
 });

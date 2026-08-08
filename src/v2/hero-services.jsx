@@ -36,8 +36,8 @@ function HeroVideo({ theme }) {
         </Reveal>
         <Reveal delay={.3}>
           <div style={{ display: 'flex', gap: 14, marginTop: 32, flexWrap: 'wrap' }}>
-            <a href="#servicios" style={{ padding: '16px 28px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Explorar servicios →</a>
-            <a href="#instalaciones" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: "'Jost',sans-serif", fontWeight: 500, fontSize: 14, border: '1.5px solid rgba(255,255,255,.4)', textDecoration: 'none' }}>Conocer el centro</a>
+            <a href="#servicios" className="glow-teal" style={{ padding: '16px 28px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Explorar servicios →</a>
+            <a href="#instalaciones" className="glow-outline" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: "'Jost',sans-serif", fontWeight: 500, fontSize: 14, border: '1.5px solid rgba(255,255,255,.4)', textDecoration: 'none' }}>Conocer el centro</a>
           </div>
         </Reveal>
         <div style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, opacity: .6 }}>

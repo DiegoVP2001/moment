@@ -11,6 +11,9 @@ function waGeneralLink(serviceTitle) {
 function waBuyLink(productName) {
   return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Consulto disponibilidad de ${productName} en Moment. ¿Tienen stock?`)}`;
 }
+function waReservarLink() {
+  return `https://wa.me/${WA_NUM}?text=${encodeURIComponent('¡Hola! Me gustaría más información para reservar en Moment.')}`;
+}
 
 const BRAND = {
   name: 'Moment',
@@ -28,6 +31,64 @@ const BRAND = {
     ['Festivos',  '09:00 — 19:00'],
   ]
 };
+
+// Horario de apertura + bloque alto, para la sección #informacion del home (ficha4)
+const OPENING_HOURS_FULL = [
+  ['Lunes a viernes', '07:30–22:00', '16:00–22:00'],
+  ['Sábado',          '09:00–22:30', 'Todo el día'],
+  ['Domingo',         '09:00–16:00', 'Todo el día'],
+  ['Festivos',        '09:00–19:00', 'Todo el día'],
+];
+
+// Horario de clases y entrenamientos, para la sección #informacion del home (ficha3)
+// Sin clases de sábado — no aparecen en la ficha nueva (ver notas-sesion-a.md)
+const CLASS_SCHEDULE = [
+  { time: '06:30–08:00', mon: null, tue: null, wed: 'Entrenamiento funcional', thu: null, fri: 'Entrenamiento funcional' },
+  { time: '08:00–09:30', mon: null, tue: 'Clase escalada adulto', wed: null, thu: 'Clase escalada adulto', fri: null },
+  { time: '17:30–19:30', mon: 'Clase escalada infantojuvenil', tue: null, wed: 'Clase escalada infantojuvenil', thu: null, fri: 'Clase escalada infantojuvenil' },
+  { time: '20:00–21:30', mon: 'Clase escalada adulto', tue: 'Entrenamiento funcional', wed: 'Clase escalada adulto', thu: 'Entrenamiento funcional', fri: 'Clase escalada adulto' },
+];
+
+// Grid de servicios del home (#servicios) — reemplaza el viejo grid de tabs (sección 4.4 del plan)
+const SERVICES_GRID = [
+  {
+    id: 'muro',
+    icon: 'assets/icon-climbing.png',
+    title: 'Muro de Escalada',
+    desc: 'Rutas de boulder para todos los niveles, renovadas periódicamente.',
+    href: 'muro-escalada.html',
+  },
+  {
+    id: 'entrenamiento',
+    icon: 'assets/icon-training.png',
+    title: 'Entrenamiento Funcional',
+    desc: 'Entrenamiento orientado a mejorar tu escalada, con horarios propios.',
+    href: 'entrenamiento-funcional.html',
+  },
+  {
+    id: 'training-boards',
+    icon: null,
+    title: 'Training Boards',
+    desc: '(Próximamente) Tableros de dedos para sumar fuerza y precisión a tu escalada.',
+  },
+  {
+    id: 'especialidades',
+    icon: null,
+    title: 'Especialidades Deportivas',
+    subitems: [
+      { label: 'Kinesiología', href: 'kinesiologia.html' },
+      { label: 'Psicología', href: 'psicologia-deportiva.html' },
+      { label: 'Nutrición', href: 'nutricion.html' },
+    ],
+  },
+  {
+    id: 'tienda',
+    icon: null,
+    title: 'Tienda',
+    desc: 'Todo lo que necesitas para tu próxima sesión de escalada. Revisa nuestro catálogo de productos y consulta disponibilidad en tienda.',
+    href: 'tienda.html',
+  },
+];
 
 const SERVICES = [
   {
@@ -291,9 +352,9 @@ const CAROUSEL_ITEMS = [
   { type: 'image', src: 'assets/img_carrusel_1.jpeg', label: 'Muro de escalada' },
   { type: 'image', src: 'assets/img_carrusel_2.jpeg', label: 'Inauguración Moment' },
   { type: 'video', src: 'assets/video_carrusel_1.mp4', label: 'Sesión de entrenamiento' },
-  { type: 'image', src: 'assets/img_carrusel_1.jpeg', label: 'Zona boulder' },
-  { type: 'image', src: 'assets/img_carrusel_2.jpeg', label: 'Comunidad Moment' },
-  { type: 'video', src: 'assets/video_carrusel_1.mp4', label: 'Recovery en acción' },
+  { type: 'image', src: 'assets/img_carrusel_instalacion_muro.jpeg', label: 'Instalando el muro' },
+  { type: 'image', src: 'assets/img_carrusel_comunidad_1.jpeg', label: 'Comunidad Moment' },
+  { type: 'image', src: 'assets/img_carrusel_comunidad_2.jpeg', label: 'Team Moment escalando' },
 ];
 
 const MEDIOS = [
@@ -370,5 +431,6 @@ const JOBS = [
 
 Object.assign(window, {
   BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
-  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink
+  OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
+  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink
 });

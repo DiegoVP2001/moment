@@ -41,6 +41,7 @@ function CarouselSection({ theme }) {
   const hoverRef = useRef(false);
   const dragRef = useRef({ active: false, startX: 0, startScroll: 0, moved: false });
   const rafRef = useRef(null);
+  const posRef = useRef(0);
 
   const items = [...CAROUSEL_ITEMS, ...CAROUSEL_ITEMS];
 
@@ -49,8 +50,12 @@ function CarouselSection({ theme }) {
     function step() {
       const t = trackRef.current;
       if (t && !hoverRef.current && !dragRef.current.active) {
-        t.scrollLeft += SPEED;
-        if (t.scrollLeft >= t.scrollWidth / 2) t.scrollLeft = 0;
+        // Acumula el desplazamiento en un número JS normal en vez de leer/escribir
+        // scrollLeft cada frame: con zoom de navegador < ~90%, Chrome redondea
+        // incrementos sub-pixel de scrollLeft a 0 y el carrusel queda congelado.
+        posRef.current += SPEED;
+        if (posRef.current >= t.scrollWidth / 2) posRef.current = 0;
+        t.scrollLeft = Math.round(posRef.current);
       }
       rafRef.current = requestAnimationFrame(step);
     }
@@ -58,8 +63,12 @@ function CarouselSection({ theme }) {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
+  // Resincroniza el acumulador del auto-scroll con la posición real tras un drag,
+  // para que no "salte" de vuelta a donde iba antes de que el usuario arrastrara.
+  const resyncPos = () => { if (trackRef.current) posRef.current = trackRef.current.scrollLeft; };
+
   const onMouseEnter = () => { hoverRef.current = true; };
-  const onMouseLeave = () => { hoverRef.current = false; dragRef.current.active = false; };
+  const onMouseLeave = () => { hoverRef.current = false; if (dragRef.current.active) resyncPos(); dragRef.current.active = false; };
 
   const onMouseDown = e => {
     dragRef.current = { active: true, startX: e.pageX, startScroll: trackRef.current.scrollLeft, moved: false };
@@ -71,7 +80,7 @@ function CarouselSection({ theme }) {
     if (Math.abs(dx) > 4) dragRef.current.moved = true;
     trackRef.current.scrollLeft = dragRef.current.startScroll - dx;
   };
-  const onMouseUp = () => { dragRef.current.active = false; };
+  const onMouseUp = () => { dragRef.current.active = false; resyncPos(); };
 
   const onTouchStart = e => {
     dragRef.current = { active: true, startX: e.touches[0].pageX, startScroll: trackRef.current.scrollLeft, moved: false };
@@ -82,7 +91,7 @@ function CarouselSection({ theme }) {
     if (Math.abs(dx) > 4) dragRef.current.moved = true;
     trackRef.current.scrollLeft = dragRef.current.startScroll - dx;
   };
-  const onTouchEnd = () => { dragRef.current.active = false; };
+  const onTouchEnd = () => { dragRef.current.active = false; resyncPos(); };
 
   const handleCardClick = item => {
     if (!dragRef.current.moved) setLightbox(item);
@@ -92,7 +101,9 @@ function CarouselSection({ theme }) {
     <section id="instalaciones" style={{ padding: '120px 0 100px', overflow: 'hidden', background: isDark ? '#0f0d17' : '#fff', position: 'relative' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 48px' }}>
         <Reveal>
-          <SectionHeader eyebrow="/ instalaciones" title="Un centro pensado para cada etapa." theme={theme}/>
+          <SectionHeader eyebrow="/ instalaciones" title="Un centro pensado para cada etapa."
+            subtitle="Un muro de escalada, zonas de entrenamiento funcional y especialistas deportivos — todo bajo un mismo techo en Isla de Maipo."
+            theme={theme}/>
         </Reveal>
         <Reveal delay={.1}>
           <p style={{ marginTop: 16, fontFamily: "'Jost',sans-serif", fontSize: 15, color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)' }}>

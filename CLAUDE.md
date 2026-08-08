@@ -24,14 +24,25 @@ Moment Landing.html     ← Versión legacy v1 (no usar)
 assets/                 ← Imágenes, íconos, videos, PDFs
 src/
   v2/
-    data.jsx            ← Constantes de marca, datos de servicios, precios, equipo
+    data.jsx            ← Constantes de marca, datos de servicios, precios, equipo, horarios
     shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard…)
-    hero-services.jsx   ← Hero video + ServicesSection + ServiceDetail + ServiceFullModal
+    hero-services.jsx   ← Hero video + ServicesSection (viejo grid de tabs, sin montar en index.html) + ServiceDetail + ServiceFullModal
     sections-mid.jsx    ← CarouselSection + TeamSection + EnMediosSection
     sections-bottom.jsx ← ShopSection + JobsSection + ContactSection
+    sections-home.jsx   ← InfoSection + LocationSection + ServicesGridSection (secciones nuevas del home: #informacion, #ubicacion, #servicios)
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
 ```
+
+**Rediseño 2026 (en curso, rama `rediseno-2026`)**: el sitio pasó de una sola
+página a multi-página (nav/footer con rutas completas, no anchors pelados).
+`index.html` hoy monta solo Hero → `#instalaciones` → `#informacion` →
+`#ubicacion` → `#servicios` (grid) → Footer — `TeamSection`, `EnMediosSection`,
+`ShopSection`, `JobsSection`, `ContactSection` y el viejo `ServicesSection` de
+tabs siguen existiendo como componentes pero ya no están montados en
+`app.jsx`; se reutilizan desde las páginas nuevas de las sesiones B/C. Detalle
+completo del plan en `nuevo/PLAN-rediseno.md` y decisiones de cada sesión en
+`nuevo/sesiones/notas-sesion-*.md`.
 
 ---
 
@@ -51,6 +62,10 @@ Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.
 - Auto-scroll con `requestAnimationFrame` (0.6px/frame)
 - Pausa en hover, drag manual en ambas direcciones
 - Click en card → lightbox (imagen full o video con sonido)
+- **Gotcha de zoom**: la posición se acumula en un `useRef` de JS (`posRef`), no se lee/escribe `scrollLeft` directamente cada frame — con zoom de navegador < ~90% Chrome redondea los incrementos sub-píxel a 0 y el auto-scroll queda congelado. Si se copia este patrón de rAF+scroll a otro componente, replicar el acumulador.
+
+### SectionHeader
+- `subtitle` usa `text-wrap: balance` — evita que el párrafo deje una última línea corta y desbalanceada ("rag" feo). Aplica a cualquier sección que use `subtitle`, no hace falta repetirlo.
 
 ---
 
@@ -111,6 +126,11 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ## UX global implementada (mayo 2026)
 
+### Hover "glow" (agosto 2026, rediseño)
+- `SHARED_CSS` define 5 clases reusables — `glow-teal`, `glow-pink`, `glow-outline`, `glow-card`, `glow-round` — cada una con `transform` + `box-shadow` coloreado a juego con el fondo del elemento. Úsalas en cualquier botón/tarjeta/pill clickeable nuevo (páginas de sesión B/C incluidas) en vez de escribir hover handlers a mano.
+- No aplicar glow a elementos no-clickeables (ej. tarjeta "Training Boards", sin `href`) — sería engañoso.
+- Links de texto plano del Nav (Quienes somos / Tienda / Contacto / labels de dropdown) usan la clase `.nav-link` (cambia a `var(--teal-dark)` al hover) — mismo criterio, reusar en vez de reinventar.
+
 ### Nav scroll-inteligente
 - `shared.jsx` Nav: `useEffect` con scroll listener — `transform: translateY(-110%)` al bajar, `translateY(0)` al subir. Threshold: 80px.
 - `Quienes Somos.html` y `psicologia-deportiva.html`: mismo comportamiento en JS vanilla. El `<nav>` tiene `transition: transform .3s` en CSS.
@@ -129,7 +149,7 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Avisar al cliente si los comparte impresos o por WhatsApp.
 - [ ] **Formulario de contacto funcional** — actualmente muestra `alert()`. Conectar a Formspree o EmailJS.
 - [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
-- [ ] **Imágenes carrusel** — actualmente repite 2 imágenes + 1 video (6 items = 3 únicos duplicados).
+- [x] **Imágenes carrusel** — resuelto en sesión A del rediseño 2026: se agregaron 3 fotos nuevas (`img_carrusel_instalacion_muro`, `img_carrusel_comunidad_1/2`) y se sacaron los 3 duplicados. 6 items, todos únicos.
 
 ### Baja prioridad
 - [ ] **Migrar a Vite** — eliminar Babel en browser (mejora ~2s de carga inicial)
@@ -144,3 +164,4 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - **Hash scroll**: app.jsx tiene retry loop para manejar el caso de llegar desde Quienes Somos con `index.html#seccion`
 - **Cache-busting**: los íconos de contacto tienen `?v=2` — al reemplazar assets futuros, incrementar el número
 - **QC SVG paths correctos** (corregidos mayo 2026): top-right = `M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z`. El error original tenía los sweep-flags invertidos.
+- **Dropdowns con `onMouseLeave` en un wrapper `position:relative`**: si el menú desplegado tiene `marginTop` para separarse visualmente del botón, ese hueco debe ir como `paddingTop` en el contenedor absoluto (no como `marginTop` en la tarjeta visible) — si no, el hueco queda fuera del área que escucha el hover y el menú se cierra solo al cruzarlo. Ver `NavDropdown` en `shared.jsx`.

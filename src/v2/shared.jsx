@@ -361,6 +361,39 @@ function InfoCard({ icon, label, lines }) {
   );
 }
 
+// --- Wraps a wide table/element that needs horizontal scroll on mobile. Only the element
+// itself scrolls (not surrounding labels/headers), and a fade + arrow hint appears on the
+// scrollable edge whenever there's more content off-screen — disappears once fully scrolled.
+function ScrollHintCard({ children, bg = '#fff', style = {} }) {
+  const ref = useRef(null);
+  const [canScroll, setCanScroll] = useState(false);
+  const check = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    setCanScroll(el.scrollWidth - el.scrollLeft - el.clientWidth > 8);
+  }, []);
+  useEffect(() => {
+    check();
+    const el = ref.current;
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(check) : null;
+    if (ro && el) ro.observe(el);
+    window.addEventListener('resize', check);
+    return () => { if (ro) ro.disconnect(); window.removeEventListener('resize', check); };
+  }, [check]);
+  return (
+    <div style={{ position: 'relative' }}>
+      <div ref={ref} onScroll={check} style={{ overflowX: 'auto', ...style }}>
+        {children}
+      </div>
+      {canScroll && (
+        <div className="scroll-hint-fade" style={{ background: `linear-gradient(to right, transparent, ${bg} 70%)` }} aria-hidden="true">
+          <span className="scroll-hint-arrow">→</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const SHARED_CSS = `
 .wa-float,.ig-float{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 .wa-float{background:#25d366;box-shadow:0 8px 24px rgba(37,211,102,.35)}
@@ -396,6 +429,12 @@ div::-webkit-scrollbar{display:none}
   .footer-grid{grid-template-columns:1fr!important}
 }
 
+/* Aviso de scroll horizontal para tablas anchas en mobile (ScrollHintCard) — flecha con
+   pulso sutil para que se note que hay más columnas a la derecha */
+.scroll-hint-fade{position:absolute;top:0;right:0;bottom:0;width:44px;pointer-events:none;display:flex;align-items:center;justify-content:center;border-radius:0 20px 20px 0}
+.scroll-hint-arrow{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--ink);font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(123,191,191,.5);animation:scrollHintPulse 1.4s ease-in-out infinite}
+@keyframes scrollHintPulse{0%,100%{transform:translateX(0);opacity:.8}50%{transform:translateX(5px);opacity:1}}
+
 /* Fila de precio clickeable (link a WhatsApp con el ítem precargado) — usada en el
    detalle de servicios del home y en las páginas nuevas de precios (sesión B/C) */
 .price-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:14px;align-items:center;padding:16px 18px;text-decoration:none;color:inherit;transition:background .15s}
@@ -407,5 +446,5 @@ div::-webkit-scrollbar{display:none}
 
 Object.assign(window, {
   useScrollReveal, Reveal, QC, MomentWord, SectionHeader, LinkedInIcon,
-  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, SHARED_CSS
+  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, ScrollHintCard, SHARED_CSS
 });

@@ -74,27 +74,29 @@ function PriceSections({ sections, notes, serviceTitle, accentColor = 'var(--tea
 function MuroPricingTable({ rows, accentColor = 'var(--pink-300)' }) {
   const border = 'rgba(26,24,35,.08)';
   return (
-    <div style={{ background: '#fff', borderRadius: 20, padding: 28, border: `1px solid ${border}`, overflowX: 'auto' }}>
-      <table style={{ width: '100%', minWidth: 560, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
-        <thead>
-          <tr>
-            {['Categoría', 'Horario', 'Entrada', '10 tickets', 'Mensualidad'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '6px 14px 10px 0', color: 'var(--ink-60)', fontWeight: 500, whiteSpace: 'nowrap' }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => (
-            <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-              <td style={{ padding: '14px 14px 14px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.category}</td>
-              <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.schedule}</td>
-              <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.entry}</td>
-              <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.tickets10}</td>
-              <td style={{ padding: '14px', color: accentColor, fontWeight: 700, whiteSpace: 'nowrap' }}>{r.monthly}</td>
+    <div style={{ background: '#fff', borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
+      <ScrollHintCard bg="#fff">
+        <table style={{ width: '100%', minWidth: 560, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
+          <thead>
+            <tr>
+              {['Categoría', 'Horario', 'Entrada', '10 tickets', 'Mensualidad'].map(h => (
+                <th key={h} style={{ textAlign: 'left', padding: '6px 14px 10px 0', color: 'var(--ink-60)', fontWeight: 500, whiteSpace: 'nowrap' }}>{h}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+                <td style={{ padding: '14px 14px 14px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{r.category}</td>
+                <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.schedule}</td>
+                <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.entry}</td>
+                <td style={{ padding: '14px', whiteSpace: 'nowrap' }}>{r.tickets10}</td>
+                <td style={{ padding: '14px', color: accentColor, fontWeight: 700, whiteSpace: 'nowrap' }}>{r.monthly}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </ScrollHintCard>
     </div>
   );
 }

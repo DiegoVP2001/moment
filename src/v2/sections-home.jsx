@@ -24,54 +24,58 @@ function InfoSection({ theme }) {
 
         <div className="info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 28, marginTop: 48, alignItems: 'start' }}>
           <Reveal delay={.08}>
-            <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}`, overflowX: 'auto' }}>
+            <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de apertura</div>
-              <table style={{ width: '100%', minWidth: 300, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Día</th>
-                    <th style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
-                    <th style={{ textAlign: 'left', padding: '6px 0 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Bloque alto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {OPENING_HOURS_FULL.map((row, i) => (
-                    <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-                      <td style={{ padding: '12px 10px 12px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[0]}</td>
-                      <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>{row[1]}</td>
-                      <td style={{ padding: '12px 0', color: 'var(--teal-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[2]}</td>
+              <ScrollHintCard bg={cardBg}>
+                <table style={{ width: '100%', minWidth: 300, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Día</th>
+                      <th style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
+                      <th style={{ textAlign: 'left', padding: '6px 0 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Bloque alto</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {OPENING_HOURS_FULL.map((row, i) => (
+                      <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+                        <td style={{ padding: '12px 10px 12px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[0]}</td>
+                        <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>{row[1]}</td>
+                        <td style={{ padding: '12px 0', color: 'var(--teal-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[2]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </ScrollHintCard>
             </div>
           </Reveal>
 
           <Reveal delay={.14}>
-            <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}`, overflowX: 'auto' }}>
+            <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de clases y entrenamientos</div>
-              <table style={{ width: '100%', minWidth: 520, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 13 }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
-                    {DAY_COLS.map(([, label]) => (
-                      <th key={label} style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>{label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {CLASS_SCHEDULE.map((row, i) => (
-                    <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-                      <td style={{ padding: '10px 10px 10px 0', whiteSpace: 'nowrap', fontWeight: 600 }}>{row.time}</td>
-                      {DAY_COLS.map(([key]) => (
-                        <td key={key} style={{ padding: '10px', color: row[key] ? 'inherit' : (isDark ? 'rgba(255,255,255,.25)' : 'rgba(26,24,35,.25)') }}>
-                          {row[key] || '—'}
-                        </td>
+              <ScrollHintCard bg={cardBg}>
+                <table style={{ width: '100%', minWidth: 520, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 13 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
+                      {DAY_COLS.map(([, label]) => (
+                        <th key={label} style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>{label}</th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {CLASS_SCHEDULE.map((row, i) => (
+                      <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+                        <td style={{ padding: '10px 10px 10px 0', whiteSpace: 'nowrap', fontWeight: 600 }}>{row.time}</td>
+                        {DAY_COLS.map(([key]) => (
+                          <td key={key} style={{ padding: '10px', color: row[key] ? 'inherit' : (isDark ? 'rgba(255,255,255,.25)' : 'rgba(26,24,35,.25)') }}>
+                            {row[key] || '—'}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </ScrollHintCard>
             </div>
           </Reveal>
         </div>
@@ -84,7 +88,7 @@ function InfoSection({ theme }) {
           </div>
         </Reveal>
       </div>
-      <style>{`@media(max-width:900px){.info-grid{grid-template-columns:1fr!important}}`}</style>
+      <style>{`.info-grid>div{min-width:0}@media(max-width:900px){.info-grid{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }

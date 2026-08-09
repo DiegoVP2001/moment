@@ -117,9 +117,9 @@ function ShopSection({ theme }) {
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
           <SectionHeader
-            eyebrow="/ tienda"
-            title="Equípate en Moment."
-            subtitle="Productos disponibles en el centro. Consulta disponibilidad y retira en Moment."
+            eyebrow={SHOP_COPY.eyebrow}
+            title={SHOP_COPY.title}
+            subtitle={SHOP_COPY.subtitle}
             theme={theme}
           />
         </Reveal>
@@ -163,7 +163,7 @@ function ShopSection({ theme }) {
         {visibleProducts.length > 3 && (
           <Reveal delay={.1}>
             <p style={{ marginTop: 16, fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: isDark ? 'rgba(255,255,255,.35)' : 'var(--ink-60)', textAlign: 'center', letterSpacing: '.06em' }}>
-              Desliza para ver más →
+              {SHOP_COPY.slideCaption}
             </p>
           </Reveal>
         )}
@@ -175,7 +175,7 @@ function ShopSection({ theme }) {
             color: isDark ? 'rgba(255,255,255,.35)' : 'var(--ink-60)',
             letterSpacing: '.04em'
           }}>
-            Productos disponibles en Moment · Consulta stock y retiro
+            {SHOP_COPY.footerCaption}
           </p>
         </Reveal>
       </div>
@@ -190,9 +190,9 @@ function JobsSection({ theme }) {
     <section id="trabaja" style={{ padding: '120px 48px', background: isDark ? '#1a1627' : 'var(--pink-50)', position: 'relative', overflow: 'hidden' }}>
       <QC position="top-right" color={isDark ? 'rgba(230,198,199,.06)' : 'var(--pink-200)'} size={160}/>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <Reveal><SectionHeader eyebrow="/ trabaja con nosotros" title="Sé parte del equipo." theme={theme}/></Reveal>
+        <Reveal><SectionHeader eyebrow={JOBS_COPY.eyebrow} title={JOBS_COPY.title} theme={theme}/></Reveal>
         <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <Reveal><div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 24, letterSpacing: '-0.01em', marginBottom: 8 }}>Vacantes disponibles</div></Reveal>
+          <Reveal><div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 24, letterSpacing: '-0.01em', marginBottom: 8 }}>{JOBS_COPY.subtitle}</div></Reveal>
           {JOBS.map((j, i) => (
             <Reveal key={i} delay={i * .1}>
               <div className="job-card-grid" style={{
@@ -210,7 +210,7 @@ function JobsSection({ theme }) {
                 <a className="job-card-cta" href={`mailto:${BRAND.email}?subject=Postulación: ${j.title}&body=Adjunto mi CV para el cargo de ${j.title}.`} style={{
                   padding: '14px 24px', borderRadius: 999, background: 'var(--ink)', color: 'var(--pink)',
                   fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', textAlign: 'center'
-                }}>Enviar CV →</a>
+                }}>{JOBS_COPY.ctaLabel}</a>
               </div>
             </Reveal>
           ))}
@@ -221,12 +221,12 @@ function JobsSection({ theme }) {
             border: `1px solid ${isDark ? 'rgba(255,255,255,.06)' : 'rgba(26,24,35,.06)'}`, textAlign: 'center'
           }}>
             <p style={{ fontSize: 16, lineHeight: 1.6, color: isDark ? 'rgba(255,255,255,.7)' : 'var(--ink-60)', fontFamily: "'Jost',sans-serif", maxWidth: 640, margin: '0 auto 24px' }}>
-              Si no contamos con vacantes de tu interés pero quieres ser parte del equipo, déjanos tu postulación y CV. Lo tendremos en cuenta para futuras oportunidades.
+              {JOBS_COPY.spontaneousParagraph}
             </p>
             <a href={`mailto:${BRAND.email}?subject=Postulación espontánea&body=Me gustaría formar parte de Moment. Adjunto mi CV.`} style={{
               display: 'inline-block', padding: '16px 32px', borderRadius: 999,
               background: 'var(--pink)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 15, textDecoration: 'none'
-            }}>Enviar postulación espontánea →</a>
+            }}>{JOBS_COPY.spontaneousCtaLabel}</a>
           </div>
         </Reveal>
       </div>
@@ -246,7 +246,7 @@ function ContactBannerSection({ theme }) {
       <QC position="top-right" color={isDark ? 'rgba(230,198,199,.06)' : 'var(--pink-200)'} size={180}/>
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
-          <SectionHeader eyebrow="/ contacto" title="Hablemos." subtitle="Escríbenos por cualquiera de estos medios y te respondemos a la brevedad." align="center" theme={theme}/>
+          <SectionHeader eyebrow={CONTACT_COPY.eyebrow} title={CONTACT_COPY.title} subtitle={CONTACT_COPY.subtitle} align="center" theme={theme}/>
         </Reveal>
         <div className="contact-banner-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24, marginTop: 56 }}>
           <Reveal delay={.08}>

@@ -19,9 +19,9 @@ function MissionValuesSection({ theme }) {
             <div className="glow-card" style={cardStyle}>
               <QC position="top-right" color="teal" size={70} style={{ opacity: .2 }}/>
               <div style={eyebrowStyle}>Misión</div>
-              <h2 style={titleStyle}>Cuidar al deportista completo</h2>
+              <h2 style={titleStyle}>{NOSOTROS_COPY.mission.title}</h2>
               <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.6, color: bodyColor, margin: 0 }}>
-                Ofrecer un servicio deportivo integral donde cada persona encuentre evaluación, rehabilitación, entrenamiento y acompañamiento psicológico en un solo lugar, con un equipo que trabaja de forma coordinada.
+                {NOSOTROS_COPY.mission.paragraph}
               </p>
             </div>
           </Reveal>
@@ -29,9 +29,9 @@ function MissionValuesSection({ theme }) {
             <div className="glow-card" style={cardStyle}>
               <QC position="top-right" color="pink" size={70} style={{ opacity: .2 }}/>
               <div style={eyebrowStyle}>Visión</div>
-              <h2 style={titleStyle}>Referente regional en bienestar deportivo</h2>
+              <h2 style={titleStyle}>{NOSOTROS_COPY.vision.title}</h2>
               <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.6, color: bodyColor, margin: 0 }}>
-                Ser el centro deportivo de referencia en la Región Metropolitana sur, reconocido por la calidad de su atención, la innovación de sus programas y el impacto real en la comunidad activa de Isla de Maipo y alrededores.
+                {NOSOTROS_COPY.vision.paragraph}
               </p>
             </div>
           </Reveal>
@@ -39,13 +39,11 @@ function MissionValuesSection({ theme }) {
             <div className="glow-card" style={cardStyle}>
               <QC position="top-right" color="ink" size={70} style={{ opacity: .12 }}/>
               <div style={eyebrowStyle}>Valores</div>
-              <h2 style={titleStyle}>Lo que nos mueve</h2>
+              <h2 style={titleStyle}>{NOSOTROS_COPY.values.title}</h2>
               <ul style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.75, color: bodyColor, margin: 0, paddingLeft: 18 }}>
-                <li><strong>Integralidad</strong> — cuerpo y mente, siempre juntos.</li>
-                <li><strong>Cercanía</strong> — conocemos a cada persona por su nombre.</li>
-                <li><strong>Evidencia</strong> — decisiones basadas en evaluación, no en supuestos.</li>
-                <li><strong>Comunidad</strong> — el centro es de quienes lo usan.</li>
-                <li><strong>Movimiento</strong> — todo empieza cuando decides moverte.</li>
+                {NOSOTROS_COPY.values.items.map((v, i) => (
+                  <li key={i}><strong>{v.term}</strong>{v.rest}</li>
+                ))}
               </ul>
             </div>
           </Reveal>
@@ -63,11 +61,11 @@ function HistorySection() {
       <QC position="bottom-right" color="pink" size={200} style={{ opacity: .07 }}/>
       <div style={{ maxWidth: 1000, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
-          <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(36px,5vw,60px)', lineHeight: .95, letterSpacing: '-0.03em', margin: '0 0 16px', color: '#fff' }}>De una idea a un centro real.</h2>
+          <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(36px,5vw,60px)', lineHeight: .95, letterSpacing: '-0.03em', margin: '0 0 16px', color: '#fff' }}>{NOSOTROS_COPY.history.title}</h2>
         </Reveal>
         <Reveal delay={.05}>
           <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 17, lineHeight: 1.6, color: 'rgba(230,198,199,.7)', margin: '0 0 64px', maxWidth: 640 }}>
-            Moment nació con una convicción: que kinesiología, psicología, entrenamiento y escalada deberían compartir el mismo techo. No como servicios separados, sino como un sistema que trabaja en conjunto por el bienestar de cada persona.
+            {NOSOTROS_COPY.history.subtitle}
           </p>
         </Reveal>
 
@@ -75,26 +73,23 @@ function HistorySection() {
           <Reveal delay={.1}>
             <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 16, lineHeight: 1.65, color: 'rgba(230,198,199,.75)' }}>
               <p style={{ margin: '0 0 20px' }}>
-                En 2026 abrimos las puertas en Calle Cortes 41, Isla de Maipo, con las cuatro áreas ya funcionando desde el primer día. Kinesiología, psicología deportiva, entrenamiento & recovery y escalada — todo integrado, todo en un mismo espacio.
+                {NOSOTROS_COPY.history.paragraph1}
               </p>
               <p style={{ margin: 0 }}>
-                Somos un equipo multidisciplinario que cree que el rendimiento y el bienestar no se dividen: se construyen juntos.
+                {NOSOTROS_COPY.history.paragraph2}
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={.16}>
             <div className="timeline">
-              <div className="timeline-item">
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.12em', color: 'var(--teal)', marginBottom: 6 }}>2026</div>
-                <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 20, margin: '0 0 8px', color: '#fff', letterSpacing: '-0.01em' }}>Apertura del centro</h3>
-                <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'rgba(230,198,199,.65)', margin: 0 }}>Cuatro áreas integradas desde el día uno: kinesiología, psicología, entrenamiento y escalada indoor.</p>
-              </div>
-              <div className="timeline-item highlight">
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.12em', color: 'var(--pink)', marginBottom: 6 }}>Hoy</div>
-                <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 20, margin: '0 0 8px', color: '#fff', letterSpacing: '-0.01em' }}>Comunidad en crecimiento</h3>
-                <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'rgba(230,198,199,.65)', margin: 0 }}>Tienda, eventos, atenciones semanales y una comunidad activa que ya es parte del centro.</p>
-              </div>
+              {NOSOTROS_COPY.history.timeline.map((t, i) => (
+                <div key={i} className={i === NOSOTROS_COPY.history.timeline.length - 1 ? 'timeline-item highlight' : 'timeline-item'}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.12em', color: i === NOSOTROS_COPY.history.timeline.length - 1 ? 'var(--pink)' : 'var(--teal)', marginBottom: 6 }}>{t.year}</div>
+                  <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 20, margin: '0 0 8px', color: '#fff', letterSpacing: '-0.01em' }}>{t.title}</h3>
+                  <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'rgba(230,198,199,.65)', margin: 0 }}>{t.desc}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
@@ -120,34 +115,22 @@ function WhyMomentSection({ theme }) {
     <section id="por-que-moment" style={{ padding: '100px 48px', background: isDark ? '#0f0d17' : 'var(--cream)' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         <Reveal>
-          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 18 }}>/ por qué Moment</div>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 18 }}>{NOSOTROS_COPY.whyMoment.eyebrow}</div>
         </Reveal>
         <Reveal delay={.05}>
-          <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(32px,5vw,56px)', lineHeight: .95, letterSpacing: '-0.03em', margin: '0 0 56px' }}>Todo en un mismo lugar.</h2>
+          <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(32px,5vw,56px)', lineHeight: .95, letterSpacing: '-0.03em', margin: '0 0 56px' }}>{NOSOTROS_COPY.whyMoment.title}</h2>
         </Reveal>
 
         <div className="mvv-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
-          <Reveal delay={.1}>
-            <div style={statCardStyle}>
-              <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 56, lineHeight: 1, letterSpacing: '-0.04em', color: 'var(--teal)' }}>4</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 16, fontWeight: 600, margin: '8px 0 6px' }}>Áreas especializadas</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: 'var(--ink-60)', lineHeight: 1.4 }}>Kinesiología, psicología, entrenamiento y escalada bajo un mismo techo.</div>
-            </div>
-          </Reveal>
-          <Reveal delay={.16}>
-            <div style={statCardStyle}>
-              <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 56, lineHeight: 1, letterSpacing: '-0.04em', color: 'var(--pink-300)' }}>2026</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 16, fontWeight: 600, margin: '8px 0 6px' }}>Año de apertura</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: 'var(--ink-60)', lineHeight: 1.4 }}>Abrimos con las 4 áreas integradas desde el primer día, en Isla de Maipo.</div>
-            </div>
-          </Reveal>
-          <Reveal delay={.22}>
-            <div style={statCardStyle}>
-              <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 56, lineHeight: 1, letterSpacing: '-0.04em', color: 'var(--teal)' }}>100%</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 16, fontWeight: 600, margin: '8px 0 6px' }}>Enfoque integral</div>
-              <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: 'var(--ink-60)', lineHeight: 1.4 }}>Cada área trabaja coordinada con las demás por tu bienestar completo.</div>
-            </div>
-          </Reveal>
+          {NOSOTROS_COPY.whyMoment.stats.map((s, i) => (
+            <Reveal key={i} delay={.1 + i * .06}>
+              <div style={statCardStyle}>
+                <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 56, lineHeight: 1, letterSpacing: '-0.04em', color: i === 1 ? 'var(--pink-300)' : 'var(--teal)' }}>{s.number}</div>
+                <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 16, fontWeight: 600, margin: '8px 0 6px' }}>{s.label}</div>
+                <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, color: 'var(--ink-60)', lineHeight: 1.4 }}>{s.desc}</div>
+              </div>
+            </Reveal>
+          ))}
         </div>
 
         <Reveal delay={.28}>

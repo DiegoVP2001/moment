@@ -292,7 +292,7 @@ function Footer({ theme = 'light' }) {
               <img src="assets/logo-isotype-pink.png" style={{ width: 42, height: 42 }}/>
               <MomentWord theme="pink" style={{ fontSize: 32 }}/>
             </div>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(230,198,199,.7)', maxWidth: 300 }}>Centro de escalada en Isla de Maipo. Muro, entrenamiento funcional y especialidades deportivas para acompañar tu progreso.</p>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(230,198,199,.7)', maxWidth: 300 }}>{FOOTER_COPY.brandParagraph}</p>
           </div>
           <div>
             <h4 style={h4Style}>Información</h4>

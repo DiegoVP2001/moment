@@ -17,19 +17,54 @@ function waReservarLink() {
 
 const BRAND = {
   name: 'Moment',
-  tagline: 'Piensa en tu bienestar',
   phone: WA_PRETTY,
   email: 'momentcentrodeportivo@gmail.com',
   address: 'Calle Cortes 41, Isla de Maipo',
   region: 'Región Metropolitana',
   instagram: 'moment.csd',
   instagramUrl: 'https://www.instagram.com/moment.csd/',
-  hours: [
-    ['Lun — Vie', '07:30 — 22:00'],
-    ['Sábado',    '09:00 — 22:30'],
-    ['Domingo',   '09:00 — 16:00'],
-    ['Festivos',  '09:00 — 19:00'],
-  ]
+};
+
+// Copy de marca del home (index.html): Hero, Instalaciones/Carrusel, Información, Ubicación, Servicios.
+// Un objeto por sección, para que calce 1:1 con la hoja "Home — Textos" del Sheet (ver
+// panel-cliente/sesiones/notas-sesion-1.md §3). El formato (negritas, cursivas, saltos de línea,
+// orden de concatenación) queda fijo en el JSX — solo las palabras son datos.
+const HOME_COPY = {
+  hero: {
+    titleLine1: 'Piensa en tu',
+    titleHighlight: 'bienestar',
+    subtitle: 'Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.',
+    ctaPrimaryLabel: 'Explorar servicios →',
+    ctaSecondaryLabel: 'Conocer el centro',
+  },
+  installations: {
+    eyebrow: '/ instalaciones',
+    title: 'Un centro pensado para cada etapa.',
+    subtitle: 'Un muro de escalada, zonas de entrenamiento funcional y especialistas deportivos — todo bajo un mismo techo en Isla de Maipo.',
+    instructions: 'Pasa el cursor para pausar · Arrastra para navegar · Haz clic para ampliar',
+  },
+  info: {
+    eyebrow: '/ información',
+    title: 'Horarios y funcionamiento.',
+    openingHoursLabel: 'Horario de apertura',
+    classScheduleLabel: 'Horario de clases y entrenamientos',
+    ctaClasesLabel: 'Clases de Escalada →',
+    ctaEntrenamientoLabel: 'Entrenamientos Funcionales →',
+    ctaMuroLabel: 'Muro de Escalada →',
+  },
+  location: {
+    eyebrow: '/ ubicación',
+    title: 'Gimnasio de escalada',
+    // subtítulo partido en prefijo/sufijo porque BRAND.address se intercala en medio del texto —
+    // el orden de concatenación queda fijo en JSX, las palabras (prefijo/sufijo) son datos.
+    subtitlePrefix: 'Estamos ubicados en ',
+    subtitleSuffix: ' — a pasos de la plaza de Armas. Contamos con bicicleteros al interior del recinto.',
+    ctaLabel: 'Cómo llegar →',
+  },
+  services: {
+    eyebrow: '/ servicios',
+    title: 'Un centro pensado para acompañarte.',
+  },
 };
 
 // Horario de apertura + bloque alto, para la sección #informacion del home (ficha4)
@@ -93,6 +128,10 @@ const SERVICES_GRID = [
 // Datos de precios de las páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología (sesión B del rediseño).
 const PAGE_CLASES_ESCALADA = {
   title: 'Clases de Escalada',
+  eyebrow: '/ clases de escalada · moment',
+  titleLine1: 'Sube de nivel,',
+  titleLine2: 'clase a clase.',
+  subtitle: 'Clases grupales con instructor en nuestro muro boulder — sin arnés ni cuerdas, solo colchonetas de seguridad. Aprende técnica de escalada desde el primer día, sin importar tu nivel.',
   items: [
     { k: '4 clases al mes', v: '$49.990' },
     { k: '8 clases al mes', v: '$88.990' },
@@ -104,6 +143,10 @@ const PAGE_CLASES_ESCALADA = {
 
 const PAGE_ENTRENAMIENTO_FUNCIONAL = {
   title: 'Entrenamiento Funcional',
+  eyebrow: '/ entrenamiento funcional · moment',
+  titleLine1: 'Más fuerza,',
+  titleLine2: 'mejor escalada.',
+  subtitle: 'Entrenamientos funcionales orientados a mejorar en la escalada, con horarios propios dentro del centro.',
   items: [
     { k: '4 sesiones al mes', v: '$65.000' },
     { k: '8 sesiones al mes', v: '$80.000' },
@@ -114,6 +157,11 @@ const PAGE_ENTRENAMIENTO_FUNCIONAL = {
 
 const PAGE_MURO_ESCALADA = {
   title: 'Muro de Escalada',
+  eyebrow: '/ muro de escalada · moment',
+  titleLine1: 'Escala a tu',
+  titleLine2: 'propio ritmo.',
+  subtitle: 'Pases, tickets y mensualidades para nuestro muro indoor, con rutas de boulder renovadas periódicamente.',
+  blockExplanation: 'El "bloque alto" es el horario de mayor demanda (columna de la derecha); el resto de las horas de apertura corresponde al "bloque bajo", con precios más bajos.',
   pricing: [
     { category: 'General', schedule: 'Bloque alto', entry: '$6.500', tickets10: '$52.000', monthly: '$65.000' },
     { category: 'General', schedule: 'Bloque bajo', entry: '$5.000', tickets10: '$40.000', monthly: '$50.000' },
@@ -130,6 +178,10 @@ const PAGE_MURO_ESCALADA = {
 
 const PAGE_KINESIOLOGIA = {
   title: 'Kinesiología Deportiva',
+  eyebrow: '/ kinesiología deportiva · moment',
+  titleLine1: 'Cuida el cuerpo',
+  titleLine2: 'que te sostiene.',
+  subtitle: 'Evaluación, rehabilitación y optimización del movimiento para deportistas y personas activas.',
   notes: [
     'Atenciones realizadas por kinesiólogos deportivos.',
     'Reembolsable en isapres y seguros complementarios. Se emite boleta por sesión.',
@@ -167,6 +219,78 @@ const PAGE_KINESIOLOGIA = {
       ],
     },
   ],
+};
+
+// Nutrición no tenía objeto propio (era placeholder sin precios) — se crea siguiendo el mismo
+// patrón de los demás PAGE_* aunque hoy solo tenga copy, para que NutricionContent deje de leer
+// título/CTA hardcodeados y quede igual de editable que el resto de las páginas de servicio.
+const PAGE_NUTRICION = {
+  title: 'Nutrición Deportiva',
+  eyebrow: '/ nutrición deportiva · moment',
+  titleLine1: 'Alimenta tu',
+  titleLine2: 'rendimiento.',
+  subtitle: 'Planes alimenticios pensados para complementar tu entrenamiento y tu progreso en la escalada.',
+  pendingLabel: '⏳ Contenido pendiente',
+  pendingParagraph: 'Todavía no tenemos precios ni planes definidos para Nutrición Deportiva — esta página se completará más adelante. Mientras tanto, escríbenos por WhatsApp y te contamos los valores directamente.',
+  ctaLabel: 'Consultar valores por WhatsApp',
+};
+
+// Copy de marca de "Quiénes Somos" (Equipo, En medios, Misión/Visión/Valores, Historia,
+// Por qué Moment) — calca 1:1 con la hoja "Quiénes Somos — Textos" del Sheet (notas-sesion-1.md §3).
+const NOSOTROS_COPY = {
+  team: {
+    eyebrow: '/ equipo',
+    // H2 en 3 sub-campos: prefijo plano + palabra en itálica-rosa (fija en JSX) + sufijo plano.
+    titlePrefix: 'Profesionales que ',
+    titleHighlight: 'escuchan',
+    titleSuffix: ' antes de tratar.',
+    subtitle: 'Cada miembro tiene formación específica y trabaja en coordinación con las otras áreas.',
+    linkLabel: 'Conoce más de nosotros →',
+  },
+  media: {
+    eyebrow: '/ en medios',
+    title: 'Lo que dicen de nosotros.',
+  },
+  mission: {
+    title: 'Cuidar al deportista completo',
+    paragraph: 'Ofrecer un servicio deportivo integral donde cada persona encuentre evaluación, rehabilitación, entrenamiento y acompañamiento psicológico en un solo lugar, con un equipo que trabaja de forma coordinada.',
+  },
+  vision: {
+    title: 'Referente regional en bienestar deportivo',
+    paragraph: 'Ser el centro deportivo de referencia en la Región Metropolitana sur, reconocido por la calidad de su atención, la innovación de sus programas y el impacto real en la comunidad activa de Isla de Maipo y alrededores.',
+  },
+  values: {
+    title: 'Lo que nos mueve',
+    // Cada ítem: término en negrita (fijo en JSX) + resto del texto, como sub-campos separados.
+    items: [
+      { term: 'Integralidad', rest: ' — cuerpo y mente, siempre juntos.' },
+      { term: 'Cercanía', rest: ' — conocemos a cada persona por su nombre.' },
+      { term: 'Evidencia', rest: ' — decisiones basadas en evaluación, no en supuestos.' },
+      { term: 'Comunidad', rest: ' — el centro es de quienes lo usan.' },
+      { term: 'Movimiento', rest: ' — todo empieza cuando decides moverte.' },
+    ],
+  },
+  history: {
+    title: 'De una idea a un centro real.',
+    subtitle: 'Moment nació con una convicción: que kinesiología, psicología, entrenamiento y escalada deberían compartir el mismo techo. No como servicios separados, sino como un sistema que trabaja en conjunto por el bienestar de cada persona.',
+    paragraph1: 'En 2026 abrimos las puertas en Calle Cortes 41, Isla de Maipo, con las cuatro áreas ya funcionando desde el primer día. Kinesiología, psicología deportiva, entrenamiento & recovery y escalada — todo integrado, todo en un mismo espacio.',
+    paragraph2: 'Somos un equipo multidisciplinario que cree que el rendimiento y el bienestar no se dividen: se construyen juntos.',
+    timeline: [
+      { year: '2026', title: 'Apertura del centro', desc: 'Cuatro áreas integradas desde el día uno: kinesiología, psicología, entrenamiento y escalada indoor.' },
+      { year: 'Hoy', title: 'Comunidad en crecimiento', desc: 'Tienda, eventos, atenciones semanales y una comunidad activa que ya es parte del centro.' },
+    ],
+  },
+  whyMoment: {
+    eyebrow: '/ por qué Moment',
+    title: 'Todo en un mismo lugar.',
+    // Los números ("4"/"2026"/"100%") también son copy hardcodeado en el componente original,
+    // no solo el label/descripción — se extraen los 3 juntos.
+    stats: [
+      { number: '4', label: 'Áreas especializadas', desc: 'Kinesiología, psicología, entrenamiento y escalada bajo un mismo techo.' },
+      { number: '2026', label: 'Año de apertura', desc: 'Abrimos con las 4 áreas integradas desde el primer día, en Isla de Maipo.' },
+      { number: '100%', label: 'Enfoque integral', desc: 'Cada área trabaja coordinada con las demás por tu bienestar completo.' },
+    ],
+  },
 };
 
 const TEAM = [
@@ -271,9 +395,40 @@ const JOBS = [
   { title: 'Profesor/a de Escalada', type: 'Part-time', desc: 'Instructor/a de escalada con conocimiento en progresiones y planificación de clases grupales.' },
 ];
 
+// Copy de marca de Tienda, Contacto y Vacantes (texto alrededor de las listas SHOP/JOBS, no las
+// listas mismas) + párrafo de marca del Footer — calcan 1:1 con la hoja "Tienda, Contacto y
+// Footer — Textos" del Sheet (notas-sesion-1.md §3).
+const SHOP_COPY = {
+  eyebrow: '/ tienda',
+  title: 'Equípate en Moment.',
+  subtitle: 'Productos disponibles en el centro. Consulta disponibilidad y retira en Moment.',
+  slideCaption: 'Desliza para ver más →',
+  footerCaption: 'Productos disponibles en Moment · Consulta stock y retiro',
+};
+
+const JOBS_COPY = {
+  eyebrow: '/ trabaja con nosotros',
+  title: 'Sé parte del equipo.',
+  subtitle: 'Vacantes disponibles',
+  ctaLabel: 'Enviar CV →',
+  spontaneousParagraph: 'Si no contamos con vacantes de tu interés pero quieres ser parte del equipo, déjanos tu postulación y CV. Lo tendremos en cuenta para futuras oportunidades.',
+  spontaneousCtaLabel: 'Enviar postulación espontánea →',
+};
+
+const CONTACT_COPY = {
+  eyebrow: '/ contacto',
+  title: 'Hablemos.',
+  subtitle: 'Escríbenos por cualquiera de estos medios y te respondemos a la brevedad.',
+};
+
+const FOOTER_COPY = {
+  brandParagraph: 'Centro de escalada en Isla de Maipo. Muro, entrenamiento funcional y especialidades deportivas para acompañar tu progreso.',
+};
+
 Object.assign(window, {
   BRAND, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
-  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA,
+  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA, PAGE_NUTRICION,
+  HOME_COPY, NOSOTROS_COPY, SHOP_COPY, JOBS_COPY, CONTACT_COPY, FOOTER_COPY,
   WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink
 });

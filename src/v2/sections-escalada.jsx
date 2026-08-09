@@ -154,9 +154,9 @@ function ClasesEscaladaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ clases de escalada · moment"
-        title={<>Sube de nivel,<br/><span style={italicAccent('var(--teal)')}>clase a clase.</span></>}
-        subtitle="Clases grupales con instructor en nuestro muro boulder — sin arnés ni cuerdas, solo colchonetas de seguridad. Aprende técnica de escalada desde el primer día, sin importar tu nivel."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -191,9 +191,9 @@ function EntrenamientoFuncionalContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ entrenamiento funcional · moment"
-        title={<>Más fuerza,<br/><span style={italicAccent('var(--teal)')}>mejor escalada.</span></>}
-        subtitle="Entrenamientos funcionales orientados a mejorar en la escalada, con horarios propios dentro del centro."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -223,9 +223,9 @@ function MuroEscaladaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ muro de escalada · moment"
-        title={<>Escala a tu<br/><span style={italicAccent('var(--pink)')}>propio ritmo.</span></>}
-        subtitle="Pases, tickets y mensualidades para nuestro muro indoor, con rutas de boulder renovadas periódicamente."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--pink)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="pink"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -239,7 +239,7 @@ function MuroEscaladaContent() {
               {eyebrowLabel('Horarios')}
               <OpeningHoursTable/>
               <p style={{ marginTop: 14, fontFamily: "'Jost',sans-serif", fontSize: 13, lineHeight: 1.5, color: 'var(--ink-60)' }}>
-                El "bloque alto" es el horario de mayor demanda (columna de la derecha); el resto de las horas de apertura corresponde al "bloque bajo", con precios más bajos.
+                {d.blockExplanation}
               </p>
             </div>
           </Reveal>
@@ -265,9 +265,9 @@ function KinesiologiaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ kinesiología deportiva · moment"
-        title={<>Cuida el cuerpo<br/><span style={italicAccent('var(--teal)')}>que te sostiene.</span></>}
-        subtitle="Evaluación, rehabilitación y optimización del movimiento para deportistas y personas activas."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -291,24 +291,23 @@ function KinesiologiaContent() {
 
 // ============ 6.3 — Nutrición (placeholder — sin precios todavía) ============
 function NutricionContent() {
+  const d = PAGE_NUTRICION;
   const miguel = TEAM.find(t => t.name === 'Miguel');
   return (
     <>
       <PageHero
-        eyebrow="/ nutrición deportiva · moment"
-        title={<>Alimenta tu<br/><span style={italicAccent('var(--teal)')}>rendimiento.</span></>}
-        subtitle="Planes alimenticios pensados para complementar tu entrenamiento y tu progreso en la escalada."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <Reveal>
             <div style={{ border: '2px dashed rgba(26,24,35,.25)', borderRadius: 20, padding: '28px 26px', background: 'rgba(255,255,255,.5)' }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 10 }}>⏳ Contenido pendiente</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 10 }}>{d.pendingLabel}</div>
               <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)', margin: 0 }}>
-                Todavía no tenemos precios ni planes definidos para Nutrición Deportiva — esta página se
-                completará más adelante. Mientras tanto, escríbenos por WhatsApp y te contamos los valores
-                directamente.
+                {d.pendingParagraph}
               </p>
             </div>
           </Reveal>
@@ -320,7 +319,7 @@ function NutricionContent() {
           )}
 
           <Reveal delay={.18}>
-            <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle="Nutrición Deportiva" label="Consultar valores por WhatsApp"/></div>
+            <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle={d.title} label={d.ctaLabel}/></div>
           </Reveal>
         </div>
       </section>

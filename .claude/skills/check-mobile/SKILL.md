@@ -34,33 +34,53 @@ python -m playwright install chromium
 
 ## 3. Drive it — overflow check + screenshots
 
+Since the 2026-08 redesign the site is multi-page — `index.html` no longer
+has most of the old anchors. Test each page for the sections it actually
+owns:
+
+| Page | Sections to check |
+|---|---|
+| `index.html` | `instalaciones`, `informacion`, `ubicacion`, `servicios` |
+| `Quienes Somos.html` | `equipo`, `medios`, `mision-vision`, `historia`, `por-que-moment` |
+| `tienda.html` | (whole page, `ShopSection` has no id) |
+| `contacto.html` | `contacto`, `trabaja` |
+| `clases-escalada.html` / `entrenamiento-funcional.html` / `muro-escalada.html` / `kinesiologia.html` / `nutricion.html` | (whole page — no ids, `PageHero` + pricing content) |
+
 Write a throwaway script (scratchpad, not in the repo) like:
 
 ```python
 import asyncio
 from playwright.async_api import async_playwright
 
-URL = "http://localhost:8765/index.html"
-SECTIONS = ["servicios", "instalaciones", "equipo", "medios", "tienda", "calendario", "trabaja", "contacto"]
+PAGES = {
+    "http://localhost:8765/index.html": ["instalaciones", "informacion", "ubicacion", "servicios"],
+    "http://localhost:8765/Quienes%20Somos.html": ["equipo", "medios", "mision-vision", "historia", "por-que-moment"],
+    "http://localhost:8765/muro-escalada.html": [],
+    "http://localhost:8765/contacto.html": ["contacto", "trabaja"],
+}
 
 async def check(width, height, label):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page(viewport={"width": width, "height": height})
-        await page.goto(URL, wait_until="networkidle")
-        for sec in SECTIONS:
-            await page.locator(f"#{sec}").scroll_into_view_if_needed()
-            await page.wait_for_timeout(300)
-            overflow = await page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
-            print(f"[{label}] #{sec} overflow: {overflow}")  # must be 0
-            await page.screenshot(path=f"{label}_{sec}.png")
+        for url, sections in PAGES.items():
+            await page.goto(url, wait_until="networkidle")
+            page_overflow = await page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+            print(f"[{label}] {url} page-level overflow: {page_overflow}")  # must be 0
+            for sec in sections:
+                loc = page.locator(f"#{sec}")
+                await loc.scroll_into_view_if_needed()
+                await page.wait_for_timeout(300)
+                inner_overflow = await loc.evaluate("el => el.scrollWidth - el.clientWidth")
+                print(f"[{label}] #{sec} own overflow: {inner_overflow}")  # see caveat below
+                await page.screenshot(path=f"{label}_{sec.replace(' ', '_')}.png")
         await browser.close()
 
 asyncio.run(check(375, 812, "iphoneSE"))
 asyncio.run(check(390, 844, "iphone12"))
 ```
 
-`overflow` must print `0` for every section at both widths — anything
+`page_overflow` must print `0` for every page at both widths — anything
 else means a fixed-width element (a `gridTemplateColumns` without a
 `@media` override, a hardcoded `width: 380` card, etc.) is forcing
 horizontal scroll.
@@ -69,6 +89,23 @@ To inspect a specific interactive panel (e.g. the service detail card
 opened by clicking a tab in `#servicios`), click first, then
 `scroll_into_view_if_needed()` + `screenshot()` on the specific
 locator (e.g. `.service-detail-grid`) rather than the whole page.
+
+### Caveat: document-level overflow can read 0 while a section is secretly broken
+
+Found 2026-08-08: `document.documentElement.scrollWidth - clientWidth`
+(the whole-page check above) can print `0` even when a `<section>` inside
+is genuinely overflowing, if that section's own overflow is being clipped
+by `body{overflow-x:hidden}` (set globally on every page in this repo)
+before it ever reaches the document root. The real bug was invisible to
+the page-level check and only showed up by measuring the section's own
+`scrollWidth` vs `clientWidth` directly (the `inner_overflow` column
+above) — root cause was a CSS grid item missing `min-width:0`, so a card
+containing a wide table refused to shrink and silently pushed content off
+the right edge with **no way to scroll to it**. See `repo/CLAUDE.md` →
+Notas de desarrollo → "Grid blowout" for the full writeup. **Always check
+per-section overflow for anything containing a `<table>` or other
+wide/nowrap content, not just the document-level number** — a clean
+page-level `0` is not proof the page is fine.
 
 ## Responsive convention used in this codebase
 

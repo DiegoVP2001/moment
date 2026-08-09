@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Moment — Centro Deportivo</title>
+<title>Muro de Escalada — Moment</title>
+<meta name="description" content="Pases, tickets y mensualidades para el muro de escalada indoor de Moment Centro Deportivo, Isla de Maipo. Rutas de boulder renovadas periódicamente."/>
 <link rel="icon" href="assets/logo-isotype-dark.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --pink:#e6c6c7;--pink-50:#f6e6e7;--pink-100:#efd7d8;--pink-200:#e6c6c7;--pink-300:#d7a8a9;
@@ -26,17 +27,34 @@
 <body>
 <div id="root"></div>
 
-
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script type="text/babel" src="src/v2/data.jsx"></script>
 <script type="text/babel" src="src/v2/shared.jsx"></script>
-<script type="text/babel" src="src/v2/hero-services.jsx"></script>
-<script type="text/babel" src="src/v2/sections-mid.jsx"></script>
-<script type="text/babel" src="src/v2/sections-bottom.jsx"></script>
-<script type="text/babel" src="src/v2/sections-home.jsx"></script>
-<script type="text/babel" src="src/v2/app.jsx"></script>
+<script type="text/babel" src="src/v2/sections-escalada.jsx"></script>
+
+<script type="text/babel">
+function App() {
+  const { useEffect } = React;
+  useEffect(() => {
+    const el = document.createElement('style');
+    el.textContent = SHARED_CSS;
+    document.head.appendChild(el);
+    return () => el.remove();
+  }, []);
+  return (
+    <>
+      <Nav/>
+      <MuroEscaladaContent/>
+      <Footer/>
+      <FloatingContacts/>
+      <BackToTop/>
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
 </body>
 </html>

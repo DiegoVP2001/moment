@@ -11,6 +11,9 @@ function waGeneralLink(serviceTitle) {
 function waBuyLink(productName) {
   return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Consulto disponibilidad de ${productName} en Moment. ¿Tienen stock?`)}`;
 }
+function waReservarLink() {
+  return `https://wa.me/${WA_NUM}?text=${encodeURIComponent('¡Hola! Me gustaría más información para reservar en Moment.')}`;
+}
 
 const BRAND = {
   name: 'Moment',
@@ -27,6 +30,145 @@ const BRAND = {
     ['Domingo',   '09:00 — 16:00'],
     ['Festivos',  '09:00 — 19:00'],
   ]
+};
+
+// Horario de apertura + bloque alto, para la sección #informacion del home (ficha4)
+const OPENING_HOURS_FULL = [
+  ['Lunes a viernes', '07:30–22:00', '16:00–22:00'],
+  ['Sábado',          '09:00–22:30', 'Todo el día'],
+  ['Domingo',         '09:00–16:00', 'Todo el día'],
+  ['Festivos',        '09:00–19:00', 'Todo el día'],
+];
+
+// Horario de clases y entrenamientos, para la sección #informacion del home (ficha3)
+// Sin clases de sábado — no aparecen en la ficha nueva (ver notas-sesion-a.md)
+const CLASS_SCHEDULE = [
+  { time: '06:30–08:00', mon: null, tue: null, wed: 'Entrenamiento funcional', thu: null, fri: 'Entrenamiento funcional' },
+  { time: '08:00–09:30', mon: null, tue: 'Clase escalada adulto', wed: null, thu: 'Clase escalada adulto', fri: null },
+  { time: '17:30–19:30', mon: 'Clase escalada infantojuvenil', tue: null, wed: 'Clase escalada infantojuvenil', thu: null, fri: 'Clase escalada infantojuvenil' },
+  { time: '20:00–21:30', mon: 'Clase escalada adulto', tue: 'Entrenamiento funcional', wed: 'Clase escalada adulto', thu: 'Entrenamiento funcional', fri: 'Clase escalada adulto' },
+];
+
+// Grid de servicios del home (#servicios) — reemplaza el viejo grid de tabs (sección 4.4 del plan)
+const SERVICES_GRID = [
+  {
+    id: 'muro',
+    icon: 'assets/icon-climbing.png',
+    title: 'Muro de Escalada',
+    desc: 'Rutas de boulder para todos los niveles, renovadas periódicamente.',
+    href: 'muro-escalada.html',
+  },
+  {
+    id: 'entrenamiento',
+    icon: 'assets/icon-training.png',
+    title: 'Entrenamiento Funcional',
+    desc: 'Entrenamiento orientado a mejorar tu escalada, con horarios propios.',
+    href: 'entrenamiento-funcional.html',
+  },
+  {
+    id: 'training-boards',
+    icon: null,
+    title: 'Training Boards',
+    desc: '(Próximamente) Tableros de dedos para sumar fuerza y precisión a tu escalada.',
+  },
+  {
+    id: 'especialidades',
+    icon: null,
+    title: 'Especialidades Deportivas',
+    subitems: [
+      { label: 'Kinesiología', href: 'kinesiologia.html' },
+      { label: 'Psicología', href: 'psicologia-deportiva.html' },
+      { label: 'Nutrición', href: 'nutricion.html' },
+    ],
+  },
+  {
+    id: 'tienda',
+    icon: null,
+    title: 'Tienda',
+    desc: 'Todo lo que necesitas para tu próxima sesión de escalada. Revisa nuestro catálogo de productos y consulta disponibilidad en tienda.',
+    href: 'tienda.html',
+  },
+];
+
+// Datos de precios de las páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología (sesión B del rediseño).
+// Independientes del viejo SERVICES (tabs) de abajo — ese array ya no se monta en ninguna página
+// y sus precios quedaron obsoletos con este rediseño (ver notas-sesion-b.md).
+const PAGE_CLASES_ESCALADA = {
+  title: 'Clases de Escalada',
+  items: [
+    { k: '4 clases al mes', v: '$49.990' },
+    { k: '8 clases al mes', v: '$88.990' },
+    { k: '12 clases al mes', v: '$109.000' },
+    { k: 'Clase de prueba', v: '$15.000' },
+  ],
+  benefit: 'Ser alumno o alumna de Moment da acceso a múltiples beneficios, entre ellos descuentos en mensualidades, entrenamientos funcionales y marcas asociadas.',
+};
+
+const PAGE_ENTRENAMIENTO_FUNCIONAL = {
+  title: 'Entrenamiento Funcional',
+  items: [
+    { k: '4 sesiones al mes', v: '$65.000' },
+    { k: '8 sesiones al mes', v: '$80.000' },
+    { k: '12 sesiones al mes', v: '$110.000' },
+    { k: 'Clase de prueba', v: '$20.000' },
+  ],
+};
+
+const PAGE_MURO_ESCALADA = {
+  title: 'Muro de Escalada',
+  pricing: [
+    { category: 'General', schedule: 'Bloque alto', entry: '$6.500', tickets10: '$52.000', monthly: '$65.000' },
+    { category: 'General', schedule: 'Bloque bajo', entry: '$5.000', tickets10: '$40.000', monthly: '$50.000' },
+    { category: 'Estudiante', schedule: 'Bloque alto', entry: '$5.500', tickets10: '$47.000', monthly: '$59.000' },
+    { category: 'Estudiante', schedule: 'Bloque bajo', entry: '$3.500', tickets10: '$36.000', monthly: '$45.000' },
+  ],
+  conditions: [
+    'La calidad de estudiante se acredita con certificado de alumno regular vigente.',
+    'Permanencia máxima 4 horas por ingreso diario.',
+    'Tickets y mensualidades intransferibles, con 1 mes para hacer uso.',
+    'El acceso incluye toda la instalación: zona de escalada, zona de entrenamiento y zona de cardio.',
+  ],
+};
+
+const PAGE_KINESIOLOGIA = {
+  title: 'Kinesiología Deportiva',
+  notes: [
+    'Atenciones realizadas por kinesiólogos deportivos.',
+    'Reembolsable en isapres y seguros complementarios. Se emite boleta por sesión.',
+    'Pago solo con efectivo o transferencia.',
+    'Pacientes FONASA: consultar condiciones de atención.',
+  ],
+  sections: [
+    {
+      title: 'Evaluación',
+      items: [
+        { k: 'Evaluación inicial (obligatoria)', v: '$35.000' },
+        { k: 'Reevaluación', v: '$20.000' },
+      ],
+    },
+    {
+      title: 'Sesiones',
+      items: [
+        { k: 'Sesión individual', v: '$30.000' },
+      ],
+    },
+    {
+      title: 'Paquetes de sesiones',
+      subtitle: 'Pago único — valor preferencial',
+      items: [
+        { k: 'Pack 5 sesiones', v: '$139.500', note: '7% de descuento' },
+        { k: 'Pack 8 sesiones', v: '$216.000', note: '10% de descuento' },
+        { k: 'Pack 10 sesiones', v: '$261.000', note: '13% de descuento' },
+      ],
+    },
+    {
+      title: 'Recovery',
+      subtitle: '1 hora por sesión',
+      items: [
+        { k: 'Recovery', v: '$35.000', note: 'Masoterapia, punción seca y compresión en botas' },
+      ],
+    },
+  ],
 };
 
 const SERVICES = [
@@ -291,9 +433,9 @@ const CAROUSEL_ITEMS = [
   { type: 'image', src: 'assets/img_carrusel_1.jpeg', label: 'Muro de escalada' },
   { type: 'image', src: 'assets/img_carrusel_2.jpeg', label: 'Inauguración Moment' },
   { type: 'video', src: 'assets/video_carrusel_1.mp4', label: 'Sesión de entrenamiento' },
-  { type: 'image', src: 'assets/img_carrusel_1.jpeg', label: 'Zona boulder' },
-  { type: 'image', src: 'assets/img_carrusel_2.jpeg', label: 'Comunidad Moment' },
-  { type: 'video', src: 'assets/video_carrusel_1.mp4', label: 'Recovery en acción' },
+  { type: 'image', src: 'assets/img_carrusel_instalacion_muro.jpeg', label: 'Instalando el muro' },
+  { type: 'image', src: 'assets/img_carrusel_comunidad_1.jpeg', label: 'Comunidad Moment' },
+  { type: 'image', src: 'assets/img_carrusel_comunidad_2.jpeg', label: 'Team Moment escalando' },
 ];
 
 const MEDIOS = [
@@ -365,10 +507,12 @@ const SHOP = [
 
 const JOBS = [
   { title: 'Kinesiólogo/a Deportivo/a', type: 'Part-time', desc: 'Buscamos kinesiólogo/a con experiencia en rehabilitación deportiva para atender pacientes y diseñar planes de recuperación.' },
-  { title: 'Profesor/a de Calistenia', type: 'Part-time', desc: 'Instructor/a de calistenia con conocimiento en progresiones de fuerza y planificación de clases grupales.' },
+  { title: 'Profesor/a de Escalada', type: 'Part-time', desc: 'Instructor/a de escalada con conocimiento en progresiones y planificación de clases grupales.' },
 ];
 
 Object.assign(window, {
   BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
-  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink
+  OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
+  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA,
+  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink
 });

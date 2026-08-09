@@ -75,7 +75,7 @@ function SectionHeader({ eyebrow, title, subtitle, align = 'left', theme = 'ligh
     <div style={{ textAlign: align, maxWidth: align === 'center' ? 800 : null, margin: align === 'center' ? '0 auto' : null }}>
       {eyebrow && <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 14 }}>{eyebrow}</div>}
       <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontWeight: 900, fontSize: 'clamp(36px, 5vw, 72px)', lineHeight: .95, letterSpacing: '-0.03em', color: ink, margin: 0 }}>{title}</h2>
-      {subtitle && <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 18, lineHeight: 1.5, color: muted, marginTop: 20, maxWidth: 640 }}>{subtitle}</p>}
+      {subtitle && <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 18, lineHeight: 1.5, color: muted, marginTop: 20, maxWidth: 820, textWrap: 'balance' }}>{subtitle}</p>}
     </div>
   );
 }
@@ -89,13 +89,45 @@ function LinkedInIcon({ size = 20, color = '#fff' }) {
   );
 }
 
+// --- Nav dropdown (reused for "Información" and "Clases, Entrenamiento y Muro") ---
+function NavDropdown({ label, items, isDark, border, fg }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ position: 'relative' }} onMouseLeave={() => setOpen(false)}>
+      <button onClick={() => setOpen(o => !o)} className="nav-link" style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', color: fg, display: 'flex', alignItems: 'center', gap: 4 }}>
+        {label} <span style={{ fontSize: 10, transition: 'transform .2s', transform: open ? 'rotate(180deg)' : 'none' }}>▾</span>
+      </button>
+      {open && (
+        // Padding-top (en vez de marginTop en la tarjeta) para que el "hueco" entre el botón
+        // y el menú siga siendo parte del área hover — si no, el mouse lo cruza y el dropdown
+        // se cierra solo antes de llegar a los links (muy sensible a la dirección del mouse).
+        <div style={{ position: 'absolute', top: '100%', left: 0, paddingTop: 8, zIndex: 60 }}>
+          <div style={{
+            background: isDark ? '#1a1627' : '#fff', borderRadius: 14, padding: 8,
+            boxShadow: '0 16px 40px rgba(0,0,0,.18)', border: `1px solid ${border}`,
+            minWidth: 220,
+          }}>
+            {items.map(([h, l]) => (
+              <a key={h} href={h} style={{ display: 'block', padding: '10px 16px', borderRadius: 8, fontSize: 13, fontFamily: "'Jost',sans-serif", transition: 'background .15s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.06)' : 'var(--pink-50)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+              >{l}</a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // --- Nav V2 (with mobile hamburger + scroll-hide) ---
+// Estructura final del rediseño 2026 — sitio multi-página, todos los links son rutas completas
+// (nunca "#seccion" pelado: index.html deja de ser la única página del sitio).
 function Nav({ theme = 'light' }) {
   const isDark = theme === 'dark';
   const bg = isDark ? 'rgba(15,13,23,.7)' : 'rgba(250,245,242,.8)';
   const fg = isDark ? '#fff' : 'var(--ink)';
   const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.08)';
-  const [moreOpen, setMoreOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
@@ -109,20 +141,24 @@ function Nav({ theme = 'light' }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const mainLinks = [
-    ['#servicios', 'Servicios'],
-    ['#instalaciones', 'Instalaciones'],
-    ['#equipo', 'Equipo'],
-    ['#medios', 'En medios'],
-    ['#tienda', 'Tienda'],
-    ['#contacto', 'Contacto'],
+  const infoLinks = [
+    ['index.html#instalaciones', 'Instalaciones'],
+    ['index.html#informacion', 'Horarios'],
+    ['index.html#ubicacion', 'Ubicación'],
+    ['index.html#servicios', 'Servicios'],
   ];
-  const moreLinks = [
+  const classLinks = [
+    ['clases-escalada.html', 'Clases de Escalada'],
+    ['entrenamiento-funcional.html', 'Entrenamientos Funcionales'],
+    ['muro-escalada.html', 'Muro de Escalada'],
+  ];
+  const mobileLinks = [
+    ...infoLinks,
     ['Quienes Somos.html', 'Quiénes somos'],
-    ['psicologia-deportiva.html', 'Psicología Deportiva'],
-    ['#trabaja', 'Trabaja con nosotros'],
+    ...classLinks,
+    ['tienda.html', 'Tienda'],
+    ['contacto.html', 'Contacto'],
   ];
-  const allLinks = [...mainLinks, ...moreLinks];
 
   return (
     <nav style={{
@@ -133,38 +169,22 @@ function Nav({ theme = 'light' }) {
       transition: 'transform .3s cubic-bezier(.4,0,.2,1)',
     }}>
       <div style={{ padding: '12px 36px', display: 'flex', alignItems: 'center', gap: 24 }}>
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        <a href="index.html" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <img src={isDark ? 'assets/logo-isotype-pink.png' : 'assets/logo-isotype-dark.png'} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
           <MomentWord theme={isDark ? 'pink' : 'ink'} style={{ fontSize: 22 }}/>
         </a>
 
         {/* Desktop links */}
         <div className="nav-links" style={{ display: 'flex', gap: 22, marginLeft: 28, fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', alignItems: 'center' }}>
-          {mainLinks.map(([h, l]) => <a key={h} href={h}>{l}</a>)}
-          <div style={{ position: 'relative' }}>
-            <button onClick={() => setMoreOpen(!moreOpen)} style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.02em', color: fg, display: 'flex', alignItems: 'center', gap: 4 }}>
-              Más <span style={{ fontSize: 10, transition: 'transform .2s', transform: moreOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
-            </button>
-            {moreOpen && (
-              <div style={{
-                position: 'absolute', top: '100%', right: 0, marginTop: 8,
-                background: isDark ? '#1a1627' : '#fff', borderRadius: 14, padding: 8,
-                boxShadow: '0 16px 40px rgba(0,0,0,.18)', border: `1px solid ${border}`,
-                minWidth: 200, zIndex: 60
-              }} onMouseLeave={() => setMoreOpen(false)}>
-                {moreLinks.map(([h, l]) => (
-                  <a key={h} href={h} style={{ display: 'block', padding: '10px 16px', borderRadius: 8, fontSize: 13, fontFamily: "'Jost',sans-serif", transition: 'background .15s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(255,255,255,.06)' : 'var(--pink-50)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >{l}</a>
-                ))}
-              </div>
-            )}
-          </div>
+          <NavDropdown label="Información" items={infoLinks} isDark={isDark} border={border} fg={fg}/>
+          <a href="Quienes Somos.html" className="nav-link">Quienes somos</a>
+          <NavDropdown label="Clases, Entrenamiento y Muro" items={classLinks} isDark={isDark} border={border} fg={fg}/>
+          <a href="tienda.html" className="nav-link">Tienda</a>
+          <a href="contacto.html" className="nav-link">Contacto</a>
         </div>
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
-          <a href="#servicios" className="nav-cta" style={{ padding: '9px 18px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontWeight: 600, fontSize: 12, fontFamily: "'Jost',sans-serif" }}>Reservar</a>
+          <a href={waReservarLink()} target="_blank" className="nav-cta glow-teal" style={{ padding: '9px 18px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontWeight: 600, fontSize: 12, fontFamily: "'Jost',sans-serif" }}>Reservar</a>
           {/* Hamburger */}
           <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)}
             style={{ display: 'none', flexDirection: 'column', gap: 5, padding: 6, background: 'none', border: 'none', cursor: 'pointer' }}
@@ -179,10 +199,12 @@ function Nav({ theme = 'light' }) {
       {/* Mobile menu */}
       {mobileOpen && (
         <div style={{ padding: '8px 24px 20px', background: bg, borderTop: `1px solid ${border}`, display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {allLinks.map(([h, l]) => (
-            <a key={h} href={h} onClick={() => setMobileOpen(false)}
+          {mobileLinks.map(([h, l]) => (
+            <a key={h} href={h} onClick={() => setMobileOpen(false)} className="nav-link"
               style={{ padding: '12px 8px', fontSize: 15, fontFamily: "'Jost',sans-serif", color: fg, borderBottom: `1px solid ${border}` }}>{l}</a>
           ))}
+          <a href={waReservarLink()} target="_blank" onClick={() => setMobileOpen(false)} className="glow-teal"
+            style={{ marginTop: 8, padding: '12px 8px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontWeight: 600, fontSize: 14, fontFamily: "'Jost',sans-serif", textAlign: 'center' }}>Reservar</a>
         </div>
       )}
     </nav>
@@ -201,6 +223,7 @@ function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Volver al inicio"
+      className="glow-round"
       style={{
         position: 'fixed', bottom: 165, right: 24, zIndex: 90,
         width: 44, height: 44, borderRadius: '50%',
@@ -211,7 +234,7 @@ function BackToTop() {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         opacity: show ? 1 : 0,
         pointerEvents: show ? 'auto' : 'none',
-        transition: 'opacity .25s',
+        transition: 'opacity .25s, transform .2s cubic-bezier(.4,0,.2,1), box-shadow .2s cubic-bezier(.4,0,.2,1)',
       }}
     >↑</button>
   );
@@ -251,34 +274,48 @@ function useDeployDate() {
 function Footer({ theme = 'light' }) {
   const isDark = theme === 'dark';
   const deployDate = useDeployDate();
+  const h4Style = { fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 };
+  const ulStyle = { listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 };
   return (
     <footer style={{ background: isDark ? '#0f0d17' : 'var(--ink)', color: 'var(--pink-100)', padding: '80px 36px 32px' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr', gap: 48, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr 1fr 1fr', gap: 40, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
               <img src="assets/logo-isotype-pink.png" style={{ width: 42, height: 42 }}/>
               <MomentWord theme="pink" style={{ fontSize: 32 }}/>
             </div>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(230,198,199,.7)', maxWidth: 300 }}>Centro deportivo integral en Isla de Maipo. Kinesiología, psicología, entrenamiento, recovery y escalada.</p>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(230,198,199,.7)', maxWidth: 300 }}>Centro de escalada en Isla de Maipo. Muro, entrenamiento funcional y especialidades deportivas para acompañar tu progreso.</p>
           </div>
           <div>
-            <h4 style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 }}>Servicios</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
-              {SERVICES.map(s => <li key={s.id}><a href="#servicios">{s.title}</a></li>)}
+            <h4 style={h4Style}>Información</h4>
+            <ul style={ulStyle}>
+              <li><a href="index.html#instalaciones">Instalaciones</a></li>
+              <li><a href="index.html#informacion">Horarios</a></li>
+              <li><a href="index.html#ubicacion">Ubicación</a></li>
+              <li><a href="index.html#servicios">Servicios</a></li>
             </ul>
           </div>
           <div>
-            <h4 style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 }}>Centro</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
+            <h4 style={h4Style}>Clases y Muro</h4>
+            <ul style={ulStyle}>
+              <li><a href="clases-escalada.html">Clases de Escalada</a></li>
+              <li><a href="entrenamiento-funcional.html">Entrenamientos Funcionales</a></li>
+              <li><a href="muro-escalada.html">Muro de Escalada</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style={h4Style}>Centro</h4>
+            <ul style={ulStyle}>
               <li><a href="Quienes Somos.html">Quiénes somos</a></li>
-              <li><a href="#tienda">Tienda</a></li>
-              <li><a href="#trabaja">Trabaja con nosotros</a></li>
+              <li><a href="tienda.html">Tienda</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+              <li><a href="contacto.html#trabaja">Trabaja con nosotros</a></li>
             </ul>
           </div>
           <div>
-            <h4 style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--pink)', marginBottom: 18 }}>Contacto</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, lineHeight: 1.5 }}>
+            <h4 style={h4Style}>Contacto</h4>
+            <ul style={{ ...ulStyle, lineHeight: 1.5 }}>
               <li>{BRAND.address}</li>
               <li>{BRAND.phone}</li>
               <li>{BRAND.email}</li>
@@ -324,15 +361,61 @@ function InfoCard({ icon, label, lines }) {
   );
 }
 
+// --- Wraps a wide table/element that needs horizontal scroll on mobile. Only the element
+// itself scrolls (not surrounding labels/headers), and a fade + arrow hint appears on the
+// scrollable edge whenever there's more content off-screen — disappears once fully scrolled.
+function ScrollHintCard({ children, bg = '#fff', style = {} }) {
+  const ref = useRef(null);
+  const [canScroll, setCanScroll] = useState(false);
+  const check = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    setCanScroll(el.scrollWidth - el.scrollLeft - el.clientWidth > 8);
+  }, []);
+  useEffect(() => {
+    check();
+    const el = ref.current;
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(check) : null;
+    if (ro && el) ro.observe(el);
+    window.addEventListener('resize', check);
+    return () => { if (ro) ro.disconnect(); window.removeEventListener('resize', check); };
+  }, [check]);
+  return (
+    <div style={{ position: 'relative' }}>
+      <div ref={ref} onScroll={check} style={{ overflowX: 'auto', ...style }}>
+        {children}
+      </div>
+      {canScroll && (
+        <div className="scroll-hint-fade" style={{ background: `linear-gradient(to right, transparent, ${bg} 70%)` }} aria-hidden="true">
+          <span className="scroll-hint-arrow">→</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const SHARED_CSS = `
-.wa-float,.ig-float{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.wa-float,.ig-float{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 .wa-float{background:#25d366;box-shadow:0 8px 24px rgba(37,211,102,.35)}
 .ig-float{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);box-shadow:0 8px 24px rgba(220,39,67,.3)}
-.wa-float:hover,.ig-float:hover{transform:scale(1.08)}
+.wa-float:hover{transform:scale(1.08);box-shadow:0 10px 30px rgba(37,211,102,.55)}
+.ig-float:hover{transform:scale(1.08);box-shadow:0 10px 30px rgba(220,39,67,.5)}
 html{scroll-behavior:smooth}
 button{transition:transform .15s,opacity .15s}
 button:hover{opacity:.92}
 div::-webkit-scrollbar{display:none}
+
+/* Links de texto del header — cambian de color al pasar el cursor para que el nav se sienta interactivo */
+.nav-link{transition:color .2s ease}
+.nav-link:hover{color:var(--teal-dark)!important}
+
+/* Glow al pasar el cursor — mismo lenguaje visual en botones, pills y tarjetas de todo el sitio */
+.glow-teal,.glow-pink,.glow-outline,.glow-card,.glow-round{transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .2s cubic-bezier(.4,0,.2,1)}
+.glow-teal:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(123,191,191,.55)}
+.glow-pink:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(230,198,199,.6)}
+.glow-outline:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,255,255,.22)}
+.glow-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,24,35,.12)}
+.glow-round:hover{transform:scale(1.08);box-shadow:0 10px 26px rgba(123,191,191,.5)}
 
 @media(max-width:768px){
   .nav-links{display:none!important}
@@ -345,9 +428,23 @@ div::-webkit-scrollbar{display:none}
 @media(max-width:480px){
   .footer-grid{grid-template-columns:1fr!important}
 }
+
+/* Aviso de scroll horizontal para tablas anchas en mobile (ScrollHintCard) — flecha con
+   pulso sutil para que se note que hay más columnas a la derecha */
+.scroll-hint-fade{position:absolute;top:0;right:0;bottom:0;width:44px;pointer-events:none;display:flex;align-items:center;justify-content:center;border-radius:0 20px 20px 0}
+.scroll-hint-arrow{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--ink);font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(123,191,191,.5);animation:scrollHintPulse 1.4s ease-in-out infinite}
+@keyframes scrollHintPulse{0%,100%{transform:translateX(0);opacity:.8}50%{transform:translateX(5px);opacity:1}}
+
+/* Fila de precio clickeable (link a WhatsApp con el ítem precargado) — usada en el
+   detalle de servicios del home y en las páginas nuevas de precios (sesión B/C) */
+.price-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:14px;align-items:center;padding:16px 18px;text-decoration:none;color:inherit;transition:background .15s}
+@media(max-width:480px){
+  .price-row{grid-template-columns:1fr auto!important;gap:8px!important;padding:14px 16px!important}
+  .price-row-num,.price-row-wa{display:none!important}
+}
 `;
 
 Object.assign(window, {
   useScrollReveal, Reveal, QC, MomentWord, SectionHeader, LinkedInIcon,
-  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, SHARED_CSS
+  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, ScrollHintCard, SHARED_CSS
 });

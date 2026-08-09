@@ -30,13 +30,10 @@ function App() {
     <>
       <Nav theme={theme}/>
       <HeroVideo theme={theme}/>
-      <ServicesSection theme={theme}/>
       <CarouselSection theme={theme}/>
-      <TeamSection theme={theme}/>
-      <EnMediosSection theme={theme}/>
-      <ShopSection theme={theme}/>
-      <JobsSection theme={theme}/>
-      <ContactSection theme={theme}/>
+      <InfoSection theme={theme}/>
+      <LocationSection theme={theme}/>
+      <ServicesGridSection theme={theme}/>
       <Footer theme={theme}/>
       <FloatingContacts/>
       <BackToTop/>

@@ -235,8 +235,7 @@ function JobsSection({ theme }) {
   );
 }
 
-// --- Banner de contacto (3 íconos) — usado en contacto.html (sesión C), reemplaza el
-// formulario+mapa del viejo ContactSection de abajo (huérfano, ver repo/CLAUDE.md) ---
+// --- Banner de contacto (3 íconos) — usado en contacto.html (sesión C) ---
 function ContactBannerSection({ theme }) {
   const isDark = theme === 'dark';
   const cardStyle = { display: 'block', textAlign: 'center', background: '#fff', borderRadius: 24, padding: '40px 28px', border: '1px solid rgba(26,24,35,.06)', textDecoration: 'none', color: 'inherit' };
@@ -278,50 +277,4 @@ function ContactBannerSection({ theme }) {
   );
 }
 
-// --- Contact ---
-function ContactSection({ theme }) {
-  const isDark = theme === 'dark';
-  const inpStyle = { padding: '14px 16px', background: 'rgba(255,255,255,.06)', border: '1px solid rgba(230,198,199,.15)', borderRadius: 10, color: '#fff', fontSize: 14, fontFamily: "'Jost',sans-serif", outline: 'none' };
-  return (
-    <section id="contacto" style={{ padding: '120px 48px', background: 'var(--pink)', color: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
-      <QC position="bottom-left" color="var(--ink)" size={180} style={{ opacity: .07 }}/>
-      <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <Reveal><SectionHeader eyebrow="/ contacto" title="Parte por agendar una conversación." theme="light"/></Reveal>
-        <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 56 }}>
-          <Reveal delay={.1}>
-            <div style={{ background: 'var(--ink)', color: 'var(--pink-100)', borderRadius: 24, padding: 40 }}>
-              <h3 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 28, color: '#fff', margin: '0 0 28px', position: 'relative' }}>Escríbenos.</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, position: 'relative' }}>
-                <input placeholder="Nombre" style={inpStyle}/>
-                <input placeholder="Teléfono" style={inpStyle}/>
-              </div>
-              <input placeholder="Email" style={{ ...inpStyle, width: '100%', marginTop: 14 }}/>
-              <select style={{ ...inpStyle, width: '100%', marginTop: 14 }}>
-                <option>¿Qué servicio te interesa?</option>
-                {SERVICES.map(s => <option key={s.id}>{s.title}</option>)}
-              </select>
-              <textarea placeholder="Cuéntanos un poco" rows={4} style={{ ...inpStyle, width: '100%', marginTop: 14, resize: 'none' }}/>
-              <button onClick={() => alert('Demo — en producción se conecta a email/CRM.')} style={{ marginTop: 20, width: '100%', padding: '16px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 15 }}>Enviar mensaje →</button>
-              <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(230,198,199,.4)', fontFamily: "'JetBrains Mono',monospace", textAlign: 'center' }}>Demo · conectar email/CRM en producción</div>
-            </div>
-          </Reveal>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <Reveal delay={.15}><InfoCard icon="assets/icon-location.png?v=2" label="Dirección" lines={[BRAND.address, BRAND.region]}/></Reveal>
-            <Reveal delay={.2}><InfoCard icon="assets/icon-phone.png?v=2" label="Teléfono" lines={[BRAND.phone, 'WhatsApp disponible']}/></Reveal>
-            <Reveal delay={.25}><InfoCard icon="assets/icon-clock.png?v=2" label="Horarios" lines={BRAND.hours.map(h => `${h[0]} · ${h[1]}`)}/></Reveal>
-            <Reveal delay={.3}><InfoCard icon="assets/icon-support.png?v=2" label="Email & Instagram" lines={[BRAND.email, `@${BRAND.instagram}`]}/></Reveal>
-          </div>
-        </div>
-        <Reveal delay={.35}>
-          <div style={{ marginTop: 24, borderRadius: 24, overflow: 'hidden', height: 380, boxShadow: '0 20px 60px rgba(26,24,35,.15)', position: 'relative' }}>
-            <iframe src="https://www.google.com/maps?q=-33.753589,-70.902940&hl=es&z=16&output=embed" style={{ width: '100%', height: '100%', border: 0 }} loading="lazy" allowFullScreen title="Moment"/>
-            <a href="https://maps.app.goo.gl/9SdguuCr2wLYyhTT6" target="_blank" style={{ position: 'absolute', bottom: 20, right: 20, background: 'var(--pink)', padding: '12px 20px', borderRadius: 999, fontFamily: "'Jost',sans-serif", fontSize: 13, fontWeight: 600, textDecoration: 'none', color: 'var(--ink)' }}>Cómo llegar →</a>
-          </div>
-        </Reveal>
-      </div>
-      <style>{`@media(max-width:768px){.contact-grid{grid-template-columns:1fr!important}}`}</style>
-    </section>
-  );
-}
-
-Object.assign(window, { ShopSection, JobsSection, ContactBannerSection, ContactSection });
+Object.assign(window, { ShopSection, JobsSection, ContactBannerSection });

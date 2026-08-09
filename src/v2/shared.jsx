@@ -152,10 +152,16 @@ function Nav({ theme = 'light' }) {
     ['entrenamiento-funcional.html', 'Entrenamientos Funcionales'],
     ['muro-escalada.html', 'Muro de Escalada'],
   ];
+  const specialtyLinks = [
+    ['kinesiologia.html', 'Kinesiología Deportiva'],
+    ['psicologia-deportiva.html', 'Psicología Deportiva'],
+    ['nutricion.html', 'Nutrición Deportiva'],
+  ];
   const mobileLinks = [
     ...infoLinks,
     ['Quienes Somos.html', 'Quiénes somos'],
     ...classLinks,
+    ...specialtyLinks,
     ['tienda.html', 'Tienda'],
     ['contacto.html', 'Contacto'],
   ];
@@ -179,6 +185,7 @@ function Nav({ theme = 'light' }) {
           <NavDropdown label="Información" items={infoLinks} isDark={isDark} border={border} fg={fg}/>
           <a href="Quienes Somos.html" className="nav-link">Quienes somos</a>
           <NavDropdown label="Clases, Entrenamiento y Muro" items={classLinks} isDark={isDark} border={border} fg={fg}/>
+          <NavDropdown label="Especialidades" items={specialtyLinks} isDark={isDark} border={border} fg={fg}/>
           <a href="tienda.html" className="nav-link">Tienda</a>
           <a href="contacto.html" className="nav-link">Contacto</a>
         </div>
@@ -279,7 +286,7 @@ function Footer({ theme = 'light' }) {
   return (
     <footer style={{ background: isDark ? '#0f0d17' : 'var(--ink)', color: 'var(--pink-100)', padding: '80px 36px 32px' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr 1fr 1fr', gap: 40, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr 1fr 1fr', gap: 40, paddingBottom: 56, borderBottom: '1px solid rgba(230,198,199,.15)' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
               <img src="assets/logo-isotype-pink.png" style={{ width: 42, height: 42 }}/>
@@ -302,6 +309,14 @@ function Footer({ theme = 'light' }) {
               <li><a href="clases-escalada.html">Clases de Escalada</a></li>
               <li><a href="entrenamiento-funcional.html">Entrenamientos Funcionales</a></li>
               <li><a href="muro-escalada.html">Muro de Escalada</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style={h4Style}>Especialidades</h4>
+            <ul style={ulStyle}>
+              <li><a href="kinesiologia.html">Kinesiología Deportiva</a></li>
+              <li><a href="psicologia-deportiva.html">Psicología Deportiva</a></li>
+              <li><a href="nutricion.html">Nutrición Deportiva</a></li>
             </ul>
           </div>
           <div>
@@ -394,6 +409,93 @@ function ScrollHintCard({ children, bg = '#fff', style = {} }) {
   );
 }
 
+// --- Horarios: tabla semanal de clases/entrenamientos y tabla de apertura, ambas leyendo
+// CLASS_SCHEDULE/OPENING_HOURS_FULL (data.jsx) como única fuente de verdad — usadas en
+// #informacion del home Y en las páginas de Clases/Entrenamiento/Muro, para que nunca se
+// desincronicen entre sí.
+const DAY_COLS = [
+  ['mon', 'Lun'], ['tue', 'Mar'], ['wed', 'Mié'], ['thu', 'Jue'], ['fri', 'Vie'],
+];
+
+// Deja solo las filas/celdas de CLASS_SCHEDULE cuyo texto incluye `keyword` (ej. "escalada"
+// o "entrenamiento") — filas sin ninguna coincidencia se descartan del todo. Sin `keyword`,
+// devuelve la tabla completa tal cual (uso en #informacion del home).
+function filterClassSchedule(keyword) {
+  if (!keyword) return CLASS_SCHEDULE;
+  const kw = keyword.toLowerCase();
+  return CLASS_SCHEDULE
+    .map(row => {
+      const filtered = { time: row.time };
+      let hasAny = false;
+      DAY_COLS.forEach(([key]) => {
+        const val = row[key];
+        if (val && val.toLowerCase().includes(kw)) { filtered[key] = val; hasAny = true; }
+        else filtered[key] = null;
+      });
+      return hasAny ? filtered : null;
+    })
+    .filter(Boolean);
+}
+
+function ClassScheduleTable({ keyword, isDark = false, cardBg = '#fff' }) {
+  const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.08)';
+  const muted = isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)';
+  const rows = filterClassSchedule(keyword);
+  return (
+    <ScrollHintCard bg={cardBg}>
+      <table style={{ width: '100%', minWidth: 520, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: muted, fontWeight: 500 }}>Horario</th>
+            {DAY_COLS.map(([, label]) => (
+              <th key={label} style={{ textAlign: 'left', padding: '6px 10px 10px', color: muted, fontWeight: 500 }}>{label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+              <td style={{ padding: '10px 10px 10px 0', whiteSpace: 'nowrap', fontWeight: 600 }}>{row.time}</td>
+              {DAY_COLS.map(([key]) => (
+                <td key={key} style={{ padding: '10px', color: row[key] ? 'inherit' : (isDark ? 'rgba(255,255,255,.25)' : 'rgba(26,24,35,.25)') }}>
+                  {row[key] || '—'}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </ScrollHintCard>
+  );
+}
+
+function OpeningHoursTable({ isDark = false, cardBg = '#fff' }) {
+  const border = isDark ? 'rgba(255,255,255,.08)' : 'rgba(26,24,35,.08)';
+  const muted = isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)';
+  return (
+    <ScrollHintCard bg={cardBg}>
+      <table style={{ width: '100%', minWidth: 300, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: muted, fontWeight: 500 }}>Día</th>
+            <th style={{ textAlign: 'left', padding: '6px 10px 10px', color: muted, fontWeight: 500 }}>Horario</th>
+            <th style={{ textAlign: 'left', padding: '6px 0 10px', color: muted, fontWeight: 500 }}>Bloque alto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {OPENING_HOURS_FULL.map((row, i) => (
+            <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+              <td style={{ padding: '12px 10px 12px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[0]}</td>
+              <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>{row[1]}</td>
+              <td style={{ padding: '12px 0', color: 'var(--teal-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </ScrollHintCard>
+  );
+}
+
 const SHARED_CSS = `
 .wa-float,.ig-float{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 .wa-float{background:#25d366;box-shadow:0 8px 24px rgba(37,211,102,.35)}
@@ -417,10 +519,15 @@ div::-webkit-scrollbar{display:none}
 .glow-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,24,35,.12)}
 .glow-round:hover{transform:scale(1.08);box-shadow:0 10px 26px rgba(123,191,191,.5)}
 
-@media(max-width:768px){
+/* Con el dropdown "Especialidades" el nav de escritorio suma ~1010px y choca con el botón
+   Reservar bajo ~1050px — este breakpoint es más ancho que el del resto del layout (768px)
+   a propósito, para pasar al menú móvil antes de que el nav se apriete. */
+@media(max-width:1080px){
   .nav-links{display:none!important}
   .hamburger{display:flex!important}
   .nav-cta{display:none!important}
+}
+@media(max-width:768px){
   .footer-grid{grid-template-columns:1fr 1fr!important;gap:32px!important}
   section{padding-top:80px!important;padding-bottom:64px!important}
   section:not(#instalaciones){padding-left:20px!important;padding-right:20px!important}
@@ -446,5 +553,6 @@ div::-webkit-scrollbar{display:none}
 
 Object.assign(window, {
   useScrollReveal, Reveal, QC, MomentWord, SectionHeader, LinkedInIcon,
-  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, ScrollHintCard, SHARED_CSS
+  Nav, BackToTop, FloatingContacts, Footer, YouTubeModal, InfoCard, ScrollHintCard,
+  DAY_COLS, ClassScheduleTable, OpeningHoursTable, SHARED_CSS
 });

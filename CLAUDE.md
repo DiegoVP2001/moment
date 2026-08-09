@@ -35,12 +35,12 @@ assets/                       ← Imágenes, íconos, videos, PDFs
 src/
   v2/
     data.jsx            ← Constantes de marca, datos de servicios, precios, equipo, horarios
-    shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard…)
-    hero-services.jsx   ← Hero video + ServicesSection (viejo grid de tabs, código muerto — ver nota abajo) + ServiceDetail + ServiceFullModal
+    shared.jsx          ← Componentes reutilizables (Nav, Footer, QC, Reveal, InfoCard, ClassScheduleTable, OpeningHoursTable…)
+    hero-services.jsx   ← Hero video (HeroVideo) — único export desde agosto 2026, ver nota abajo
     sections-mid.jsx    ← CarouselSection + TeamSection + EnMediosSection
-    sections-bottom.jsx ← ShopSection + JobsSection + ContactBannerSection (Sesión C) + ContactSection (código muerto)
+    sections-bottom.jsx ← ShopSection + JobsSection + ContactBannerSection (Sesión C)
     sections-home.jsx   ← InfoSection + LocationSection + ServicesGridSection (secciones nuevas del home: #informacion, #ubicacion, #servicios)
-    sections-escalada.jsx ← Sesión B: PageHero/PriceRows/PriceSections/MuroPricingTable (compartidos) + contenido de las 5 páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología/Nutrición
+    sections-escalada.jsx ← Sesión B: PageHero/PriceRows/PriceSections/MuroPricingTable/ProCard (compartidos) + contenido de las 5 páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología/Nutrición
     sections-nosotros.jsx ← Sesión C: MissionValuesSection + HistorySection + WhyMomentSection (contenido migrado tal cual de la vieja Quienes Somos.html, ver PLAN-rediseno.md 7.1)
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
@@ -61,18 +61,15 @@ reemplazado por `ContactBannerSection` (3 íconos: correo/teléfono/dirección)
 en `contacto.html` — el formulario de contacto fue **eliminado a propósito**,
 no quedó pendiente de arreglar (ver "Tareas pendientes" más abajo).
 
-**`ServicesSection`/`ServiceDetail`/`ServiceFullModal` (en `hero-services.jsx`),
-el array `SERVICES` en `data.jsx`, y `ContactSection` (en `sections-bottom.jsx`)
-son código muerto**: no se montan en ninguna página, y sus precios quedaron
-obsoletos con este rediseño (planes personalizados de Entrenamiento, escalada
-con precios viejos). El plan original de Sesión A asumía que `ServicesSection`
-se reutilizaría en las páginas nuevas, pero no calzaba (es un selector de 4
-tabs, no una página de un solo servicio) — las páginas de Sesión B/C usan
-datos y componentes propios en `sections-escalada.jsx`/`sections-nosotros.jsx`/
-`sections-bottom.jsx` en su lugar. QA de Sesión C confirmó que este código
-realmente no se renderiza en ningún lado (no es un bug activo). Queda
-pendiente decidir si se elimina del todo (ver `nuevo/sesiones/notas-sesion-b.md`)
-— no se borró en Sesión C por no ser parte del alcance explícito de esa sesión.
+**Código muerto eliminado (agosto 2026)**: `ServicesSection`/`ServiceDetail`/
+`ServiceFullModal` (en `hero-services.jsx`, quedó solo `HeroVideo`), el array
+`SERVICES` en `data.jsx`, y `ContactSection` (en `sections-bottom.jsx`) — nunca
+se montaban en ninguna página tras el rediseño y sus precios estaban obsoletos.
+El plan original de Sesión A asumía que `ServicesSection` se reutilizaría en
+las páginas nuevas, pero no calzaba (es un selector de 4 tabs, no una página
+de un solo servicio) — las páginas de Sesión B/C usan datos y componentes
+propios en `sections-escalada.jsx`/`sections-nosotros.jsx`/`sections-bottom.jsx`
+en su lugar.
 
 Detalle completo del plan en `nuevo/PLAN-rediseno.md` y decisiones de cada
 sesión en `nuevo/sesiones/notas-sesion-*.md`.
@@ -87,9 +84,18 @@ SVG de sector de anillo relleno. Parámetros: `position`, `color`, `size`, `styl
 - Color default: `teal`. Otros: `pink`, `pink-light`, `ink`, o cualquier CSS color
 - Los sweep-flags del SVG fueron corregidos: arco interior de 90° (no el de 270°)
 
-### ServiceFullModal
-Modal de detalle completo de planes. Se activa con "Ver detalle completo de planes →".
-Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.jsx`.
+### ClassScheduleTable / OpeningHoursTable (agosto 2026)
+- `shared.jsx`: tablas de horario reusadas por `#información` del home Y por las páginas
+  de Clases/Entrenamiento/Muro (`sections-escalada.jsx`), para que nunca se desincronicen.
+  Ambas leen `CLASS_SCHEDULE`/`OPENING_HOURS_FULL` de `data.jsx` como única fuente de verdad.
+- `ClassScheduleTable({ keyword, isDark, cardBg })`: sin `keyword` muestra la tabla semanal
+  completa (home); con `keyword` (ej. `"escalada"`, `"entrenamiento"`) filtra filas/celdas
+  cuyo texto lo incluye y descarta filas sin ninguna coincidencia.
+- `OpeningHoursTable({ isDark, cardBg })`: tabla Día/Horario/Bloque alto, tal cual.
+
+### ProCard (agosto 2026)
+- `sections-escalada.jsx`: tarjeta de profesional (foto + rol + bio desde `TEAM` en
+  `data.jsx`). Usada al final de `kinesiologia.html` (Karinna) y `nutricion.html` (Miguel).
 
 ### CarouselSection
 - Auto-scroll con `requestAnimationFrame` (0.6px/frame)
@@ -103,7 +109,7 @@ Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.
 ### ScrollHintCard (agosto 2026)
 - `shared.jsx`: wrapper para cualquier tabla/elemento ancho que necesite scroll horizontal en mobile. Props: `children`, `bg` (color de fondo de la tarjeta contenedora, para que el degradé de borde calce), `style`.
 - Muestra un pill teal con flecha, centrado verticalmente, solo cuando `scrollWidth - scrollLeft - clientWidth > 8` (o sea, cuando de verdad queda contenido oculto a la derecha) — desaparece solo al llegar al final del scroll.
-- Usado en las 3 tablas del sitio: los dos horarios de `#información` (`sections-home.jsx`) y `MuroPricingTable` (`sections-escalada.jsx`).
+- Usado en las tablas de horario/precio del sitio: `#información` (`sections-home.jsx`), `MuroPricingTable`, y `ClassScheduleTable`/`OpeningHoursTable` en las páginas de Clases/Entrenamiento/Muro (`sections-escalada.jsx`).
 - **Requiere que el ancestro inmediato no sea un grid/flex item sin `min-width:0`** — ver gotcha de "grid blowout" en Notas de desarrollo. El componente por sí solo no sirve de nada si el contenedor padre se estira en vez de encoger.
 
 ---
@@ -111,7 +117,8 @@ Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.
 ## Datos editables (data.jsx)
 Todo el contenido editable está en `src/v2/data.jsx`:
 - `BRAND` — nombre, teléfono, email, dirección, horarios, Instagram
-- `SERVICES` — 4 servicios con precios, descripciones y `fullDetail` completo
+- `CLASS_SCHEDULE` / `OPENING_HOURS_FULL` — horarios semanales, fuente única para el home y las páginas de Clases/Entrenamiento/Muro
+- `PAGE_CLASES_ESCALADA` / `PAGE_ENTRENAMIENTO_FUNCIONAL` / `PAGE_MURO_ESCALADA` / `PAGE_KINESIOLOGIA` — precios de cada página nueva
 - `TEAM` — 3 profesionales con foto, rol, bio y LinkedIn
 - `CAROUSEL_ITEMS` — imágenes y videos del carrusel
 - `MEDIOS` — videos de YouTube (youtubeId)
@@ -135,8 +142,7 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - Acento de color: `--blue: #6aa6da`
 - Agendamiento: botón "Agenda tu hora" → WhatsApp (la integración con TUU Reserva se eliminó en junio 2026)
 - WhatsApp interceptor idéntico al de las otras páginas
-- El Nav del `index.html` (React) enlaza a esta página desde el dropdown "Más"
-- En `ServiceFullModal` para psicología (`s.id === 'psico'`), hay un botón extra que abre esta subpágina
+- Nav y footer son HTML/JS propios (no comparten `shared.jsx`) pero replican la misma estructura que el resto del sitio — incluido el dropdown "Especialidades" — para que no se desalineen. Si cambia el Nav o el Footer de React, replicar el cambio a mano aquí (ver "Notas de desarrollo").
 
 ### Agendamiento — solo WhatsApp
 - Se eliminó la integración con TUU Reserva (`tuu.cl/centrodeportivomoment`) en junio 2026. Todos los CTA de agendamiento (main y subpágina de psicología) usan únicamente links `wa.me` con texto **"Agenda tu hora"**.
@@ -208,3 +214,5 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - **QC SVG paths correctos** (corregidos mayo 2026): top-right = `M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z`. El error original tenía los sweep-flags invertidos.
 - **Dropdowns con `onMouseLeave` en un wrapper `position:relative`**: si el menú desplegado tiene `marginTop` para separarse visualmente del botón, ese hueco debe ir como `paddingTop` en el contenedor absoluto (no como `marginTop` en la tarjeta visible) — si no, el hueco queda fuera del área que escucha el hover y el menú se cierra solo al cruzarlo. Ver `NavDropdown` en `shared.jsx`.
 - **"Grid blowout" con tablas/contenido ancho dentro de un CSS grid** (agosto 2026): un `overflow-x:auto` en un div no sirve de nada si algún ancestro es un item de grid o flex sin `min-width:0` — por default el item se niega a encogerse por debajo del ancho mínimo de su contenido (la tabla), así que en vez de scrollear internamente, TODA la sección se desborda del viewport. Con `body{overflow-x:hidden}` (global en todas las páginas) eso deja contenido invisible y sin scroll posible, no solo "feo". Si se agrega una tabla/tarjeta ancha dentro de un `display:grid` o `display:flex`, siempre sumar `min-width:0` al item del grid/flex, y envolver el contenido scrolleable con `ScrollHintCard` (`shared.jsx`) para que además quede visualmente claro que hay más para el lado. Ver fix completo en el commit `13e841a`.
+- **Nav de 5 links de escritorio (agosto 2026)**: con el dropdown "Especialidades" agregado junto a "Clases, Entrenamiento y Muro", el nav de escritorio pasa al menú hamburguesa en `max-width:1080px` (no `768px` como el resto del layout) — ver el bloque `@media(max-width:1080px)` en `SHARED_CSS`. Si se agrega o saca un ítem del nav, revisar si ese breakpoint sigue siendo el correcto.
+- **`psicologia-deportiva.html` no comparte Nav/Footer de React**: es la única página con nav y footer escritos a mano (HTML/CSS/JS puro, ver sección propia arriba). Cualquier cambio a la estructura del `Nav` o `Footer` de `shared.jsx` (agregar/sacar un link, un dropdown, una columna) hay que replicarlo a mano en esta página o queda desalineada — ya pasó una vez (menú y footer quedaron con contenido de mayo 2026 hasta la corrección de agosto 2026).

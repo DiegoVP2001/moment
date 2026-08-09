@@ -76,9 +76,9 @@ const SERVICES_GRID = [
     icon: null,
     title: 'Especialidades Deportivas',
     subitems: [
-      { label: 'Kinesiología', href: 'kinesiologia.html' },
-      { label: 'Psicología', href: 'psicologia-deportiva.html' },
-      { label: 'Nutrición', href: 'nutricion.html' },
+      { label: 'Kinesiología Deportiva', href: 'kinesiologia.html' },
+      { label: 'Psicología Deportiva', href: 'psicologia-deportiva.html' },
+      { label: 'Nutrición Deportiva', href: 'nutricion.html' },
     ],
   },
   {
@@ -91,8 +91,6 @@ const SERVICES_GRID = [
 ];
 
 // Datos de precios de las páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología (sesión B del rediseño).
-// Independientes del viejo SERVICES (tabs) de abajo — ese array ya no se monta en ninguna página
-// y sus precios quedaron obsoletos con este rediseño (ver notas-sesion-b.md).
 const PAGE_CLASES_ESCALADA = {
   title: 'Clases de Escalada',
   items: [
@@ -170,243 +168,6 @@ const PAGE_KINESIOLOGIA = {
     },
   ],
 };
-
-const SERVICES = [
-  {
-    id: 'kine', n: '01',
-    title: 'Kinesiología Deportiva',
-    icon: 'assets/icon-kinesiology.png',
-    desc: 'Evaluación, rehabilitación y optimización del movimiento para deportistas y personas activas.',
-    cta: 'Agendar evaluación',
-    accent: 'teal',
-    detail: 'Diagnóstico funcional, tratamiento manual y ejercicios específicos para recuperar lesiones y mejorar el rendimiento. Los packs permiten acceso a valor preferencial y seguimiento continuo del proceso.',
-    items: [
-      { k: 'Evaluación inicial',  v: '$35.000' },
-      { k: 'Sesión individual',   v: '$30.000' },
-      { k: 'Pack 5 sesiones',     v: '$139.500' },
-      { k: 'Pack 10 sesiones',    v: '$261.000' },
-    ],
-    fullDetail: {
-      notes: [
-        'Atenciones realizadas por kinesiólogos deportivos.',
-        'Reembolsable en isapres y seguros complementarios. Se emite boleta por sesión.',
-        'Pago solo con efectivo o transferencia.',
-        'Pacientes FONASA: consultar condiciones de atención.',
-      ],
-      sections: [
-        {
-          title: 'Evaluación',
-          items: [
-            { k: 'Evaluación inicial (obligatoria)', v: '$35.000' },
-            { k: 'Reevaluación', v: '$20.000' },
-          ],
-        },
-        {
-          title: 'Sesiones',
-          items: [
-            { k: 'Sesión individual', v: '$30.000' },
-          ],
-        },
-        {
-          title: 'Paquetes de sesiones',
-          subtitle: 'Pago único — valor preferencial',
-          items: [
-            { k: 'Pack 5 sesiones', v: '$139.500', note: '7% de descuento' },
-            { k: 'Pack 8 sesiones', v: '$216.000', note: '10% de descuento' },
-            { k: 'Pack 10 sesiones', v: '$261.000', note: '13% de descuento' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'psico', n: '02',
-    title: 'Psicología Deportiva',
-    icon: 'assets/icon-psychology.png',
-    desc: 'Trabajo psicológico especializado para deportistas, entrenadores, padres y equipos. Concentración, ansiedad, motivación, autoconfianza y 9 áreas de intervención aplicadas al deporte.',
-    cta: 'Consultar disponibilidad',
-    accent: 'blue',
-    detail: 'Intervención en 9 áreas: concentración, motivación, autoconfianza, fortaleza mental, activación, visualización, autohabla, retorno tras lesión y cohesión de equipo. Sesiones individuales y 3 programas de acompañamiento mensual (desde $115.000). Atención a deportistas, entrenadores, padres y organizaciones.',
-    items: [
-      { k: 'Evaluación inicial',         v: '$25.000' },
-      { k: 'Sesión individual',          v: '$30.000' },
-      { k: 'Evaluación y Bases',         v: '$115.000/mes' },
-      { k: 'Intervención en Competencia', v: '$300.000/mes' },
-    ],
-    fullDetail: {
-      notes: [
-        'Modalidad presencial u online.',
-        'Duración por sesión: 45 a 55 minutos.',
-        'Los valores con precios visibles corresponden exclusivamente a deportistas individuales.',
-        'Para entrenadores, equipos y organizaciones: consultar directamente.',
-      ],
-      sections: [
-        {
-          title: 'Evaluación y sesiones individuales',
-          items: [
-            { k: 'Evaluación inicial', v: '$25.000', note: 'Análisis del contexto deportivo, objetivos y recomendaciones iniciales' },
-            { k: 'Sesión individual', v: '$30.000', note: 'Intervención focalizada en necesidad específica' },
-          ],
-        },
-        {
-          title: 'Programas de acompañamiento mensual',
-          items: [
-            { k: 'Evaluación y Bases', v: '$115.000/mes', note: 'Hasta 4 sesiones — inicio del proceso psicológico deportivo' },
-            { k: 'Desarrollo Psicológico', v: '$210.000/mes', note: 'Hasta 8 sesiones — plan progresivo + seguimiento entre sesiones' },
-            { k: 'Intervención en Competencia', v: '$300.000/mes', note: 'Hasta 12 sesiones — rutinas precompetitivas, control de presión y observaciones' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'train', n: '03',
-    title: 'Entrenamiento & Recovery',
-    icon: 'assets/icon-training.png',
-    desc: 'Planes de entrenamiento personalizado, recovery con masoterapia y compresión, y evaluación cardiovascular.',
-    cta: 'Ver planes',
-    accent: 'ink',
-    detail: 'Trabajamos desde las ciencias del deporte integrando entrenamiento y kinesiología. Planes individuales y grupales. Recovery con masoterapia, electropunción y compresión neumática.',
-    items: [
-      { k: 'Plan Inicio (1 ses + 1 acceso/sem)', v: '$89.000/mes' },
-      { k: 'Plan 2 (2 ses + 2 accesos/sem)',     v: '$200.000/mes' },
-      { k: 'Recovery Moment (60 min)',            v: '$35.000' },
-      { k: 'Evaluación VO2',                      v: '$20.000' },
-    ],
-    fullDetail: {
-      notes: [
-        'Evaluación inicial obligatoria: $35.000 · Reevaluación: $20.000.',
-        'Cualquier método de pago.',
-      ],
-      sections: [
-        {
-          title: 'Entrenamiento personalizado',
-          subtitle: 'Guiado por kinesióloga deportiva — planes mensuales',
-          items: [
-            { k: 'Plan Inicio', v: '$89.000/mes', note: '1 sesión + 1 acceso al gym por semana' },
-            { k: 'Plan 1', v: '$120.000/mes', note: '1 sesión + 2 accesos al gym por semana' },
-            { k: 'Plan 2', v: '$200.000/mes', note: '2 sesiones + 2 accesos al gym por semana' },
-            { k: 'Plan 3', v: '$280.000/mes', note: '3 sesiones + acceso libre al gym + 1 pase acompañante' },
-          ],
-        },
-        {
-          title: 'Small Group',
-          subtitle: 'Entrenamiento grupal guiado · máx. 3 personas',
-          items: [
-            { k: '1 vez por semana', v: '$55.000/mes' },
-            { k: '2 veces por semana', v: '$85.000/mes' },
-            { k: '3 veces por semana', v: '$110.000/mes' },
-          ],
-        },
-        {
-          title: 'Recovery',
-          subtitle: '60 minutos por sesión',
-          items: [
-            { k: 'Recovery Moment', v: '$35.000', note: 'Masoterapia + compresión neumática (Terapress)' },
-            { k: 'Recovery Pro', v: '$45.000', note: 'Masoterapia + electropunción + compresión neumática' },
-            { k: 'Pack 2 sesiones/mes', v: '$68.000', note: '$34.000 por sesión' },
-            { k: 'Pack 4 sesiones/mes', v: '$130.000', note: '$32.500 por sesión' },
-          ],
-        },
-        {
-          title: 'Entrenamiento cardiovascular',
-          items: [
-            { k: 'Evaluación VO2 (indirecto)', v: '$20.000', note: 'Test + interpretación de resultados' },
-            { k: 'Plan Cardiovascular', v: '$65.000', note: 'Planificación basada en FTP para runners y ciclistas' },
-            { k: 'Plan Cardiovascular + VO2', v: '$75.000' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'climb', n: '04',
-    title: 'Escalada · Climbing Wall',
-    icon: 'assets/icon-climbing.png',
-    desc: 'Pases, clases y bautizos de escalada en nuestro muro indoor con rutas renovadas periódicamente.',
-    cta: 'Reservar sesión',
-    accent: 'pink',
-    detail: 'Muro indoor con rutas para todos los niveles. Horario bajo (L–V 7:30–16:00) y horario alto (16:00–22:00; fines de semana y festivos). Planes mensuales y semestrales con acceso libre. Clases con instructor, arnés incluido.',
-    items: [
-      { k: 'Pase diario adulto',  v: 'desde $5.000' },
-      { k: 'Plan mensual adulto', v: 'desde $45.000' },
-      { k: 'Clase prueba',        v: '$12.000' },
-      { k: 'Bautizo de escalada', v: '$15.000' },
-    ],
-    fullDetail: {
-      notes: [
-        'Arriendo de zapatillas de escalada: $2.000.',
-        'Horario bajo: lunes a viernes 7:30–16:00 · Horario alto: lunes a viernes 16:00–22:00; sábados, domingos y festivos todo el día.',
-        'Horarios boulder: Sáb 9:00–22:30 · Dom 9:00–16:00 · Festivos 9:00–19:00.',
-        'Comunidad Moment: misma tarifa que menores de 22 en planes.',
-      ],
-      sections: [
-        {
-          title: 'Pase diario',
-          items: [
-            { k: 'Adulto — horario bajo', v: '$5.000' },
-            { k: 'Adulto — horario alto', v: '$6.500' },
-            { k: 'Menor de 22 / Comunidad Moment — horario bajo', v: '$3.500' },
-            { k: 'Menor de 22 / Comunidad Moment — horario alto', v: '$4.500' },
-          ],
-        },
-        {
-          title: 'Pack de pases',
-          subtitle: 'Duración 1 mes',
-          items: [
-            { k: '5 pases', v: '$22.500', note: '$4.500 por pase' },
-            { k: '10 pases', v: '$40.000', note: '$4.000 por pase' },
-          ],
-        },
-        {
-          title: 'Plan mensual (30 días)',
-          items: [
-            { k: 'Adulto — horario bajo', v: '$45.000' },
-            { k: 'Adulto — horario alto', v: '$65.000' },
-            { k: 'Adulto — full', v: '$80.000' },
-            { k: 'Menor / Comunidad Moment — horario bajo', v: '$33.500' },
-            { k: 'Menor / Comunidad Moment — horario alto', v: '$49.000' },
-            { k: 'Menor / Comunidad Moment — full', v: '$60.000' },
-          ],
-        },
-        {
-          title: 'Plan semestral (6 meses)',
-          items: [
-            { k: 'Adulto — horario bajo', v: '$230.000' },
-            { k: 'Adulto — horario alto', v: '$360.000' },
-            { k: 'Adulto — full', v: '$400.000' },
-            { k: 'Menor / Comunidad Moment — horario bajo', v: '$184.000' },
-            { k: 'Menor / Comunidad Moment — horario alto', v: '$288.000' },
-            { k: 'Menor / Comunidad Moment — full', v: '$320.000' },
-          ],
-        },
-        {
-          title: 'Clases mensuales',
-          subtitle: 'Con instructor — arnés incluido · 10% dcto. menores de 22 y Comunidad Moment · 10% extra al 2º hermano/a (NNA)',
-          items: [
-            { k: '4 clases al mes', v: '$49.900' },
-            { k: '8 clases al mes', v: '$79.900' },
-            { k: '12 clases al mes', v: '$109.000' },
-            { k: 'Clase prueba', v: '$12.000' },
-            { k: 'Bautizo de escalada (adulto)', v: '$15.000' },
-          ],
-        },
-        {
-          title: 'Horarios de clases',
-          subtitle: 'Actualizados junio 2026',
-          items: [
-            { k: 'Adultos — Lu · Mi · Vi', v: '7:30–9:30 · 9:30–11:30 · 19:45–21:45' },
-            { k: 'Adultos — Ma · Ju', v: '17:30–19:30' },
-            { k: 'Niños/as 5–8 años — Ma · Ju', v: '17:00–18:30' },
-            { k: 'Niños/as 5–8 años — Sáb', v: '10:00–11:30' },
-            { k: 'Niños/as 9–14 años — Lu · Mi · Vi', v: '17:00–18:30' },
-            { k: 'Niños/as 9–14 años — Sáb', v: '11:45–13:15' },
-          ],
-        },
-      ],
-    },
-  },
-];
 
 const TEAM = [
   {
@@ -511,7 +272,7 @@ const JOBS = [
 ];
 
 Object.assign(window, {
-  BRAND, SERVICES, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
+  BRAND, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
   PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA,
   WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink

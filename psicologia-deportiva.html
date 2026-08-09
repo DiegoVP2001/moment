@@ -47,11 +47,15 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop
 .mobile-menu a{padding:12px 8px;font-size:15px;font-family:'Jost',sans-serif;border-bottom:1px solid rgba(26,24,35,.07)}
 .mobile-menu.open{display:flex}
 
-/* More dropdown */
-#more-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:14px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.18);border:1px solid rgba(26,24,35,.08);min-width:210px;z-index:60;display:none}
-#more-dropdown.open{display:block}
-#more-dropdown a{display:block;padding:10px 16px;border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;transition:background .15s}
-#more-dropdown a:hover{background:var(--pink-50)}
+/* Nav dropdowns (Información / Clases / Especialidades) — click para abrir, mismo patrón */
+.nav-dd{position:relative}
+.nav-dd-btn{display:flex;align-items:center;gap:4px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.02em;padding:0}
+.nav-dd-btn .chev{font-size:10px;transition:transform .2s}
+.nav-dd-btn.open .chev{transform:rotate(180deg)}
+.nav-dropdown-panel{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:14px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.18);border:1px solid rgba(26,24,35,.08);min-width:220px;z-index:60;display:none}
+.nav-dropdown-panel.open{display:block}
+.nav-dropdown-panel a{display:block;padding:10px 16px;border-radius:8px;font-size:13px;font-family:'Jost',sans-serif;transition:background .15s;white-space:nowrap}
+.nav-dropdown-panel a:hover{background:var(--pink-50)}
 
 /* Cards */
 .card-base{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(26,24,35,.06);transition:transform .2s,box-shadow .2s}
@@ -92,7 +96,7 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop
 
 /* Footer */
 footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
-.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;border-bottom:1px solid rgba(230,198,199,.15)}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1fr 1fr;gap:40px;padding-bottom:56px;border-bottom:1px solid rgba(230,198,199,.15)}
 .footer-col h4{font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);margin-bottom:18px;margin-top:0}
 .footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px}
 .footer-bottom{display:flex;justify-content:space-between;padding-top:28px;font-size:12px;color:rgba(230,198,199,.5);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:8px}
@@ -102,9 +106,13 @@ footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
   .program-grid,.service-cards,.audience-grid,.sports-grid{grid-template-columns:repeat(2,1fr)!important}
   .area-grid{grid-template-columns:repeat(2,1fr)!important}
 }
-@media(max-width:768px){
+/* Mismo breakpoint que el resto del sitio (shared.jsx): con 3 dropdowns en el nav de
+   escritorio, se pasa al menú móvil antes de que el nav se apriete contra el CTA. */
+@media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
+}
+@media(max-width:768px){
   .nav-inner{padding:12px 20px}
   section{padding-left:20px!important;padding-right:20px!important}
   .problem-grid,.area-grid,.tools-grid{grid-template-columns:1fr 1fr!important}
@@ -128,22 +136,34 @@ footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
       <span>moment</span>
     </a>
     <div class="nav-links">
-      <a href="index.html#servicios">Servicios</a>
-      <a href="index.html#instalaciones">Instalaciones</a>
-      <a href="Quienes Somos.html#equipo">Equipo</a>
-      <a href="Quienes Somos.html#medios">En medios</a>
-      <a href="tienda.html">Tienda</a>
-      <a href="contacto.html">Contacto</a>
-      <div style="position:relative">
-        <button id="more-btn" style="display:flex;align-items:center;gap:4px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.02em;padding:0">
-          Más <span id="more-chevron" style="font-size:10px;transition:transform .2s">▾</span>
-        </button>
-        <div id="more-dropdown">
-          <a href="Quienes Somos.html">Quiénes somos</a>
-          <a href="psicologia-deportiva.html" style="color:var(--blue);font-weight:600">Psicología Deportiva</a>
-          <a href="contacto.html#trabaja">Trabaja con nosotros</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" data-dd="info">Información <span class="chev">▾</span></button>
+        <div class="nav-dropdown-panel" id="dd-info">
+          <a href="index.html#instalaciones">Instalaciones</a>
+          <a href="index.html#informacion">Horarios</a>
+          <a href="index.html#ubicacion">Ubicación</a>
+          <a href="index.html#servicios">Servicios</a>
         </div>
       </div>
+      <a href="Quienes Somos.html">Quienes somos</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" data-dd="clases">Clases, Entrenamiento y Muro <span class="chev">▾</span></button>
+        <div class="nav-dropdown-panel" id="dd-clases">
+          <a href="clases-escalada.html">Clases de Escalada</a>
+          <a href="entrenamiento-funcional.html">Entrenamientos Funcionales</a>
+          <a href="muro-escalada.html">Muro de Escalada</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" data-dd="esp">Especialidades <span class="chev">▾</span></button>
+        <div class="nav-dropdown-panel" id="dd-esp">
+          <a href="kinesiologia.html">Kinesiología Deportiva</a>
+          <a href="psicologia-deportiva.html" style="color:var(--blue);font-weight:600">Psicología Deportiva</a>
+          <a href="nutricion.html">Nutrición Deportiva</a>
+        </div>
+      </div>
+      <a href="tienda.html">Tienda</a>
+      <a href="contacto.html">Contacto</a>
     </div>
     <a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20agendar%20una%20hora%20en%20Psicolog%C3%ADa%20Deportiva." target="_blank" class="nav-cta">Agenda tu hora</a>
     <button class="hamburger" id="hamburger" aria-label="Menú">
@@ -151,15 +171,19 @@ footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
     </button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <a href="index.html">Inicio</a>
-    <a href="index.html#servicios">Servicios</a>
     <a href="index.html#instalaciones">Instalaciones</a>
-    <a href="Quienes Somos.html#equipo">Equipo</a>
-    <a href="Quienes Somos.html#medios">En medios</a>
+    <a href="index.html#informacion">Horarios</a>
+    <a href="index.html#ubicacion">Ubicación</a>
+    <a href="index.html#servicios">Servicios</a>
+    <a href="Quienes Somos.html">Quienes somos</a>
+    <a href="clases-escalada.html">Clases de Escalada</a>
+    <a href="entrenamiento-funcional.html">Entrenamientos Funcionales</a>
+    <a href="muro-escalada.html">Muro de Escalada</a>
+    <a href="kinesiologia.html">Kinesiología Deportiva</a>
+    <a href="psicologia-deportiva.html" style="color:var(--blue);font-weight:600">Psicología Deportiva</a>
+    <a href="nutricion.html">Nutrición Deportiva</a>
     <a href="tienda.html">Tienda</a>
     <a href="contacto.html">Contacto</a>
-    <a href="Quienes Somos.html">Quiénes somos</a>
-    <a href="contacto.html#trabaja">Trabaja con nosotros</a>
     <a href="https://wa.me/56998928078?text=Hola%2C%20quiero%20agendar%20una%20hora%20en%20Psicolog%C3%ADa%20Deportiva." target="_blank" style="color:var(--blue);font-weight:600">Agenda tu hora →</a>
   </div>
 </nav>
@@ -470,24 +494,40 @@ footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
           <img src="assets/logo-isotype-pink.png" style="width:38px;height:38px"/>
           <span style="font-family:'Playfair Display',serif;font-weight:500;font-style:italic;letter-spacing:-0.02em;color:var(--pink);font-size:28px">moment</span>
         </div>
-        <p style="font-size:13px;line-height:1.6;color:rgba(230,198,199,.65);max-width:280px">Centro deportivo integral en Isla de Maipo. Kinesiología, psicología, entrenamiento, recovery y escalada.</p>
+        <p style="font-size:13px;line-height:1.6;color:rgba(230,198,199,.65);max-width:280px">Centro de escalada en Isla de Maipo. Muro, entrenamiento funcional y especialidades deportivas para acompañar tu progreso.</p>
       </div>
       <div class="footer-col">
-        <h4>Psicología</h4>
+        <h4>Información</h4>
         <ul>
-          <li><a href="#servicios">Evaluación Inicial</a></li>
-          <li><a href="#servicios">Sesión Individual</a></li>
-          <li><a href="#programas">Programas</a></li>
-          <li><a href="#agendar">Agendar con Jairo</a></li>
+          <li><a href="index.html#instalaciones">Instalaciones</a></li>
+          <li><a href="index.html#informacion">Horarios</a></li>
+          <li><a href="index.html#ubicacion">Ubicación</a></li>
+          <li><a href="index.html#servicios">Servicios</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Moment</h4>
+        <h4>Clases y Muro</h4>
         <ul>
-          <li><a href="index.html#servicios">Todos los servicios</a></li>
-          <li><a href="Quienes Somos.html#equipo">El equipo</a></li>
-          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="clases-escalada.html">Clases de Escalada</a></li>
+          <li><a href="entrenamiento-funcional.html">Entrenamientos Funcionales</a></li>
+          <li><a href="muro-escalada.html">Muro de Escalada</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Especialidades</h4>
+        <ul>
+          <li><a href="kinesiologia.html">Kinesiología Deportiva</a></li>
+          <li><a href="psicologia-deportiva.html">Psicología Deportiva</a></li>
+          <li><a href="nutricion.html">Nutrición Deportiva</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Centro</h4>
+        <ul>
           <li><a href="Quienes Somos.html">Quiénes somos</a></li>
+          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="contacto.html#trabaja">Trabaja con nosotros</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -502,7 +542,7 @@ footer{background:var(--ink);color:var(--pink-100);padding:80px 36px 32px}
     </div>
     <div class="footer-bottom">
       <span>© 2026 Moment · Centro Deportivo</span>
-      <span>Última actualización (17 mayo 2026)</span>
+      <span>Isla de Maipo · Chile</span>
     </div>
   </div>
 </footer>
@@ -558,21 +598,21 @@ if(ham && mob){
   mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
 }
 
-// "Más" dropdown
-const moreBtn = document.getElementById('more-btn');
-const moreDrop = document.getElementById('more-dropdown');
-const moreChevron = document.getElementById('more-chevron');
-if(moreBtn && moreDrop){
-  moreBtn.addEventListener('click', (e) => {
+// Nav dropdowns (Información / Clases / Especialidades)
+document.querySelectorAll('.nav-dd-btn').forEach(btn => {
+  const panel = document.getElementById('dd-' + btn.dataset.dd);
+  btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const open = moreDrop.classList.toggle('open');
-    moreChevron.style.transform = open ? 'rotate(180deg)' : 'none';
+    const willOpen = !panel.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown-panel.open').forEach(p => p.classList.remove('open'));
+    document.querySelectorAll('.nav-dd-btn.open').forEach(b => b.classList.remove('open'));
+    if (willOpen) { panel.classList.add('open'); btn.classList.add('open'); }
   });
-  document.addEventListener('click', () => {
-    moreDrop.classList.remove('open');
-    moreChevron.style.transform = 'none';
-  });
-}
+});
+document.addEventListener('click', () => {
+  document.querySelectorAll('.nav-dropdown-panel.open').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.nav-dd-btn.open').forEach(b => b.classList.remove('open'));
+});
 
 // Scroll reveal
 const obs = new IntersectionObserver((entries) => {

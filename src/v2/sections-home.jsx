@@ -1,9 +1,5 @@
 // ============ INFORMACION + UBICACION + SERVICIOS (grid) — secciones nuevas del home ============
 
-const DAY_COLS = [
-  ['mon', 'Lun'], ['tue', 'Mar'], ['wed', 'Mié'], ['thu', 'Jue'], ['fri', 'Vie'],
-];
-
 // --- #informacion: horarios de apertura + horarios de clases + 3 accesos rápidos ---
 function InfoSection({ theme }) {
   const isDark = theme === 'dark';
@@ -26,56 +22,14 @@ function InfoSection({ theme }) {
           <Reveal delay={.08}>
             <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de apertura</div>
-              <ScrollHintCard bg={cardBg}>
-                <table style={{ width: '100%', minWidth: 300, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 14 }}>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Día</th>
-                      <th style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
-                      <th style={{ textAlign: 'left', padding: '6px 0 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Bloque alto</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {OPENING_HOURS_FULL.map((row, i) => (
-                      <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-                        <td style={{ padding: '12px 10px 12px 0', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[0]}</td>
-                        <td style={{ padding: '12px 10px', whiteSpace: 'nowrap' }}>{row[1]}</td>
-                        <td style={{ padding: '12px 0', color: 'var(--teal-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{row[2]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </ScrollHintCard>
+              <OpeningHoursTable isDark={isDark} cardBg={cardBg}/>
             </div>
           </Reveal>
 
           <Reveal delay={.14}>
             <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de clases y entrenamientos</div>
-              <ScrollHintCard bg={cardBg}>
-                <table style={{ width: '100%', minWidth: 520, borderCollapse: 'collapse', fontFamily: "'Jost',sans-serif", fontSize: 13 }}>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: 'left', padding: '6px 10px 10px 0', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>Horario</th>
-                      {DAY_COLS.map(([, label]) => (
-                        <th key={label} style={{ textAlign: 'left', padding: '6px 10px 10px', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', fontWeight: 500 }}>{label}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {CLASS_SCHEDULE.map((row, i) => (
-                      <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-                        <td style={{ padding: '10px 10px 10px 0', whiteSpace: 'nowrap', fontWeight: 600 }}>{row.time}</td>
-                        {DAY_COLS.map(([key]) => (
-                          <td key={key} style={{ padding: '10px', color: row[key] ? 'inherit' : (isDark ? 'rgba(255,255,255,.25)' : 'rgba(26,24,35,.25)') }}>
-                            {row[key] || '—'}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </ScrollHintCard>
+              <ClassScheduleTable isDark={isDark} cardBg={cardBg}/>
             </div>
           </Reveal>
         </div>

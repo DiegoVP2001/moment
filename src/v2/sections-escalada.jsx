@@ -128,6 +128,21 @@ function WaGeneralCta({ serviceTitle, label }) {
   );
 }
 
+// --- Tarjeta de profesional (foto + rol + bio, desde TEAM en data.jsx) — usada al final de
+// Kinesiología y Nutrición para poner cara al servicio ---
+function ProCard({ member, style = {} }) {
+  return (
+    <div style={{ display: 'flex', gap: 20, alignItems: 'center', background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', flexWrap: 'wrap', ...style }}>
+      <img src={member.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
+      <div>
+        <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{member.name}</div>
+        <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{member.role}</div>
+        <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{member.bio}</p>
+      </div>
+    </div>
+  );
+}
+
 const italicAccent = color => ({ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color });
 const eyebrowLabel = txt => (
   <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 16 }}>{txt}</div>
@@ -141,7 +156,7 @@ function ClasesEscaladaContent() {
       <PageHero
         eyebrow="/ clases de escalada · moment"
         title={<>Sube de nivel,<br/><span style={italicAccent('var(--teal)')}>clase a clase.</span></>}
-        subtitle="Clases grupales con instructor y arnés incluido — aprende técnica de escalada desde el primer día, sin importar tu nivel."
+        subtitle="Clases grupales con instructor en nuestro muro boulder — sin arnés ni cuerdas, solo colchonetas de seguridad. Aprende técnica de escalada desde el primer día, sin importar tu nivel."
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -155,7 +170,13 @@ function ClasesEscaladaContent() {
               {d.benefit}
             </div>
           </Reveal>
-          <Reveal delay={.18}>
+          <Reveal delay={.16}>
+            <div style={{ marginTop: 40 }}>
+              {eyebrowLabel('Horarios')}
+              <ClassScheduleTable keyword="escalada"/>
+            </div>
+          </Reveal>
+          <Reveal delay={.22}>
             <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle={d.title}/></div>
           </Reveal>
         </div>
@@ -182,6 +203,12 @@ function EntrenamientoFuncionalContent() {
             <PriceRows items={d.items} serviceTitle={d.title} accentColor="var(--teal-dark)"/>
           </Reveal>
           <Reveal delay={.1}>
+            <div style={{ marginTop: 40 }}>
+              {eyebrowLabel('Horarios')}
+              <ClassScheduleTable keyword="entrenamiento"/>
+            </div>
+          </Reveal>
+          <Reveal delay={.18}>
             <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle={d.title}/></div>
           </Reveal>
         </div>
@@ -209,11 +236,20 @@ function MuroEscaladaContent() {
           </Reveal>
           <Reveal delay={.1}>
             <div style={{ marginTop: 40 }}>
+              {eyebrowLabel('Horarios')}
+              <OpeningHoursTable/>
+              <p style={{ marginTop: 14, fontFamily: "'Jost',sans-serif", fontSize: 13, lineHeight: 1.5, color: 'var(--ink-60)' }}>
+                El "bloque alto" es el horario de mayor demanda (columna de la derecha); el resto de las horas de apertura corresponde al "bloque bajo", con precios más bajos.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={.16}>
+            <div style={{ marginTop: 40 }}>
               {eyebrowLabel('Condiciones')}
               <BulletList items={d.conditions}/>
             </div>
           </Reveal>
-          <Reveal delay={.18}>
+          <Reveal delay={.22}>
             <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle={d.title}/></div>
           </Reveal>
         </div>
@@ -225,6 +261,7 @@ function MuroEscaladaContent() {
 // ============ 6.1 — Kinesiología (primera vez con página/URL propia) ============
 function KinesiologiaContent() {
   const d = PAGE_KINESIOLOGIA;
+  const karinna = TEAM.find(t => t.name === 'Karinna Araneda');
   return (
     <>
       <PageHero
@@ -238,8 +275,13 @@ function KinesiologiaContent() {
           <Reveal>
             <PriceSections sections={d.sections} notes={d.notes} serviceTitle={d.title} accentColor="var(--teal-dark)"/>
           </Reveal>
-          <Reveal delay={.1}>
-            <div style={{ marginTop: 12 }}><WaGeneralCta serviceTitle={d.title}/></div>
+          {karinna && (
+            <Reveal delay={.1}>
+              <ProCard member={karinna} style={{ marginTop: 32 }}/>
+            </Reveal>
+          )}
+          <Reveal delay={.16}>
+            <div style={{ marginTop: 24 }}><WaGeneralCta serviceTitle={d.title}/></div>
           </Reveal>
         </div>
       </section>
@@ -273,14 +315,7 @@ function NutricionContent() {
 
           {miguel && (
             <Reveal delay={.1}>
-              <div style={{ marginTop: 32, display: 'flex', gap: 20, alignItems: 'center', background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', flexWrap: 'wrap' }}>
-                <img src={miguel.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
-                <div>
-                  <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{miguel.name}</div>
-                  <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{miguel.role}</div>
-                  <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{miguel.bio}</p>
-                </div>
-              </div>
+              <ProCard member={miguel} style={{ marginTop: 32 }}/>
             </Reveal>
           )}
 
@@ -294,6 +329,6 @@ function NutricionContent() {
 }
 
 Object.assign(window, {
-  PageHero, PriceRows, PriceSections, MuroPricingTable, BulletList, WaGeneralCta,
+  PageHero, PriceRows, PriceSections, MuroPricingTable, BulletList, WaGeneralCta, ProCard,
   ClasesEscaladaContent, EntrenamientoFuncionalContent, MuroEscaladaContent, KinesiologiaContent, NutricionContent
 });

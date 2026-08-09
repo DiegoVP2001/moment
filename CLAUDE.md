@@ -188,6 +188,21 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ---
 
+## Panel de cliente (futuro, en planificación — no implementado)
+
+Hay un plan (sin ejecutar todavía) para que Moment (el cliente) edite todo el
+**texto** del sitio por su cuenta vía Google Sheets, sin depender de Diego —
+detalle completo en `../panel-cliente/PLAN-panel-cliente.md` y el inventario
+de campos en `../panel-cliente/CAMPOS.md`.
+
+**Regla para cualquier sesión que trabaje en este repo**: si agregas una
+página nueva, un componente con texto de cara al cliente, o cambias la forma
+de un dato existente en `data.jsx`, actualiza `../panel-cliente/CAMPOS.md`
+como parte del mismo trabajo (no lo dejes pendiente) — de lo contrario el
+inventario de ese plan queda desincronizado del sitio real y el panel de
+cliente, cuando se construya, va a fallar o va a mostrar campos que ya no
+existen.
+
 ## Tareas pendientes
 
 ### Media prioridad

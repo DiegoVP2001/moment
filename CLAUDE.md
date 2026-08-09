@@ -46,8 +46,11 @@ src/
   (raíz src/)           ← Legacy v1, ignorar
 ```
 
-**Rediseño 2026 (Sesiones A/B/C completas en rama `rediseno-2026`, pendiente
-aprobación final de Diego para merge a `production`)**: el sitio pasó de una
+**Rediseño 2026 (Sesiones A/B/C completas, mergeadas a `main` y publicadas en
+GitHub Pages — https://diegovp2001.github.io/moment/ — el 2026-08-08 para que
+Diego se lo mostrara a sus clientes. `production` /centrodeportivomoment.cl
+NO se ha tocado; el merge `main` → `production` sigue pendiente de una
+aprobación explícita y separada de Diego)**: el sitio pasó de una
 sola página a multi-página (nav/footer con rutas completas, no anchors
 pelados). `index.html` hoy monta solo Hero → `#instalaciones` →
 `#informacion` → `#ubicacion` → `#servicios` (grid) → Footer. `TeamSection` y
@@ -96,6 +99,12 @@ Los datos vienen de `fullDetail` en cada servicio dentro de `SERVICES` en `data.
 
 ### SectionHeader
 - `subtitle` usa `text-wrap: balance` — evita que el párrafo deje una última línea corta y desbalanceada ("rag" feo). Aplica a cualquier sección que use `subtitle`, no hace falta repetirlo.
+
+### ScrollHintCard (agosto 2026)
+- `shared.jsx`: wrapper para cualquier tabla/elemento ancho que necesite scroll horizontal en mobile. Props: `children`, `bg` (color de fondo de la tarjeta contenedora, para que el degradé de borde calce), `style`.
+- Muestra un pill teal con flecha, centrado verticalmente, solo cuando `scrollWidth - scrollLeft - clientWidth > 8` (o sea, cuando de verdad queda contenido oculto a la derecha) — desaparece solo al llegar al final del scroll.
+- Usado en las 3 tablas del sitio: los dos horarios de `#información` (`sections-home.jsx`) y `MuroPricingTable` (`sections-escalada.jsx`).
+- **Requiere que el ancestro inmediato no sea un grid/flex item sin `min-width:0`** — ver gotcha de "grid blowout" en Notas de desarrollo. El componente por sí solo no sirve de nada si el contenedor padre se estira en vez de encoger.
 
 ---
 
@@ -180,7 +189,7 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
 - [ ] **Copy "4 áreas" desactualizado** — el Hero de `index.html` (`hero-services.jsx`) y ahora también `Quienes Somos.html` (`sections-nosotros.jsx`, Historia y "Por qué Moment") siguen describiendo "kinesiología, psicología, entrenamiento & recovery y escalada" como 4 áreas iguales. Contradice el nuevo posicionamiento 100% escalada (kinesiología/psicología/nutrición pasaron a "Especialidades Deportivas" complementarias). En Sesión C el contenido de Quienes Somos se migró literal a propósito (no se reescribió) — pendiente una decisión de Diego sobre si actualizar el copy.
 - [ ] **Flotante de WhatsApp/Instagram tapa CTAs de WhatsApp en mobile al hacer scroll** — `FloatingContacts` (`shared.jsx`, fixed, z-index 80) puede solaparse con filas de precio ("WA →"), el pill "Cómo llegar →" o el botón "Consultar" de un producto en `tienda.html`, dependiendo de dónde quede el scroll — confirmado con QA de Sesión C en 375px. Un tap en esa zona activa el flotante genérico en vez del link específico. No es nuevo de Sesión C (componente compartido, afecta cualquier página con esos elementos), pero conviene decidir un ajuste (reposicionar, reducir tamaño, o subir el z-index de los CTAs) antes de que un cliente lo reporte.
-- [ ] **Tabla de precios del Muro sin indicio de scroll en mobile** — `MuroPricingTable` (`sections-escalada.jsx`) hace scroll horizontal dentro de su propia tarjeta en vez de desbordar la página (correcto), pero en 375px solo se ven 3 de 5 columnas sin ninguna pista visual (sombra/flecha) de que "10 tickets" y "Mensualidad" están más a la derecha. Mismo patrón ya existente en las tablas de `#informacion` en `index.html`. Cosmético, no bloqueante.
+- [x] **Tablas de horarios/precios no se veían completas en mobile** — resuelto 2026-08-08. No era solo cosmético: `.info-grid` (`#información` en `index.html`) es un CSS grid cuyos items no tenían `min-width:0`, así que en mobile la tarjeta se estiraba para acomodar el ancho de la tabla en vez de encogerse — la sección entera se desbordaba del viewport y, como `body{overflow-x:hidden}`, las columnas de más ("Bloque alto", Jue/Vie) quedaban invisibles y **sin ninguna forma de hacerles scroll**. Se agregó `min-width:0` a los items del grid y el componente `ScrollHintCard` (ver Componentes clave) con indicador visual de scroll, aplicado a esa tabla y a `MuroPricingTable`.
 - [x] **Imágenes carrusel** — resuelto en sesión A del rediseño 2026: se agregaron 3 fotos nuevas (`img_carrusel_instalacion_muro`, `img_carrusel_comunidad_1/2`) y se sacaron los 3 duplicados. 6 items, todos únicos.
 - [x] **Formulario de contacto** — no se arregló, se **eliminó a propósito** en Sesión C del rediseño 2026 (decisión del plan, sección 7.3): `contacto.html` ya no tiene formulario ni mapa, solo banner de contacto directo + vacantes. El viejo `ContactSection` con el `alert()` quedó como código muerto sin montar.
 
@@ -198,3 +207,4 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - **Cache-busting**: los íconos de contacto tienen `?v=2` — al reemplazar assets futuros, incrementar el número
 - **QC SVG paths correctos** (corregidos mayo 2026): top-right = `M 100,88 A 88,88 0 0,1 12,0 L 48,0 A 52,52 0 0,0 100,52 Z`. El error original tenía los sweep-flags invertidos.
 - **Dropdowns con `onMouseLeave` en un wrapper `position:relative`**: si el menú desplegado tiene `marginTop` para separarse visualmente del botón, ese hueco debe ir como `paddingTop` en el contenedor absoluto (no como `marginTop` en la tarjeta visible) — si no, el hueco queda fuera del área que escucha el hover y el menú se cierra solo al cruzarlo. Ver `NavDropdown` en `shared.jsx`.
+- **"Grid blowout" con tablas/contenido ancho dentro de un CSS grid** (agosto 2026): un `overflow-x:auto` en un div no sirve de nada si algún ancestro es un item de grid o flex sin `min-width:0` — por default el item se niega a encogerse por debajo del ancho mínimo de su contenido (la tabla), así que en vez de scrollear internamente, TODA la sección se desborda del viewport. Con `body{overflow-x:hidden}` (global en todas las páginas) eso deja contenido invisible y sin scroll posible, no solo "feo". Si se agrega una tabla/tarjeta ancha dentro de un `display:grid` o `display:flex`, siempre sumar `min-width:0` al item del grid/flex, y envolver el contenido scrolleable con `ScrollHintCard` (`shared.jsx`) para que además quede visualmente claro que hay más para el lado. Ver fix completo en el commit `13e841a`.

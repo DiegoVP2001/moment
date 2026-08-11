@@ -180,7 +180,7 @@ function TeamSection({ theme }) {
             <div>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 18 }}>{NOSOTROS_COPY.team.eyebrow}</div>
               <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(40px,5vw,72px)', lineHeight: .95, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>
-                {NOSOTROS_COPY.team.titlePrefix}<span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>{NOSOTROS_COPY.team.titleHighlight}</span>{NOSOTROS_COPY.team.titleSuffix}
+                {NOSOTROS_COPY.team.titlePrefix}{' '}<span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>{NOSOTROS_COPY.team.titleHighlight}</span>{' '}{NOSOTROS_COPY.team.titleSuffix}
               </h2>
             </div>
             <p style={{ fontSize: 17, lineHeight: 1.55, color: 'rgba(230,198,199,.7)', margin: 0, fontFamily: "'Jost',sans-serif", fontWeight: 300 }}>

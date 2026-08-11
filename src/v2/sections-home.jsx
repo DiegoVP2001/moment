@@ -56,7 +56,7 @@ function LocationSection({ theme }) {
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
           <SectionHeader eyebrow={HOME_COPY.location.eyebrow} title={HOME_COPY.location.title}
-            subtitle={`${HOME_COPY.location.subtitlePrefix}${BRAND.address}${HOME_COPY.location.subtitleSuffix}`}
+            subtitle={`${HOME_COPY.location.subtitlePrefix} ${BRAND.address} ${HOME_COPY.location.subtitleSuffix}`}
             theme={theme}/>
         </Reveal>
 

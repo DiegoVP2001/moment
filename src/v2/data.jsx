@@ -57,8 +57,8 @@ const HOME_COPY = {
     title: 'Gimnasio de escalada',
     // subtítulo partido en prefijo/sufijo porque BRAND.address se intercala en medio del texto —
     // el orden de concatenación queda fijo en JSX, las palabras (prefijo/sufijo) son datos.
-    subtitlePrefix: 'Estamos ubicados en ',
-    subtitleSuffix: ' — a pasos de la plaza de Armas. Contamos con bicicleteros al interior del recinto.',
+    subtitlePrefix: 'Estamos ubicados en',
+    subtitleSuffix: '— a pasos de la plaza de Armas. Contamos con bicicleteros al interior del recinto.',
     ctaLabel: 'Cómo llegar →',
   },
   services: {
@@ -241,9 +241,9 @@ const NOSOTROS_COPY = {
   team: {
     eyebrow: '/ equipo',
     // H2 en 3 sub-campos: prefijo plano + palabra en itálica-rosa (fija en JSX) + sufijo plano.
-    titlePrefix: 'Profesionales que ',
+    titlePrefix: 'Profesionales que',
     titleHighlight: 'escuchan',
-    titleSuffix: ' antes de tratar.',
+    titleSuffix: 'antes de tratar.',
     subtitle: 'Cada miembro tiene formación específica y trabaja en coordinación con las otras áreas.',
     linkLabel: 'Conoce más de nosotros →',
   },
@@ -263,11 +263,11 @@ const NOSOTROS_COPY = {
     title: 'Lo que nos mueve',
     // Cada ítem: término en negrita (fijo en JSX) + resto del texto, como sub-campos separados.
     items: [
-      { term: 'Integralidad', rest: ' — cuerpo y mente, siempre juntos.' },
-      { term: 'Cercanía', rest: ' — conocemos a cada persona por su nombre.' },
-      { term: 'Evidencia', rest: ' — decisiones basadas en evaluación, no en supuestos.' },
-      { term: 'Comunidad', rest: ' — el centro es de quienes lo usan.' },
-      { term: 'Movimiento', rest: ' — todo empieza cuando decides moverte.' },
+      { term: 'Integralidad', rest: '— cuerpo y mente, siempre juntos.' },
+      { term: 'Cercanía', rest: '— conocemos a cada persona por su nombre.' },
+      { term: 'Evidencia', rest: '— decisiones basadas en evaluación, no en supuestos.' },
+      { term: 'Comunidad', rest: '— el centro es de quienes lo usan.' },
+      { term: 'Movimiento', rest: '— todo empieza cuando decides moverte.' },
     ],
   },
   history: {

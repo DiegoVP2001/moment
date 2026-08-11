@@ -42,7 +42,7 @@ function MissionValuesSection({ theme }) {
               <h2 style={titleStyle}>{NOSOTROS_COPY.values.title}</h2>
               <ul style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.75, color: bodyColor, margin: 0, paddingLeft: 18 }}>
                 {NOSOTROS_COPY.values.items.map((v, i) => (
-                  <li key={i}><strong>{v.term}</strong>{v.rest}</li>
+                  <li key={i}><strong>{v.term}</strong>{' '}{v.rest}</li>
                 ))}
               </ul>
             </div>

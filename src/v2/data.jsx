@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-12 18:34
+// Última actualización: 2026-08-12 18:36
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -149,7 +149,7 @@ const SERVICES_GRID = [
     "title": "Especialidades Deportivas",
     "subitems": [
       {
-        "label": "Kinesiología Deportiva niños",
+        "label": "Kinesiología Deportiva",
         "href": "kinesiologia.html"
       },
       {
@@ -617,6 +617,11 @@ const JOBS = [
     "title": "Kinesiólogo/a Deportivo/a",
     "type": "Part-time",
     "desc": "Buscamos kinesiólogo/a con experiencia en rehabilitación deportiva para atender pacientes y diseñar planes de recuperación."
+  },
+  {
+    "title": "Profe",
+    "type": "Full",
+    "desc": "LOL"
   },
   {
     "title": "Profesor/a de Escalada",

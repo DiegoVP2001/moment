@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-11 19:19
+// Última actualización: 2026-08-12 18:34
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -149,7 +149,7 @@ const SERVICES_GRID = [
     "title": "Especialidades Deportivas",
     "subitems": [
       {
-        "label": "Kinesiología Deportiva",
+        "label": "Kinesiología Deportiva niños",
         "href": "kinesiologia.html"
       },
       {
@@ -219,7 +219,7 @@ const PAGE_ENTRENAMIENTO_FUNCIONAL = {
     },
     {
       "k": "Clase de prueba",
-      "v": "$29.000"
+      "v": "$20.000"
     }
   ]
 };

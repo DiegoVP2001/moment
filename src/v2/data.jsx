@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-12 18:37
+// Última actualización: 2026-08-12 18:38
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -30,7 +30,7 @@ const BRAND = {
 
 const HOME_COPY = {
   "hero": {
-    "titleLine1": "Piensa en tu xdxddddxddxdxd",
+    "titleLine1": "Piensa en tu xdxd",
     "titleHighlight": "bienestar",
     "subtitle": "Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.",
     "ctaPrimaryLabel": "Explorar servicios →",

@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-12 18:38
+// Última actualización: 2026-08-12 18:41
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -30,7 +30,7 @@ const BRAND = {
 
 const HOME_COPY = {
   "hero": {
-    "titleLine1": "Piensa en tu xdxd",
+    "titleLine1": "Piensa en tu",
     "titleHighlight": "bienestar",
     "subtitle": "Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.",
     "ctaPrimaryLabel": "Explorar servicios →",
@@ -497,7 +497,7 @@ const CAROUSEL_ITEMS = [
 const MEDIOS = [
   {
     "source": "Islita TV",
-    "title": "Inauguración MOMENT",
+    "title": "Inauguración MOMENT EN ISLA DE MAIPO",
     "youtubeId": "zjuSQSz3h2s",
     "thumb": "https://img.youtube.com/vi/zjuSQSz3h2s/hqdefault.jpg"
   },

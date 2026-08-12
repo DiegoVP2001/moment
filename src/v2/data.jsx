@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-12 18:36
+// Última actualización: 2026-08-12 18:37
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -30,7 +30,7 @@ const BRAND = {
 
 const HOME_COPY = {
   "hero": {
-    "titleLine1": "Piensa en tu",
+    "titleLine1": "Piensa en tu xdxddddxddxdxd",
     "titleHighlight": "bienestar",
     "subtitle": "Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.",
     "ctaPrimaryLabel": "Explorar servicios →",
@@ -617,11 +617,6 @@ const JOBS = [
     "title": "Kinesiólogo/a Deportivo/a",
     "type": "Part-time",
     "desc": "Buscamos kinesiólogo/a con experiencia en rehabilitación deportiva para atender pacientes y diseñar planes de recuperación."
-  },
-  {
-    "title": "Profe",
-    "type": "Full",
-    "desc": "LOL"
   },
   {
     "title": "Profesor/a de Escalada",

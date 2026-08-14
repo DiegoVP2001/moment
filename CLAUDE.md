@@ -188,12 +188,27 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ---
 
-## Panel de cliente (futuro, en planificación — no implementado)
+## Panel de cliente (en vivo desde 2026-08-12)
 
-Hay un plan (sin ejecutar todavía) para que Moment (el cliente) edite todo el
-**texto** del sitio por su cuenta vía Google Sheets, sin depender de Diego —
-detalle completo en `../panel-cliente/PLAN-panel-cliente.md` y el inventario
-de campos en `../panel-cliente/CAMPOS.md`.
+Moment (el cliente) edita todo el **texto** del sitio por su cuenta vía un
+Google Sheet + Apps Script ("Moment — Panel de cliente"), sin depender de
+Diego — el generador comitea a `main` y hace fast-forward automático de
+`production`, así que un cambio en el Sheet queda en vivo en
+centrodeportivomoment.cl sin intervención manual. Detalle completo en
+`../panel-cliente/PLAN-panel-cliente.md` (cerrado) y el inventario de campos
+en `../panel-cliente/CAMPOS.md`.
+
+**Frontis Admin (en vivo desde 2026-08-14)**: además del Sheet crudo, existe
+una segunda puerta de entrada al mismo backend — una Web App de Apps Script
+(`../panel-cliente/generador/Frontis.html` + `Manifest.gs`/`Code.gs`
+extendidos) con un riel lateral agrupado por página real del sitio, en vez
+de la grilla genérica del Sheet. Escribe en las mismas celdas que el Sheet
+(nunca hay dos fuentes de verdad) y dispara el mismo pipeline
+`validateSheet()`→`buildDataJsContent()`→`commitToGithub()`→
+`fastForwardProduction()`. El Sheet + su menú "Publicar cambios" siguen
+funcionando igual, como respaldo. Detalle completo en
+`../panel-cliente/idea-panel-admin-y-metricas.md` y
+`../panel-cliente/sesiones/notas-sesion-3-frontis-admin.md`.
 
 **Regla para cualquier sesión que trabaje en este repo**: si agregas una
 página nueva, un componente con texto de cara al cliente, o cambias la forma

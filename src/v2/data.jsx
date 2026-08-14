@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 19:02
+// Última actualización: 2026-08-14 19:04
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -332,7 +332,7 @@ const PAGE_KINESIOLOGIA = {
         {
           "k": "Recovery",
           "v": "$35.000",
-          "note": "Masoterapia, punción seca y compresión en botas"
+          "note": "Masoterapia, punción seca y compresión en botas (therapress)"
         }
       ]
     }

@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 18:57
+// Última actualización: 2026-08-14 18:59
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -176,7 +176,7 @@ const PAGE_CLASES_ESCALADA = {
   "eyebrow": "/ clases de escalada · moment",
   "titleLine1": "Sube de nivel,",
   "titleLine2": "clase a clase.",
-  "subtitle": "Clases grupales con instructor en nuestro muro boulder — sin arnés ni cuerdas, solo colchonetas de seguridad. Aprende técnica de escalada desde el primer día, sin importar tu nivel.",
+  "subtitle": "Clases grupales con instructores certificados. Aprende técnicas de escalada desde el primer día, sin importar tu nivel.",
   "items": [
     {
       "k": "4 clases al mes",

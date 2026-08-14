@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 09:18
+// Última actualización: 2026-08-14 09:20
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -247,7 +247,7 @@ const PAGE_MURO_ESCALADA = {
       "monthly": "$50.000"
     },
     {
-      "category": "Estudiantes",
+      "category": "Estudiante",
       "schedule": "Bloque alto",
       "entry": "$5.500",
       "tickets10": "$47.000",
@@ -546,7 +546,7 @@ const SHOP = [
   {
     "name": "Bolsa de Magnesio Sloth",
     "price": "$25.000",
-    "category": "Magnesera",
+    "category": "Tape deportivo",
     "desc": "Abertura amplia estructurada, cierre con cordón y bolsillo con cremallera. Soporte para cepillo y forro de vellón interior.",
     "images": [
       "assets/productos/bolsa-sloth-1.webp",

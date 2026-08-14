@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 18:54
+// Última actualización: 2026-08-14 18:57
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -141,7 +141,7 @@ const SERVICES_GRID = [
     "id": "training-boards",
     "icon": null,
     "title": "Training Boards",
-    "desc": "(Próximamente) Tableros de dedos para sumar fuerza y precisión a tu escalada."
+    "desc": "(Próximamente) Escala, entrena y progresa con un sistema inteligente de luces y app que te permite elegir problemas, ajustar la dificultad y seguir tu progreso."
   },
   {
     "id": "especialidades",

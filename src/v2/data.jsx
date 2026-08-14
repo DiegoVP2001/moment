@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 18:59
+// Última actualización: 2026-08-14 19:02
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -203,7 +203,7 @@ const PAGE_ENTRENAMIENTO_FUNCIONAL = {
   "eyebrow": "/ entrenamiento funcional · moment",
   "titleLine1": "Más fuerza,",
   "titleLine2": "mejor escalada.",
-  "subtitle": "Entrenamientos funcionales orientados a mejorar en la escalada, con horarios propios dentro del centro.",
+  "subtitle": "Entrena fuerza, movilidad y resistencia en un espacio pensado para todos los niveles, con ejercicios específicos orientados a mejorar tu rendimiento en la escalada.",
   "items": [
     {
       "k": "4 sesiones al mes",

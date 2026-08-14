@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 10:48
+// Última actualización: 2026-08-14 10:49
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -23,7 +23,7 @@ const BRAND = {
   "phone": "+56 9 9892 8078",
   "email": "momentcentrodeportivo@gmail.com",
   "address": "Calle Cortes 41, Isla de Maipo",
-  "region": "Región Metropolitana2",
+  "region": "Región Metropolitana",
   "instagram": "moment.csd",
   "instagramUrl": "https://www.instagram.com/moment.csd/"
 };

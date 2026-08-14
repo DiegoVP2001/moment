@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 09:20
+// Última actualización: 2026-08-14 09:21
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -546,7 +546,7 @@ const SHOP = [
   {
     "name": "Bolsa de Magnesio Sloth",
     "price": "$25.000",
-    "category": "Tape deportivo",
+    "category": "Magnesera",
     "desc": "Abertura amplia estructurada, cierre con cordón y bolsillo con cremallera. Soporte para cepillo y forro de vellón interior.",
     "images": [
       "assets/productos/bolsa-sloth-1.webp",

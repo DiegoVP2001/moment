@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 11:29
+// Última actualización: 2026-08-14 11:35
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -247,14 +247,14 @@ const PAGE_MURO_ESCALADA = {
       "monthly": "$50.000"
     },
     {
-      "category": "Estudiantes",
+      "category": "Estudiante",
       "schedule": "Bloque alto",
       "entry": "$5.500",
       "tickets10": "$47.000",
       "monthly": "$59.000"
     },
     {
-      "category": "Estudiantes",
+      "category": "Estudiante",
       "schedule": "Bloque bajo",
       "entry": "$3.500",
       "tickets10": "$36.000",

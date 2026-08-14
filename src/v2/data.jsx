@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 19:04
+// Última actualización: 2026-08-14 19:09
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -344,9 +344,9 @@ const PAGE_NUTRICION = {
   "eyebrow": "/ nutrición deportiva · moment",
   "titleLine1": "Alimenta tu",
   "titleLine2": "rendimiento.",
-  "subtitle": "Planes alimenticios pensados para complementar tu entrenamiento y tu progreso en la escalada.",
+  "subtitle": "Planes alimenticios pensados para mejorar el rendimiento y composición corporal.",
   "pendingLabel": "⏳ Contenido pendiente",
-  "pendingParagraph": "Todavía no tenemos precios ni planes definidos para Nutrición Deportiva — esta página se completará más adelante. Mientras tanto, escríbenos por WhatsApp y te contamos los valores directamente.",
+  "pendingParagraph": "Cada proceso comienza con una evaluación completa y una planificación adaptada a tu deporte, objetivos y calendario. Una estrategia basada en datos para entrenar, competir y recuperarte mejor, cuidando siempre tu salud.",
   "ctaLabel": "Consultar valores por WhatsApp"
 };
 

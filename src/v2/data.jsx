@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 12:19
+// Última actualización: 2026-08-14 18:51
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -32,7 +32,7 @@ const HOME_COPY = {
   "hero": {
     "titleLine1": "Piensa en tu",
     "titleHighlight": "bienestar",
-    "subtitle": "Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.",
+    "subtitle": "Todo lo que necesitas para progresar en tu escalada.\n\nUn espacio pensado para ti, con escalada, entrenamiento y equipamiento especializado, acompañado por un equipo multidisciplinario.",
     "ctaPrimaryLabel": "Explorar servicios →",
     "ctaSecondaryLabel": "Conocer el centro"
   },

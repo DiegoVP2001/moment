@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-14 18:51
+// Última actualización: 2026-08-14 18:54
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -89,8 +89,8 @@ const OPENING_HOURS_FULL = [
 
 const CLASS_SCHEDULE = [
   {
-    "time": "06:30–08:00",
-    "mon": null,
+    "time": "7:00–08:00",
+    "mon": "Entrenamiento funcional",
     "tue": null,
     "wed": "Entrenamiento funcional",
     "thu": null,
@@ -105,7 +105,7 @@ const CLASS_SCHEDULE = [
     "fri": null
   },
   {
-    "time": "17:30–19:30",
+    "time": "17:30–18:30",
     "mon": "Clase escalada infantojuvenil",
     "tue": null,
     "wed": "Clase escalada infantojuvenil",
@@ -113,7 +113,7 @@ const CLASS_SCHEDULE = [
     "fri": "Clase escalada infantojuvenil"
   },
   {
-    "time": "20:00–21:30",
+    "time": "19:30–21:00",
     "mon": "Clase escalada adulto",
     "tue": "Entrenamiento funcional",
     "wed": "Clase escalada adulto",

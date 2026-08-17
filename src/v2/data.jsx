@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-17 19:10
+// Última actualización: 2026-08-17 19:11
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -72,7 +72,7 @@ const OPENING_HOURS_FULL = [
   ],
   [
     "Sábado",
-    "09:00–22:30",
+    "11:00–22:30",
     "Todo el día"
   ],
   [

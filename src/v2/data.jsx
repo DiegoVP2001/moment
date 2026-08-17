@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-17 19:11
+// Última actualización: 2026-08-17 19:12
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -134,7 +134,7 @@ const SERVICES_GRID = [
     "id": "entrenamiento",
     "icon": "assets/icon-training.png",
     "title": "Entrenamiento Funcional",
-    "desc": "Entrenamiento orientado a mejorar tu escalada, con horarios propios.",
+    "desc": "Entrenamiento orientado a mejorar tu escalada.",
     "href": "entrenamiento-funcional.html"
   },
   {

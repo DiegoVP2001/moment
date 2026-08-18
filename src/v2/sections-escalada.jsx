@@ -60,8 +60,9 @@ function PriceSections({ sections, notes, serviceTitle, accentColor = 'var(--tea
       {sections.map((sec, si) => (
         <div key={si} style={{ marginBottom: 32 }}>
           <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 17, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: sec.subtitle ? 4 : 0 }}>{sec.title}</div>
+            <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 17, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: sec.subtitle || sec.note ? 4 : 0 }}>{sec.title}</div>
             {sec.subtitle && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)' }}>{sec.subtitle}</div>}
+            {sec.note && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)', marginTop: 3 }}>· {sec.note}</div>}
           </div>
           <PriceRows items={sec.items} serviceTitle={serviceTitle} accentColor={accentColor}/>
         </div>
@@ -122,7 +123,7 @@ function WaGeneralCta({ serviceTitle, label }) {
       padding: '15px 28px', borderRadius: 999, background: '#25d366', color: '#fff',
       fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
     }}>
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      <svg viewBox="0 0 32 32" width="18" height="18" fill="#fff"><path d="M16 3C9 3 3 9 3 16c0 2.5.7 4.9 2 7L3 29l6.3-2c2 1 4.3 1.6 6.7 1.6 7 0 13-6 13-13S23 3 16 3zm7.5 18.3c-.3.9-1.6 1.7-2.3 1.8-.6.1-1.3.1-2.1-.1-.5-.2-1.1-.3-1.9-.7-3.3-1.4-5.5-4.7-5.7-5-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.6-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.5 1.4 1.3 2.7 1.7 3 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.3.1.2.1.9-.2 1.8z"/></svg>
       {label || `Consultar por ${serviceTitle} vía WhatsApp`}
     </a>
   );
@@ -136,7 +137,7 @@ function ContactIcon({ type, href }) {
   return (
     <a href={href} target="_blank" className={cls} aria-label={label}>
       {type === 'whatsapp' && (
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        <svg viewBox="0 0 32 32" width="20" height="20" fill="#fff"><path d="M16 3C9 3 3 9 3 16c0 2.5.7 4.9 2 7L3 29l6.3-2c2 1 4.3 1.6 6.7 1.6 7 0 13-6 13-13S23 3 16 3zm7.5 18.3c-.3.9-1.6 1.7-2.3 1.8-.6.1-1.3.1-2.1-.1-.5-.2-1.1-.3-1.9-.7-3.3-1.4-5.5-4.7-5.7-5-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.6-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.5 1.4 1.3 2.7 1.7 3 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.3.1.2.1.9-.2 1.8z"/></svg>
       )}
       {type === 'instagram' && (
         <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c0-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 2.1c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zm0 6.9a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zm5.3-7.1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
@@ -345,10 +346,6 @@ function NutricionContent() {
               <ProCard member={miguel} contactsTitle={d.proContactTitle} contacts={d.proContact} style={{ marginTop: 32 }}/>
             </Reveal>
           )}
-
-          <Reveal delay={.18}>
-            <div style={{ marginTop: 24 }}><WaGeneralCta serviceTitle={d.title} label={d.ctaLabel}/></div>
-          </Reveal>
         </div>
       </section>
     </>

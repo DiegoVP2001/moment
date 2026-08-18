@@ -345,9 +345,6 @@ const PAGE_NUTRICION = {
   "titleLine1": "Alimenta tu",
   "titleLine2": "rendimiento.",
   "subtitle": "Planes alimenticios pensados para mejorar el rendimiento y composición corporal.",
-  "notes": [
-    "Los controles del Pack 3 consultas no son transferibles."
-  ],
   "sections": [
     {
       "title": "Consultas",
@@ -377,6 +374,7 @@ const PAGE_NUTRICION = {
     {
       "title": "Packs",
       "subtitle": "Pago único — valor preferencial",
+      "note": "Los controles del Pack 3 consultas no son transferibles.",
       "items": [
         {
           "k": "Pack 3 consultas",
@@ -386,13 +384,12 @@ const PAGE_NUTRICION = {
       ]
     }
   ],
-  "proContactTitle": "Contactos directos de Miguel",
+  "proContactTitle": "Contactos directos",
   "proContact": {
     "whatsapp": "+56 9 9792 5212",
     "instagram": "nutri.miguel",
     "email": "Miguel@lifebalancechile.com"
-  },
-  "ctaLabel": "Consultar valores por WhatsApp"
+  }
 };
 
 const NOSOTROS_COPY = {

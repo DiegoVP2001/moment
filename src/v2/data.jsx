@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-08-17 19:12
+// Última actualización: 2026-08-17 20:13
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -345,8 +345,53 @@ const PAGE_NUTRICION = {
   "titleLine1": "Alimenta tu",
   "titleLine2": "rendimiento.",
   "subtitle": "Planes alimenticios pensados para mejorar el rendimiento y composición corporal.",
-  "pendingLabel": "⏳ Contenido pendiente",
-  "pendingParagraph": "Cada proceso comienza con una evaluación completa y una planificación adaptada a tu deporte, objetivos y calendario. Una estrategia basada en datos para entrenar, competir y recuperarte mejor, cuidando siempre tu salud.",
+  "notes": [
+    "Los controles del Pack 3 consultas no son transferibles."
+  ],
+  "sections": [
+    {
+      "title": "Consultas",
+      "items": [
+        {
+          "k": "Consulta nutricional de inicio",
+          "v": "$40.000",
+          "note": "Entrevista y establecimiento de objetivos + examen InBody + envío del programa alimenticio al correo del paciente + guía nutricional \"Alimentación en fácil\"."
+        },
+        {
+          "k": "Control nutricional de seguimiento",
+          "v": "$40.000",
+          "note": "Entrevista + examen InBody + ajuste de la pauta nutricional, si corresponde."
+        }
+      ]
+    },
+    {
+      "title": "Exámenes",
+      "items": [
+        {
+          "k": "Examen InBody",
+          "v": "$27.000",
+          "note": "Toma del examen, explicación del resultado y comparación con exámenes InBody anteriores."
+        }
+      ]
+    },
+    {
+      "title": "Packs",
+      "subtitle": "Pago único — valor preferencial",
+      "items": [
+        {
+          "k": "Pack 3 consultas",
+          "v": "$110.000",
+          "note": "Válido para 1 consulta de inicio y 2 controles de seguimiento."
+        }
+      ]
+    }
+  ],
+  "proContactTitle": "Contactos directos de Miguel",
+  "proContact": {
+    "whatsapp": "+56 9 9792 5212",
+    "instagram": "nutri.miguel",
+    "email": "Miguel@lifebalancechile.com"
+  },
   "ctaLabel": "Consultar valores por WhatsApp"
 };
 
@@ -453,7 +498,7 @@ const TEAM = [
     "photo": "assets/team-jairo.jpg"
   },
   {
-    "name": "Miguel",
+    "name": "Miguel González",
     "role": "Nutricionista Deportivo",
     "bio": "Planes alimenticios que potencian la salud y el rendimiento de atletas.",
     "linkedin": null,

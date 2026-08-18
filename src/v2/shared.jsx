@@ -502,6 +502,14 @@ const SHARED_CSS = `
 .ig-float{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);box-shadow:0 8px 24px rgba(220,39,67,.3)}
 .wa-float:hover{transform:scale(1.08);box-shadow:0 10px 30px rgba(37,211,102,.55)}
 .ig-float:hover{transform:scale(1.08);box-shadow:0 10px 30px rgba(220,39,67,.5)}
+
+/* Íconos de contacto inline (ej. ProCard) — mismo lenguaje visual que wa-float/ig-float pero con
+   su propia clase, para no colisionar con el widget fijo de esquina (FloatingContacts) */
+.wa-pill,.ig-pill,.mail-pill{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
+.wa-pill{background:#25d366;box-shadow:0 6px 18px rgba(37,211,102,.3)}
+.ig-pill{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);box-shadow:0 6px 18px rgba(220,39,67,.25)}
+.mail-pill{background:var(--ink);box-shadow:0 6px 18px rgba(26,24,35,.2)}
+.wa-pill:hover,.ig-pill:hover,.mail-pill:hover{transform:scale(1.08)}
 html{scroll-behavior:smooth}
 button{transition:transform .15s,opacity .15s}
 button:hover{opacity:.92}

@@ -235,6 +235,21 @@ proyecto de Apps Script real y correr `syncSheetsWithManifest()` una vez a
 mano — si no, `validateSheet()` falla con "falta la fila" apenas el cliente
 intente publicar.
 
+**El deploy del Frontis (Web App) no se actualiza solo al editar `Manifest.gs`/
+`Code.gs`/`Frontis.html` (agosto 2026)**: Apps Script congela el código en el
+momento de "Implementar" (Deploy) — la URL `.../exec` sigue sirviendo esa
+versión vieja aunque se guarden archivos nuevos en el editor. Correr una
+función directamente desde el editor (ej. `syncSheetsWithManifest()`) sí usa
+el código más reciente, porque se ejecuta ahí mismo — eso genera la falsa
+sensación de "ya se actualizó" cuando en realidad solo el Sheet cambió: el
+Frontis sigue mostrando la estructura vieja (campos que faltan/sobran, labels
+viejos) hasta que se publique una nueva versión. **Regla**: cada vez que un
+cambio en `Manifest.gs`/`Code.gs`/`Frontis.html` afecte lo que el Frontis
+muestra o hace, avisarle a Diego que además de guardar tiene que crear una
+nueva versión de la implementación (Apps Script → Implementar → Administrar
+implementaciones → ✏️ en la implementación activa → Versión: Nueva versión →
+Implementar) — actualiza la misma URL, sin generar un link nuevo.
+
 **Riesgo real confirmado (agosto 2026)**: si el Sheet/generador se actualiza
 (nueva forma de un `PAGE_*`) y se publica ANTES de que el código React
 correspondiente (`sections-escalada.jsx` u otro) que lee esos campos esté

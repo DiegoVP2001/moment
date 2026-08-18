@@ -60,8 +60,9 @@ function PriceSections({ sections, notes, serviceTitle, accentColor = 'var(--tea
       {sections.map((sec, si) => (
         <div key={si} style={{ marginBottom: 32 }}>
           <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 17, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: sec.subtitle ? 4 : 0 }}>{sec.title}</div>
+            <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 17, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: sec.subtitle || sec.note ? 4 : 0 }}>{sec.title}</div>
             {sec.subtitle && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)' }}>{sec.subtitle}</div>}
+            {sec.note && <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 12, color: 'var(--ink-60)', marginTop: 3 }}>· {sec.note}</div>}
           </div>
           <PriceRows items={sec.items} serviceTitle={serviceTitle} accentColor={accentColor}/>
         </div>
@@ -122,23 +123,56 @@ function WaGeneralCta({ serviceTitle, label }) {
       padding: '15px 28px', borderRadius: 999, background: '#25d366', color: '#fff',
       fontFamily: "'Jost',sans-serif", fontWeight: 600, fontSize: 14, textDecoration: 'none'
     }}>
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      <svg viewBox="0 0 32 32" width="18" height="18" fill="#fff"><path d="M16 3C9 3 3 9 3 16c0 2.5.7 4.9 2 7L3 29l6.3-2c2 1 4.3 1.6 6.7 1.6 7 0 13-6 13-13S23 3 16 3zm7.5 18.3c-.3.9-1.6 1.7-2.3 1.8-.6.1-1.3.1-2.1-.1-.5-.2-1.1-.3-1.9-.7-3.3-1.4-5.5-4.7-5.7-5-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.6-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.5 1.4 1.3 2.7 1.7 3 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.3.1.2.1.9-.2 1.8z"/></svg>
       {label || `Consultar por ${serviceTitle} vía WhatsApp`}
     </a>
   );
 }
 
-// --- Tarjeta de profesional (foto + rol + bio, desde TEAM en data.jsx) — usada al final de
-// Kinesiología y Nutrición para poner cara al servicio ---
-function ProCard({ member, style = {} }) {
+// --- Ícono redondo de contacto (WhatsApp/Instagram/correo) — usado por ProCard cuando el
+// profesional tiene canales propios distintos de los de Moment ---
+function ContactIcon({ type, href }) {
+  const cls = type === 'whatsapp' ? 'wa-pill' : type === 'instagram' ? 'ig-pill' : 'mail-pill';
+  const label = type === 'whatsapp' ? 'WhatsApp' : type === 'instagram' ? 'Instagram' : 'Correo';
   return (
-    <div style={{ display: 'flex', gap: 20, alignItems: 'center', background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', flexWrap: 'wrap', ...style }}>
-      <img src={member.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
-      <div>
-        <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{member.name}</div>
-        <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{member.role}</div>
-        <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{member.bio}</p>
+    <a href={href} target="_blank" className={cls} aria-label={label}>
+      {type === 'whatsapp' && (
+        <svg viewBox="0 0 32 32" width="20" height="20" fill="#fff"><path d="M16 3C9 3 3 9 3 16c0 2.5.7 4.9 2 7L3 29l6.3-2c2 1 4.3 1.6 6.7 1.6 7 0 13-6 13-13S23 3 16 3zm7.5 18.3c-.3.9-1.6 1.7-2.3 1.8-.6.1-1.3.1-2.1-.1-.5-.2-1.1-.3-1.9-.7-3.3-1.4-5.5-4.7-5.7-5-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.6-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.5 1.4 1.3 2.7 1.7 3 1.8.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.3.7-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.3.1.2.1.9-.2 1.8z"/></svg>
+      )}
+      {type === 'instagram' && (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c0-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 2.1c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zm0 6.9a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zm5.3-7.1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+      )}
+      {type === 'email' && (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v.01L12 12l8-5.99V6H4zm16 12V8.24l-7.35 5.51a1 1 0 0 1-1.2 0L4 8.24V18h16z"/></svg>
+      )}
+    </a>
+  );
+}
+
+// --- Tarjeta de profesional (foto + rol + bio, desde TEAM en data.jsx) — usada al final de
+// Kinesiología y Nutrición para poner cara al servicio. `contactsTitle`/`contacts` son opcionales
+// — solo Nutrición los usa, para los canales propios de Miguel (distintos de los de Moment) ---
+function ProCard({ member, contactsTitle, contacts, style = {} }) {
+  return (
+    <div style={{ background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', ...style }}>
+      <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
+        <img src={member.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
+        <div>
+          <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{member.name}</div>
+          <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{member.role}</div>
+          <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{member.bio}</p>
+        </div>
       </div>
+      {contactsTitle && contacts && (
+        <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid rgba(26,24,35,.08)' }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 12 }}>{contactsTitle}</div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            {contacts.whatsapp && <ContactIcon type="whatsapp" href={`https://wa.me/${contacts.whatsapp.replace(/\D/g, '')}`}/>}
+            {contacts.instagram && <ContactIcon type="instagram" href={`https://www.instagram.com/${contacts.instagram}/`}/>}
+            {contacts.email && <ContactIcon type="email" href={`mailto:${contacts.email}`}/>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -154,9 +188,9 @@ function ClasesEscaladaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ clases de escalada · moment"
-        title={<>Sube de nivel,<br/><span style={italicAccent('var(--teal)')}>clase a clase.</span></>}
-        subtitle="Clases grupales con instructor en nuestro muro boulder — sin arnés ni cuerdas, solo colchonetas de seguridad. Aprende técnica de escalada desde el primer día, sin importar tu nivel."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -191,9 +225,9 @@ function EntrenamientoFuncionalContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ entrenamiento funcional · moment"
-        title={<>Más fuerza,<br/><span style={italicAccent('var(--teal)')}>mejor escalada.</span></>}
-        subtitle="Entrenamientos funcionales orientados a mejorar en la escalada, con horarios propios dentro del centro."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -223,9 +257,9 @@ function MuroEscaladaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ muro de escalada · moment"
-        title={<>Escala a tu<br/><span style={italicAccent('var(--pink)')}>propio ritmo.</span></>}
-        subtitle="Pases, tickets y mensualidades para nuestro muro indoor, con rutas de boulder renovadas periódicamente."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--pink)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="pink"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -239,7 +273,7 @@ function MuroEscaladaContent() {
               {eyebrowLabel('Horarios')}
               <OpeningHoursTable/>
               <p style={{ marginTop: 14, fontFamily: "'Jost',sans-serif", fontSize: 13, lineHeight: 1.5, color: 'var(--ink-60)' }}>
-                El "bloque alto" es el horario de mayor demanda (columna de la derecha); el resto de las horas de apertura corresponde al "bloque bajo", con precios más bajos.
+                {d.blockExplanation}
               </p>
             </div>
           </Reveal>
@@ -265,9 +299,9 @@ function KinesiologiaContent() {
   return (
     <>
       <PageHero
-        eyebrow="/ kinesiología deportiva · moment"
-        title={<>Cuida el cuerpo<br/><span style={italicAccent('var(--teal)')}>que te sostiene.</span></>}
-        subtitle="Evaluación, rehabilitación y optimización del movimiento para deportistas y personas activas."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
@@ -289,39 +323,29 @@ function KinesiologiaContent() {
   );
 }
 
-// ============ 6.3 — Nutrición (placeholder — sin precios todavía) ============
+// ============ 6.3 — Nutrición ============
 function NutricionContent() {
-  const miguel = TEAM.find(t => t.name === 'Miguel');
+  const d = PAGE_NUTRICION;
+  const miguel = TEAM.find(t => t.name.startsWith('Miguel'));
   return (
     <>
       <PageHero
-        eyebrow="/ nutrición deportiva · moment"
-        title={<>Alimenta tu<br/><span style={italicAccent('var(--teal)')}>rendimiento.</span></>}
-        subtitle="Planes alimenticios pensados para complementar tu entrenamiento y tu progreso en la escalada."
+        eyebrow={d.eyebrow}
+        title={<>{d.titleLine1}<br/><span style={italicAccent('var(--teal)')}>{d.titleLine2}</span></>}
+        subtitle={d.subtitle}
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
-        <div style={{ maxWidth: 780, margin: '0 auto' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <Reveal>
-            <div style={{ border: '2px dashed rgba(26,24,35,.25)', borderRadius: 20, padding: '28px 26px', background: 'rgba(255,255,255,.5)' }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 10 }}>⏳ Contenido pendiente</div>
-              <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)', margin: 0 }}>
-                Todavía no tenemos precios ni planes definidos para Nutrición Deportiva — esta página se
-                completará más adelante. Mientras tanto, escríbenos por WhatsApp y te contamos los valores
-                directamente.
-              </p>
-            </div>
+            <PriceSections sections={d.sections} notes={d.notes} serviceTitle={d.title} accentColor="var(--teal-dark)"/>
           </Reveal>
 
           {miguel && (
             <Reveal delay={.1}>
-              <ProCard member={miguel} style={{ marginTop: 32 }}/>
+              <ProCard member={miguel} contactsTitle={d.proContactTitle} contacts={d.proContact} style={{ marginTop: 32 }}/>
             </Reveal>
           )}
-
-          <Reveal delay={.18}>
-            <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle="Nutrición Deportiva" label="Consultar valores por WhatsApp"/></div>
-          </Reveal>
         </div>
       </section>
     </>

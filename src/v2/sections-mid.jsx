@@ -101,13 +101,13 @@ function CarouselSection({ theme }) {
     <section id="instalaciones" style={{ padding: '120px 0 100px', overflow: 'hidden', background: isDark ? '#0f0d17' : '#fff', position: 'relative' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 48px' }}>
         <Reveal>
-          <SectionHeader eyebrow="/ instalaciones" title="Un centro pensado para cada etapa."
-            subtitle="Un muro de escalada, zonas de entrenamiento funcional y especialistas deportivos — todo bajo un mismo techo en Isla de Maipo."
+          <SectionHeader eyebrow={HOME_COPY.installations.eyebrow} title={HOME_COPY.installations.title}
+            subtitle={HOME_COPY.installations.subtitle}
             theme={theme}/>
         </Reveal>
         <Reveal delay={.1}>
           <p style={{ marginTop: 16, fontFamily: "'Jost',sans-serif", fontSize: 15, color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)' }}>
-            Pasa el cursor para pausar · Arrastra para navegar · Haz clic para ampliar
+            {HOME_COPY.installations.instructions}
           </p>
         </Reveal>
       </div>
@@ -178,13 +178,13 @@ function TeamSection({ theme }) {
         <Reveal>
           <div className="team-header-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, marginBottom: 72, alignItems: 'end' }}>
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 18 }}>/ equipo</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: 18 }}>{NOSOTROS_COPY.team.eyebrow}</div>
               <h2 style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 'clamp(40px,5vw,72px)', lineHeight: .95, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>
-                Profesionales que <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>escuchan</span> antes de tratar.
+                {NOSOTROS_COPY.team.titlePrefix}{' '}<span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>{NOSOTROS_COPY.team.titleHighlight}</span>{' '}{NOSOTROS_COPY.team.titleSuffix}
               </h2>
             </div>
             <p style={{ fontSize: 17, lineHeight: 1.55, color: 'rgba(230,198,199,.7)', margin: 0, fontFamily: "'Jost',sans-serif", fontWeight: 300 }}>
-              Cada miembro tiene formación específica y trabaja en coordinación con las otras áreas.
+              {NOSOTROS_COPY.team.subtitle}
             </p>
           </div>
         </Reveal>
@@ -235,7 +235,7 @@ function TeamSection({ theme }) {
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(230,198,199,.1)'; e.currentTarget.style.borderColor = 'rgba(230,198,199,.5)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.05)'; e.currentTarget.style.borderColor = 'rgba(230,198,199,.25)'; }}
             >
-              Conoce más de nosotros →
+              {NOSOTROS_COPY.team.linkLabel}
             </a>
           </div>
         </Reveal>
@@ -257,7 +257,7 @@ function EnMediosSection({ theme }) {
       <QC position="top-right" color="teal" size={160} style={{ opacity: .18 }}/>
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
         <Reveal>
-          <SectionHeader eyebrow="/ en medios" title="Lo que dicen de nosotros." theme={theme}/>
+          <SectionHeader eyebrow={NOSOTROS_COPY.media.eyebrow} title={NOSOTROS_COPY.media.title} theme={theme}/>
         </Reveal>
         <div className="medios-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 28, marginTop: 56 }}>
           {MEDIOS.map((m, i) => (

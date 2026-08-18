@@ -29,7 +29,7 @@ clases-escalada.html          ← Sesión B — mini-app React
 entrenamiento-funcional.html  ← Sesión B — mini-app React
 muro-escalada.html            ← Sesión B — mini-app React
 kinesiologia.html             ← Sesión B — mini-app React (antes era tab+modal dentro de #servicios)
-nutricion.html                ← Sesión B — mini-app React, placeholder sin precios
+nutricion.html                ← Sesión B — mini-app React, precios reales desde agosto 2026
 Moment Landing.html           ← Versión legacy v1 (no usar)
 assets/                       ← Imágenes, íconos, videos, PDFs
 src/
@@ -96,6 +96,11 @@ SVG de sector de anillo relleno. Parámetros: `position`, `color`, `size`, `styl
 ### ProCard (agosto 2026)
 - `sections-escalada.jsx`: tarjeta de profesional (foto + rol + bio desde `TEAM` en
   `data.jsx`). Usada al final de `kinesiologia.html` (Karinna) y `nutricion.html` (Miguel).
+- Props opcionales `contactsTitle`/`contacts` (agregadas agosto 2026, solo las usa Nutrición):
+  cuando el profesional tiene canales propios distintos de los de Moment (WhatsApp/Instagram/correo
+  de Miguel, `PAGE_NUTRICION.proContactTitle`/`.proContact` en `data.jsx`), la tarjeta agrega un
+  bloque con 3 íconos redondos (`ContactIcon`, mismo componente) bajo la bio. Sin esas props la
+  tarjeta se ve exactamente igual que antes (Kinesiología no las pasa).
 
 ### CarouselSection
 - Auto-scroll con `requestAnimationFrame` (0.6px/frame)
@@ -188,11 +193,66 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ---
 
+## Panel de cliente (en vivo desde 2026-08-12)
+
+Moment (el cliente) edita todo el **texto** del sitio por su cuenta vía un
+Google Sheet + Apps Script ("Moment — Panel de cliente"), sin depender de
+Diego — el generador comitea a `main` y hace fast-forward automático de
+`production`, así que un cambio en el Sheet queda en vivo en
+centrodeportivomoment.cl sin intervención manual. Detalle completo en
+`../panel-cliente/PLAN-panel-cliente.md` (cerrado) y el inventario de campos
+en `../panel-cliente/CAMPOS.md`.
+
+**Frontis Admin (en vivo desde 2026-08-14)**: además del Sheet crudo, existe
+una segunda puerta de entrada al mismo backend — una Web App de Apps Script
+(`../panel-cliente/generador/Frontis.html` + `Manifest.gs`/`Code.gs`
+extendidos) con un riel lateral agrupado por página real del sitio, en vez
+de la grilla genérica del Sheet. Escribe en las mismas celdas que el Sheet
+(nunca hay dos fuentes de verdad) y dispara el mismo pipeline
+`validateSheet()`→`buildDataJsContent()`→`commitToGithub()`→
+`fastForwardProduction()`. El Sheet + su menú "Publicar cambios" siguen
+funcionando igual, como respaldo. Detalle completo en
+`../panel-cliente/idea-panel-admin-y-metricas.md` y
+`../panel-cliente/sesiones/notas-sesion-3-frontis-admin.md`.
+
+**Regla para cualquier sesión que trabaje en este repo**: si agregas una
+página nueva, un componente con texto de cara al cliente, o cambias la forma
+de un dato existente en `data.jsx`, actualiza `../panel-cliente/CAMPOS.md`
+como parte del mismo trabajo (no lo dejes pendiente) — de lo contrario el
+inventario de ese plan queda desincronizado del sitio real y el panel de
+cliente, cuando se construya, va a fallar o va a mostrar campos que ya no
+existen.
+
+**Sincronizar el Sheet real cuando cambian los campos del generador (agosto
+2026)**: `Setup.gs` tiene `setupSheet()` (bootstrap de un solo uso,
+SOBREESCRIBE todo — no correr sobre un Sheet en uso) y
+`syncSheetsWithManifest()` (agregada agosto 2026, NO destructiva — recrea solo
+las hojas de tipo `fields` preservando cada valor ya editado por el cliente,
+vía `readKeyValueMap()`; usa el default de `getBaseTemplate()` solo para
+claves nuevas). Cuando una sesión agrega un campo o una hoja nueva a
+`getFieldRows()`/`SHEET_ORDER`, hay que pegar el `.gs` actualizado en el
+proyecto de Apps Script real y correr `syncSheetsWithManifest()` una vez a
+mano — si no, `validateSheet()` falla con "falta la fila" apenas el cliente
+intente publicar.
+
+**Riesgo real confirmado (agosto 2026)**: si el Sheet/generador se actualiza
+(nueva forma de un `PAGE_*`) y se publica ANTES de que el código React
+correspondiente (`sections-escalada.jsx` u otro) que lee esos campos esté
+también en `main`/`production`, el sitio en vivo queda roto — `data.jsx` ya
+tiene los campos nuevos pero el componente sigue leyendo los campos viejos
+(que ya no existen) y no sabe interpretar los nuevos. Pasó exactamente esto
+con Nutrición: se publicó `PAGE_NUTRICION` con la forma nueva mientras el
+código seguía esperando `pendingLabel`/`pendingParagraph`. **Orden correcto**:
+el código que consume la forma nueva debe llegar a `main`/`production` en la
+misma operación que el primer publish del Sheet con esa forma nueva — no
+publicar desde el Sheet primero y subir el código después "cuando se pueda".
+
 ## Tareas pendientes
 
 ### Media prioridad
 - [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Con el rediseño 2026 el modelo de precios cambió completo, así que ahora están aún más desactualizados. Avisar al cliente si los comparte impresos o por WhatsApp.
-- [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
+- [x] **Miguel sin apellido** — resuelto agosto 2026: `TEAM` ahora dice "Miguel González" (el PDF de precios que envió trae su nombre completo, "Miguel González Santander", pero se dejó solo el apellido paterno para no romper el ancho de la tarjeta `ProCard`).
+- [ ] **Fotos del equipo desactualizadas**.
 - [ ] **Copy "4 áreas" desactualizado** — el Hero de `index.html` (`hero-services.jsx`) y ahora también `Quienes Somos.html` (`sections-nosotros.jsx`, Historia y "Por qué Moment") siguen describiendo "kinesiología, psicología, entrenamiento & recovery y escalada" como 4 áreas iguales. Contradice el nuevo posicionamiento 100% escalada (kinesiología/psicología/nutrición pasaron a "Especialidades Deportivas" complementarias). En Sesión C el contenido de Quienes Somos se migró literal a propósito (no se reescribió) — pendiente una decisión de Diego sobre si actualizar el copy.
 - [ ] **Flotante de WhatsApp/Instagram tapa CTAs de WhatsApp en mobile al hacer scroll** — `FloatingContacts` (`shared.jsx`, fixed, z-index 80) puede solaparse con filas de precio ("WA →"), el pill "Cómo llegar →" o el botón "Consultar" de un producto en `tienda.html`, dependiendo de dónde quede el scroll — confirmado con QA de Sesión C en 375px. Un tap en esa zona activa el flotante genérico en vez del link específico. No es nuevo de Sesión C (componente compartido, afecta cualquier página con esos elementos), pero conviene decidir un ajuste (reposicionar, reducir tamaño, o subir el z-index de los CTAs) antes de que un cliente lo reporte.
 - [x] **Tablas de horarios/precios no se veían completas en mobile** — resuelto 2026-08-08. No era solo cosmético: `.info-grid` (`#información` en `index.html`) es un CSS grid cuyos items no tenían `min-width:0`, así que en mobile la tarjeta se estiraba para acomodar el ancho de la tabla en vez de encogerse — la sección entera se desbordaba del viewport y, como `body{overflow-x:hidden}`, las columnas de más ("Bloque alto", Jue/Vie) quedaban invisibles y **sin ninguna forma de hacerles scroll**. Se agregó `min-width:0` a los items del grid y el componente `ScrollHintCard` (ver Componentes clave) con indicador visual de scroll, aplicado a esa tabla y a `MuroPricingTable`.
@@ -216,3 +276,5 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 - **"Grid blowout" con tablas/contenido ancho dentro de un CSS grid** (agosto 2026): un `overflow-x:auto` en un div no sirve de nada si algún ancestro es un item de grid o flex sin `min-width:0` — por default el item se niega a encogerse por debajo del ancho mínimo de su contenido (la tabla), así que en vez de scrollear internamente, TODA la sección se desborda del viewport. Con `body{overflow-x:hidden}` (global en todas las páginas) eso deja contenido invisible y sin scroll posible, no solo "feo". Si se agrega una tabla/tarjeta ancha dentro de un `display:grid` o `display:flex`, siempre sumar `min-width:0` al item del grid/flex, y envolver el contenido scrolleable con `ScrollHintCard` (`shared.jsx`) para que además quede visualmente claro que hay más para el lado. Ver fix completo en el commit `13e841a`.
 - **Nav de 5 links de escritorio (agosto 2026)**: con el dropdown "Especialidades" agregado junto a "Clases, Entrenamiento y Muro", el nav de escritorio pasa al menú hamburguesa en `max-width:1080px` (no `768px` como el resto del layout) — ver el bloque `@media(max-width:1080px)` en `SHARED_CSS`. Si se agrega o saca un ítem del nav, revisar si ese breakpoint sigue siendo el correcto.
 - **`psicologia-deportiva.html` no comparte Nav/Footer de React**: es la única página con nav y footer escritos a mano (HTML/CSS/JS puro, ver sección propia arriba). Cualquier cambio a la estructura del `Nav` o `Footer` de `shared.jsx` (agregar/sacar un link, un dropdown, una columna) hay que replicarlo a mano en esta página o queda desalineada — ya pasó una vez (menú y footer quedaron con contenido de mayo 2026 hasta la corrección de agosto 2026).
+- **`git status` marca archivos como "modified" sin diff real** — el repo vive bajo Google Drive ("Mi unidad"), cuyo sync de archivos altera mtimes sin tocar contenido. Reaparece cada pocas sesiones al hacer `checkout`/`merge`. Confirmar siempre con `git diff --quiet <archivo>` antes de asumir que hay un cambio real; si es falso positivo, resolver con `git add`/`git restore` (nunca `reset --hard`, que si hay un falso positivo mezclado con cambios reales sin commitear los descarta a ambos).
+- **`git merge` con cambios sin commitear en el working tree es peligroso, incluso con `--no-commit`** (agosto 2026): si el merge falla por "local changes would be overwritten", el mensaje dice "Aborting" pero en la práctica puede dejar algunos archivos ya revertidos a `HEAD` en vez de restaurar limpio — pasó en esta sesión, se perdieron 3 de 5 archivos editados (se reconstruyeron a mano desde el historial de la conversación, sin daño final, pero fue evitable). Regla: **siempre `git commit` (o `git stash`) los cambios reales antes de cualquier `git merge`/`git checkout <otra-rama>`** — nunca confiar en que el merge aborta limpio con working tree sucio.

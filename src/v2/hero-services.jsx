@@ -25,19 +25,19 @@ function HeroVideo({ theme }) {
             fontFamily: "'Archivo Black',sans-serif", fontWeight: 900,
             fontSize: 'clamp(56px, 10vw, 160px)', lineHeight: .88, letterSpacing: '-0.045em', margin: 0
           }}>
-            Piensa en tu<br/>
-            <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>bienestar</span><span style={{ color: 'var(--teal)' }}>.</span>
+            {HOME_COPY.hero.titleLine1}<br/>
+            <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--pink)' }}>{HOME_COPY.hero.titleHighlight}</span><span style={{ color: 'var(--teal)' }}>.</span>
           </h1>
         </Reveal>
         <Reveal delay={.2}>
           <p style={{ marginTop: 28, fontSize: 20, lineHeight: 1.5, maxWidth: 580, color: 'rgba(255,255,255,.8)', fontFamily: "'Jost',sans-serif", fontWeight: 300 }}>
-            Un espacio donde kinesiología, psicología, entrenamiento y escalada conviven con un mismo propósito.
+            {HOME_COPY.hero.subtitle}
           </p>
         </Reveal>
         <Reveal delay={.3}>
           <div style={{ display: 'flex', gap: 14, marginTop: 32, flexWrap: 'wrap' }}>
-            <a href="#servicios" className="glow-teal" style={{ padding: '16px 28px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>Explorar servicios →</a>
-            <a href="#instalaciones" className="glow-outline" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: "'Jost',sans-serif", fontWeight: 500, fontSize: 14, border: '1.5px solid rgba(255,255,255,.4)', textDecoration: 'none' }}>Conocer el centro</a>
+            <a href="#servicios" className="glow-teal" style={{ padding: '16px 28px', borderRadius: 999, background: 'var(--teal)', color: 'var(--ink)', fontFamily: "'Jost',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>{HOME_COPY.hero.ctaPrimaryLabel}</a>
+            <a href="#instalaciones" className="glow-outline" style={{ padding: '16px 28px', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: "'Jost',sans-serif", fontWeight: 500, fontSize: 14, border: '1.5px solid rgba(255,255,255,.4)', textDecoration: 'none' }}>{HOME_COPY.hero.ctaSecondaryLabel}</a>
           </div>
         </Reveal>
         <div style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, opacity: .6 }}>

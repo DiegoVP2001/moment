@@ -15,20 +15,20 @@ function InfoSection({ theme }) {
       <QC position="top-right" color={isDark ? 'rgba(230,198,199,.06)' : 'var(--pink-200)'} size={160}/>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
-          <SectionHeader eyebrow="/ información" title="Horarios y funcionamiento." theme={theme}/>
+          <SectionHeader eyebrow={HOME_COPY.info.eyebrow} title={HOME_COPY.info.title} theme={theme}/>
         </Reveal>
 
         <div className="info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 28, marginTop: 48, alignItems: 'start' }}>
           <Reveal delay={.08}>
             <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de apertura</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>{HOME_COPY.info.openingHoursLabel}</div>
               <OpeningHoursTable isDark={isDark} cardBg={cardBg}/>
             </div>
           </Reveal>
 
           <Reveal delay={.14}>
             <div style={{ background: cardBg, borderRadius: 20, padding: 28, border: `1px solid ${border}` }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>Horario de clases y entrenamientos</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,.5)' : 'var(--ink-60)', marginBottom: 16 }}>{HOME_COPY.info.classScheduleLabel}</div>
               <ClassScheduleTable isDark={isDark} cardBg={cardBg}/>
             </div>
           </Reveal>
@@ -36,9 +36,9 @@ function InfoSection({ theme }) {
 
         <Reveal delay={.2}>
           <div style={{ display: 'flex', gap: 14, marginTop: 40, flexWrap: 'wrap' }}>
-            <a href="clases-escalada.html" className="glow-teal" style={btnStyle}>Clases de Escalada →</a>
-            <a href="entrenamiento-funcional.html" className="glow-teal" style={btnStyle}>Entrenamientos Funcionales →</a>
-            <a href="muro-escalada.html" className="glow-teal" style={btnStyle}>Muro de Escalada →</a>
+            <a href="clases-escalada.html" className="glow-teal" style={btnStyle}>{HOME_COPY.info.ctaClasesLabel}</a>
+            <a href="entrenamiento-funcional.html" className="glow-teal" style={btnStyle}>{HOME_COPY.info.ctaEntrenamientoLabel}</a>
+            <a href="muro-escalada.html" className="glow-teal" style={btnStyle}>{HOME_COPY.info.ctaMuroLabel}</a>
           </div>
         </Reveal>
       </div>
@@ -55,15 +55,15 @@ function LocationSection({ theme }) {
       <QC position="top-right" color={isDark ? 'rgba(230,198,199,.06)' : 'var(--pink-200)'} size={160} style={{ opacity: .5 }}/>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
-          <SectionHeader eyebrow="/ ubicación" title="Gimnasio de escalada"
-            subtitle={`Estamos ubicados en ${BRAND.address} — a pasos de la plaza de Armas. Contamos con bicicleteros al interior del recinto.`}
+          <SectionHeader eyebrow={HOME_COPY.location.eyebrow} title={HOME_COPY.location.title}
+            subtitle={`${HOME_COPY.location.subtitlePrefix} ${BRAND.address} ${HOME_COPY.location.subtitleSuffix}`}
             theme={theme}/>
         </Reveal>
 
         <Reveal delay={.12}>
           <div style={{ marginTop: 48, height: 420, position: 'relative', borderRadius: 24, overflow: 'hidden', boxShadow: '0 20px 60px rgba(26,24,35,.12)' }}>
             <iframe src="https://www.google.com/maps?q=-33.753589,-70.902940&hl=es&z=16&output=embed" style={{ width: '100%', height: '100%', border: 0, display: 'block' }} loading="lazy" allowFullScreen title="Ubicación Moment"/>
-            <a href="https://maps.app.goo.gl/9SdguuCr2wLYyhTT6" target="_blank" className="glow-pink" style={{ position: 'absolute', bottom: 20, right: 20, background: 'var(--pink)', padding: '12px 20px', borderRadius: 999, fontFamily: "'Jost',sans-serif", fontSize: 13, fontWeight: 600, textDecoration: 'none', color: 'var(--ink)' }}>Cómo llegar →</a>
+            <a href="https://maps.app.goo.gl/9SdguuCr2wLYyhTT6" target="_blank" className="glow-pink" style={{ position: 'absolute', bottom: 20, right: 20, background: 'var(--pink)', padding: '12px 20px', borderRadius: 999, fontFamily: "'Jost',sans-serif", fontSize: 13, fontWeight: 600, textDecoration: 'none', color: 'var(--ink)' }}>{HOME_COPY.location.ctaLabel}</a>
           </div>
         </Reveal>
       </div>
@@ -127,7 +127,7 @@ function ServicesGridSection({ theme }) {
       <QC position="bottom-left" color="teal" size={160} style={{ opacity: .18 }}/>
       <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <Reveal>
-          <SectionHeader eyebrow="/ servicios" title="Un centro pensado para acompañarte." theme={theme}/>
+          <SectionHeader eyebrow={HOME_COPY.services.eyebrow} title={HOME_COPY.services.title} theme={theme}/>
         </Reveal>
         <div className="services-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 28, marginTop: 56 }}>
           {SERVICES_GRID.map((item, i) => (

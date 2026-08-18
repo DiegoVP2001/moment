@@ -128,17 +128,50 @@ function WaGeneralCta({ serviceTitle, label }) {
   );
 }
 
-// --- Tarjeta de profesional (foto + rol + bio, desde TEAM en data.jsx) — usada al final de
-// Kinesiología y Nutrición para poner cara al servicio ---
-function ProCard({ member, style = {} }) {
+// --- Ícono redondo de contacto (WhatsApp/Instagram/correo) — usado por ProCard cuando el
+// profesional tiene canales propios distintos de los de Moment ---
+function ContactIcon({ type, href }) {
+  const cls = type === 'whatsapp' ? 'wa-pill' : type === 'instagram' ? 'ig-pill' : 'mail-pill';
+  const label = type === 'whatsapp' ? 'WhatsApp' : type === 'instagram' ? 'Instagram' : 'Correo';
   return (
-    <div style={{ display: 'flex', gap: 20, alignItems: 'center', background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', flexWrap: 'wrap', ...style }}>
-      <img src={member.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
-      <div>
-        <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{member.name}</div>
-        <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{member.role}</div>
-        <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{member.bio}</p>
+    <a href={href} target="_blank" className={cls} aria-label={label}>
+      {type === 'whatsapp' && (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      )}
+      {type === 'instagram' && (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2 0 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c0 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2 0-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c0-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 2.1c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.3-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.3 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1.1.2 1.7.3 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.3.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .3-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.3-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.1-1-.3-2.1-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zm0 6.9a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zm5.3-7.1a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+      )}
+      {type === 'email' && (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v.01L12 12l8-5.99V6H4zm16 12V8.24l-7.35 5.51a1 1 0 0 1-1.2 0L4 8.24V18h16z"/></svg>
+      )}
+    </a>
+  );
+}
+
+// --- Tarjeta de profesional (foto + rol + bio, desde TEAM en data.jsx) — usada al final de
+// Kinesiología y Nutrición para poner cara al servicio. `contactsTitle`/`contacts` son opcionales
+// — solo Nutrición los usa, para los canales propios de Miguel (distintos de los de Moment) ---
+function ProCard({ member, contactsTitle, contacts, style = {} }) {
+  return (
+    <div style={{ background: '#fff', borderRadius: 20, padding: 24, border: '1px solid rgba(26,24,35,.08)', ...style }}>
+      <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
+        <img src={member.photo} style={{ width: 88, height: 88, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}/>
+        <div>
+          <div style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: 18, letterSpacing: '-0.01em' }}>{member.name}</div>
+          <div style={{ fontFamily: "'Jost',sans-serif", fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, margin: '4px 0 8px' }}>{member.role}</div>
+          <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)', margin: 0 }}>{member.bio}</p>
+        </div>
       </div>
+      {contactsTitle && contacts && (
+        <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid rgba(26,24,35,.08)' }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 12 }}>{contactsTitle}</div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            {contacts.whatsapp && <ContactIcon type="whatsapp" href={`https://wa.me/${contacts.whatsapp.replace(/\D/g, '')}`}/>}
+            {contacts.instagram && <ContactIcon type="instagram" href={`https://www.instagram.com/${contacts.instagram}/`}/>}
+            {contacts.email && <ContactIcon type="email" href={`mailto:${contacts.email}`}/>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -289,10 +322,10 @@ function KinesiologiaContent() {
   );
 }
 
-// ============ 6.3 — Nutrición (placeholder — sin precios todavía) ============
+// ============ 6.3 — Nutrición ============
 function NutricionContent() {
   const d = PAGE_NUTRICION;
-  const miguel = TEAM.find(t => t.name === 'Miguel');
+  const miguel = TEAM.find(t => t.name.startsWith('Miguel'));
   return (
     <>
       <PageHero
@@ -302,24 +335,19 @@ function NutricionContent() {
         accent="teal"
       />
       <section style={{ padding: '96px 48px 120px', background: 'var(--cream)' }}>
-        <div style={{ maxWidth: 780, margin: '0 auto' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <Reveal>
-            <div style={{ border: '2px dashed rgba(26,24,35,.25)', borderRadius: 20, padding: '28px 26px', background: 'rgba(255,255,255,.5)' }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-60)', marginBottom: 10 }}>{d.pendingLabel}</div>
-              <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)', margin: 0 }}>
-                {d.pendingParagraph}
-              </p>
-            </div>
+            <PriceSections sections={d.sections} notes={d.notes} serviceTitle={d.title} accentColor="var(--teal-dark)"/>
           </Reveal>
 
           {miguel && (
             <Reveal delay={.1}>
-              <ProCard member={miguel} style={{ marginTop: 32 }}/>
+              <ProCard member={miguel} contactsTitle={d.proContactTitle} contacts={d.proContact} style={{ marginTop: 32 }}/>
             </Reveal>
           )}
 
           <Reveal delay={.18}>
-            <div style={{ marginTop: 36 }}><WaGeneralCta serviceTitle={d.title} label={d.ctaLabel}/></div>
+            <div style={{ marginTop: 24 }}><WaGeneralCta serviceTitle={d.title} label={d.ctaLabel}/></div>
           </Reveal>
         </div>
       </section>

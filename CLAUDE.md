@@ -29,7 +29,7 @@ clases-escalada.html          ← Sesión B — mini-app React
 entrenamiento-funcional.html  ← Sesión B — mini-app React
 muro-escalada.html            ← Sesión B — mini-app React
 kinesiologia.html             ← Sesión B — mini-app React (antes era tab+modal dentro de #servicios)
-nutricion.html                ← Sesión B — mini-app React, placeholder sin precios
+nutricion.html                ← Sesión B — mini-app React, precios reales desde agosto 2026
 Moment Landing.html           ← Versión legacy v1 (no usar)
 assets/                       ← Imágenes, íconos, videos, PDFs
 src/
@@ -96,6 +96,11 @@ SVG de sector de anillo relleno. Parámetros: `position`, `color`, `size`, `styl
 ### ProCard (agosto 2026)
 - `sections-escalada.jsx`: tarjeta de profesional (foto + rol + bio desde `TEAM` en
   `data.jsx`). Usada al final de `kinesiologia.html` (Karinna) y `nutricion.html` (Miguel).
+- Props opcionales `contactsTitle`/`contacts` (agregadas agosto 2026, solo las usa Nutrición):
+  cuando el profesional tiene canales propios distintos de los de Moment (WhatsApp/Instagram/correo
+  de Miguel, `PAGE_NUTRICION.proContactTitle`/`.proContact` en `data.jsx`), la tarjeta agrega un
+  bloque con 3 íconos redondos (`ContactIcon`, mismo componente) bajo la bio. Sin esas props la
+  tarjeta se ve exactamente igual que antes (Kinesiología no las pasa).
 
 ### CarouselSection
 - Auto-scroll con `requestAnimationFrame` (0.6px/frame)
@@ -218,11 +223,36 @@ inventario de ese plan queda desincronizado del sitio real y el panel de
 cliente, cuando se construya, va a fallar o va a mostrar campos que ya no
 existen.
 
+**Sincronizar el Sheet real cuando cambian los campos del generador (agosto
+2026)**: `Setup.gs` tiene `setupSheet()` (bootstrap de un solo uso,
+SOBREESCRIBE todo — no correr sobre un Sheet en uso) y
+`syncSheetsWithManifest()` (agregada agosto 2026, NO destructiva — recrea solo
+las hojas de tipo `fields` preservando cada valor ya editado por el cliente,
+vía `readKeyValueMap()`; usa el default de `getBaseTemplate()` solo para
+claves nuevas). Cuando una sesión agrega un campo o una hoja nueva a
+`getFieldRows()`/`SHEET_ORDER`, hay que pegar el `.gs` actualizado en el
+proyecto de Apps Script real y correr `syncSheetsWithManifest()` una vez a
+mano — si no, `validateSheet()` falla con "falta la fila" apenas el cliente
+intente publicar.
+
+**Riesgo real confirmado (agosto 2026)**: si el Sheet/generador se actualiza
+(nueva forma de un `PAGE_*`) y se publica ANTES de que el código React
+correspondiente (`sections-escalada.jsx` u otro) que lee esos campos esté
+también en `main`/`production`, el sitio en vivo queda roto — `data.jsx` ya
+tiene los campos nuevos pero el componente sigue leyendo los campos viejos
+(que ya no existen) y no sabe interpretar los nuevos. Pasó exactamente esto
+con Nutrición: se publicó `PAGE_NUTRICION` con la forma nueva mientras el
+código seguía esperando `pendingLabel`/`pendingParagraph`. **Orden correcto**:
+el código que consume la forma nueva debe llegar a `main`/`production` en la
+misma operación que el primer publish del Sheet con esa forma nueva — no
+publicar desde el Sheet primero y subir el código después "cuando se pueda".
+
 ## Tareas pendientes
 
 ### Media prioridad
 - [ ] **PDFs de planes desactualizados** — `assets/planes moment.pdf` y `assets/detalle_planes.pdf` tienen los precios antiguos (pre julio 2026: aún incluyen plan anual, plan dúo y clases por semana). Con el rediseño 2026 el modelo de precios cambió completo, así que ahora están aún más desactualizados. Avisar al cliente si los comparte impresos o por WhatsApp.
-- [ ] **Fotos del equipo** — Miguel sin apellido en `data.jsx`. Fotos de equipo desactualizadas.
+- [x] **Miguel sin apellido** — resuelto agosto 2026: `TEAM` ahora dice "Miguel González" (el PDF de precios que envió trae su nombre completo, "Miguel González Santander", pero se dejó solo el apellido paterno para no romper el ancho de la tarjeta `ProCard`).
+- [ ] **Fotos del equipo desactualizadas**.
 - [ ] **Copy "4 áreas" desactualizado** — el Hero de `index.html` (`hero-services.jsx`) y ahora también `Quienes Somos.html` (`sections-nosotros.jsx`, Historia y "Por qué Moment") siguen describiendo "kinesiología, psicología, entrenamiento & recovery y escalada" como 4 áreas iguales. Contradice el nuevo posicionamiento 100% escalada (kinesiología/psicología/nutrición pasaron a "Especialidades Deportivas" complementarias). En Sesión C el contenido de Quienes Somos se migró literal a propósito (no se reescribió) — pendiente una decisión de Diego sobre si actualizar el copy.
 - [ ] **Flotante de WhatsApp/Instagram tapa CTAs de WhatsApp en mobile al hacer scroll** — `FloatingContacts` (`shared.jsx`, fixed, z-index 80) puede solaparse con filas de precio ("WA →"), el pill "Cómo llegar →" o el botón "Consultar" de un producto en `tienda.html`, dependiendo de dónde quede el scroll — confirmado con QA de Sesión C en 375px. Un tap en esa zona activa el flotante genérico en vez del link específico. No es nuevo de Sesión C (componente compartido, afecta cualquier página con esos elementos), pero conviene decidir un ajuste (reposicionar, reducir tamaño, o subir el z-index de los CTAs) antes de que un cliente lo reporte.
 - [x] **Tablas de horarios/precios no se veían completas en mobile** — resuelto 2026-08-08. No era solo cosmético: `.info-grid` (`#información` en `index.html`) es un CSS grid cuyos items no tenían `min-width:0`, así que en mobile la tarjeta se estiraba para acomodar el ancho de la tabla en vez de encogerse — la sección entera se desbordaba del viewport y, como `body{overflow-x:hidden}`, las columnas de más ("Bloque alto", Jue/Vie) quedaban invisibles y **sin ninguna forma de hacerles scroll**. Se agregó `min-width:0` a los items del grid y el componente `ScrollHintCard` (ver Componentes clave) con indicador visual de scroll, aplicado a esa tabla y a `MuroPricingTable`.

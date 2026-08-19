@@ -157,9 +157,15 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
   "Agenda tu hora" (azul, mensaje propio) que tenía en su versión HTML — mismo trade-off ya aceptado
   al migrar Kinesiología/Nutrición. El botón "Agenda tu hora" azul se mantiene en el Hero y en el CTA
   final de la página misma.
-- **Panel de cliente todavía no la puede editar**: `PAGE_PSICOLOGIA` existe en `data.jsx` pero
-  `Manifest.gs`/`Code.gs` no la leen aún — es la sesión siguiente (ver
-  `panel-cliente/sesiones/notas-sesion-psicologia-react.md`).
+- **Panel de cliente: generador listo, falta el despliegue manual**. `Manifest.gs`/`Setup.gs`/
+  `Code.gs` en `panel-cliente/generador/` ya saben leer/escribir `PAGE_PSICOLOGIA` (verificado con
+  `panel-cliente/generador/verify-manifest.js`, sin acceso al Sheet real) — pero el proyecto de
+  Apps Script real todavía tiene la versión vieja de esos archivos, así que el Sheet/Frontis en
+  producción **todavía no pueden editar esta página**. Ver
+  `panel-cliente/sesiones/notas-sesion-generador-psicologia.md` para las instrucciones exactas de
+  qué falta pegar/correr/desplegar a mano. Esta rama (`panel-cliente/psicologia-react`) sigue sin
+  mergear a `main` hasta que eso esté confirmado (mismo riesgo de siempre: `Code.gs` regenera
+  `data.jsx` completo en cada publicación del Sheet).
 
 ### Agendamiento — solo WhatsApp
 - Se eliminó la integración con TUU Reserva (`tuu.cl/centrodeportivomoment`) en junio 2026. Todos los CTA de agendamiento (main y subpágina de psicología) usan únicamente links `wa.me` con texto **"Agenda tu hora"**.

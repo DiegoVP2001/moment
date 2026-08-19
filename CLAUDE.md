@@ -49,9 +49,9 @@ src/
 
 **Rediseño 2026 (Sesiones A/B/C completas, mergeadas a `main` y publicadas en
 GitHub Pages — https://diegovp2001.github.io/moment/ — el 2026-08-08 para que
-Diego se lo mostrara a sus clientes. `production` /centrodeportivomoment.cl
-NO se ha tocado; el merge `main` → `production` sigue pendiente de una
-aprobación explícita y separada de Diego)**: el sitio pasó de una
+Diego se lo mostrara a sus clientes; `production`/centrodeportivomoment.cl
+recibió el merge poco después, con aprobación explícita de Diego — el sitio
+multi-página ya está en vivo)**: el sitio pasó de una
 sola página a multi-página (nav/footer con rutas completas, no anchors
 pelados). `index.html` hoy monta solo Hero → `#instalaciones` →
 `#informacion` → `#ubicacion` → `#servicios` (grid) → Footer. `TeamSection` y
@@ -125,7 +125,7 @@ Todo el contenido editable está en `src/v2/data.jsx`:
 - `BRAND` — nombre, teléfono, email, dirección, horarios, Instagram
 - `CLASS_SCHEDULE` / `OPENING_HOURS_FULL` — horarios semanales, fuente única para el home y las páginas de Clases/Entrenamiento/Muro
 - `PAGE_CLASES_ESCALADA` / `PAGE_ENTRENAMIENTO_FUNCIONAL` / `PAGE_MURO_ESCALADA` / `PAGE_KINESIOLOGIA` — precios de cada página nueva
-- `PAGE_PSICOLOGIA` — las 12 secciones de Psicología Deportiva (copy + precios en un solo objeto, a diferencia de las demás `PAGE_*` que separan precios en la tabla operativa). El generador del panel de cliente todavía no la lee (pendiente, sesión siguiente).
+- `PAGE_PSICOLOGIA` — las 12 secciones de Psicología Deportiva (copy + precios en un solo objeto, a diferencia de las demás `PAGE_*` que separan precios en la tabla operativa). El generador del panel de cliente ya la lee/escribe (agosto 2026) — editable desde el Sheet/Frontis igual que el resto.
 - `TEAM` — 3 profesionales con foto, rol, bio y LinkedIn
 - `CAROUSEL_ITEMS` — imágenes y videos del carrusel
 - `MEDIOS` — videos de YouTube (youtubeId)
@@ -157,15 +157,15 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
   "Agenda tu hora" (azul, mensaje propio) que tenía en su versión HTML — mismo trade-off ya aceptado
   al migrar Kinesiología/Nutrición. El botón "Agenda tu hora" azul se mantiene en el Hero y en el CTA
   final de la página misma.
-- **Panel de cliente: generador listo, falta el despliegue manual**. `Manifest.gs`/`Setup.gs`/
-  `Code.gs` en `panel-cliente/generador/` ya saben leer/escribir `PAGE_PSICOLOGIA` (verificado con
-  `panel-cliente/generador/verify-manifest.js`, sin acceso al Sheet real) — pero el proyecto de
-  Apps Script real todavía tiene la versión vieja de esos archivos, así que el Sheet/Frontis en
-  producción **todavía no pueden editar esta página**. Ver
-  `panel-cliente/sesiones/notas-sesion-generador-psicologia.md` para las instrucciones exactas de
-  qué falta pegar/correr/desplegar a mano. Esta rama (`panel-cliente/psicologia-react`) sigue sin
-  mergear a `main` hasta que eso esté confirmado (mismo riesgo de siempre: `Code.gs` regenera
-  `data.jsx` completo en cada publicación del Sheet).
+- **Panel de cliente: en vivo (2026-08-19)**. `Manifest.gs`/`Setup.gs`/`Code.gs` en
+  `panel-cliente/generador/` leen/escriben `PAGE_PSICOLOGIA` (verificado localmente con
+  `panel-cliente/generador/verify-manifest.js` antes de tocar nada en vivo), Diego pegó el código
+  actualizado en el proyecto de Apps Script real, corrió `syncSheetsWithManifest()` y desplegó una
+  nueva versión del Frontis — el Sheet/Frontis ya pueden editar esta página igual que Kinesiología/
+  Nutrición. `panel-cliente/psicologia-react` se mergeó a `main` y a `production` el mismo día, en
+  ese orden (generador real actualizado primero, código React después — ver
+  `panel-cliente/sesiones/notas-sesion-generador-psicologia.md` para el detalle de por qué ese
+  orden importa). Confirmado en vivo en centrodeportivomoment.cl sin errores de consola.
 
 ### Agendamiento — solo WhatsApp
 - Se eliminó la integración con TUU Reserva (`tuu.cl/centrodeportivomoment`) en junio 2026. Todos los CTA de agendamiento (main y subpágina de psicología) usan únicamente links `wa.me` con texto **"Agenda tu hora"**.

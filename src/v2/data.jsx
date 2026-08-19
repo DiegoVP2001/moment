@@ -17,6 +17,9 @@ function waBuyLink(productName) {
 function waReservarLink() {
   return `https://wa.me/${WA_NUM}?text=${encodeURIComponent('¡Hola! Me gustaría más información para reservar en Moment.')}`;
 }
+function waPsicologiaSportLink(sport) {
+  return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Practico ${sport} y me interesa la Psicología Deportiva.`)}`;
+}
 
 const BRAND = {
   "name": "Moment",
@@ -392,6 +395,130 @@ const PAGE_NUTRICION = {
   }
 };
 
+const PAGE_PSICOLOGIA = {
+  "title": "Psicología Deportiva",
+  "hero": {
+    "eyebrow": "/ psicología deportiva · Moment",
+    "titleLine1": "Entrena",
+    "titleHighlight": "también",
+    "titleLine3": "tu mente.",
+    "subtitle": "Trabajo psicológico especializado para deportistas, entrenadores y equipos. Porque el rendimiento empieza antes de la competencia."
+  },
+  "problems": {
+    "eyebrow": "/ identifica tu desafío",
+    "title": "¿Qué necesitas trabajar?",
+    "items": [
+      { "title": "Me desconcentro en competencia", "desc": "Foco atencional y control de distractores", "modalDesc": "La concentración es una habilidad entrenable. Trabajamos técnicas de foco atencional, manejo de distractores y rutinas de activación pre-competencia." },
+      { "title": "Entreno bien pero compito mal", "desc": "Transferencia entrenamiento-competencia", "modalDesc": "La diferencia entre entrenamiento y competencia tiene explicación psicológica. Trabajamos la transferencia, el manejo de presión real y la confianza en condiciones adversas." },
+      { "title": "Pierdo confianza rápidamente", "desc": "Autoconfianza y diálogo interno", "modalDesc": "La autoconfianza se construye. Trabajamos el diálogo interno, los registros de logros y la preparación mental para mantener la confianza ante la adversidad." },
+      { "title": "Me bloqueo bajo presión", "desc": "Regulación emocional y fortaleza mental", "modalDesc": "El bloqueo tiene raíces psicológicas concretas. Trabajamos la regulación emocional, las rutinas precompetitivas y las estrategias de afrontamiento." },
+      { "title": "Tengo ansiedad competitiva", "desc": "Manejo de ansiedad pre-competencia", "modalDesc": "Cuando la ansiedad se vuelve paralizante, necesita trabajo específico. Combinamos técnicas cognitivas, de respiración y de exposición gradual." },
+      { "title": "No logro mantener la motivación", "desc": "Motivación y adherencia deportiva", "modalDesc": "La motivación depende de cómo están estructurados tus objetivos y creencias. Trabajamos la orientación motivacional y la adherencia a largo plazo." },
+      { "title": "Dificultades para volver tras lesión", "desc": "Acompañamiento en rehabilitación", "modalDesc": "El retorno es tanto físico como psicológico. Trabajamos el miedo a la recaída, la incertidumbre y la reconexión con la identidad deportiva." },
+      { "title": "El equipo no tiene cohesión", "desc": "Trabajo grupal y comunicación", "modalDesc": "La cohesión grupal se trabaja activamente. Abordamos comunicación, roles, confianza entre compañeros y cultura deportiva del equipo." },
+      { "title": "Mi hijo/a sufre mucho al competir", "desc": "Orientación para padres y jóvenes", "modalDesc": "Ayudamos a padres a entender la ansiedad competitiva de sus hijos y a acompañarles sin aumentar la presión. También trabajamos directamente con los jóvenes si corresponde." }
+    ]
+  },
+  "areas": {
+    "eyebrow": "/ en qué trabajamos",
+    "title": "Áreas de trabajo psicológico.",
+    "items": [
+      { "title": "Atención y concentración", "desc": "Foco atencional y control de distractores." },
+      { "title": "Motivación", "desc": "Adherencia, compromiso deportivo y orientación a objetivos." },
+      { "title": "Autoconfianza", "desc": "Seguridad personal y confianza competitiva." },
+      { "title": "Fortaleza mental", "desc": "Resiliencia y estabilidad emocional bajo presión." },
+      { "title": "Activación y relajación", "desc": "Respiración, relajación y control fisiológico." },
+      { "title": "Visualización", "desc": "Imaginería y simulación competitiva." },
+      { "title": "Autohabla y rutinas", "desc": "Diálogo interno y rutinas precompetitivas." },
+      { "title": "Retorno tras lesión", "desc": "Acompañamiento en rehabilitación y reintegración." },
+      { "title": "Cohesión de equipo", "desc": "Comunicación y funcionamiento grupal." }
+    ]
+  },
+  "audience": {
+    "eyebrow": "/ audiencia",
+    "title": "¿Para quién está dirigido?",
+    "items": [
+      { "title": "Deportistas", "desc": "Trabajo psicológico aplicado al rendimiento, la competencia y el desarrollo deportivo. Sesiones individuales y programas con precios visibles.", "cta": "Ver servicios y programas →" },
+      { "title": "Entrenadores", "desc": "Liderazgo, comunicación efectiva y herramientas psicológicas aplicadas al trabajo con deportistas.", "cta": "Solicitar información →" },
+      { "title": "Padres y madres", "desc": "Orientación para acompañar emocionalmente a hijos e hijas deportistas, especialmente en etapas de alta exigencia.", "cta": "Consultar modalidades →" },
+      { "title": "Equipos y organizaciones", "desc": "Cohesión grupal, cultura deportiva y funcionamiento organizacional. Sin precios publicados — cotización a medida.", "cta": "Solicitar propuesta →" }
+    ]
+  },
+  "sports": {
+    "eyebrow": "/ especialización",
+    "title": "Especialidades por deporte.",
+    "subtitle": "Cada disciplina tiene sus propias demandas psicológicas. Haz clic para consultar tu deporte.",
+    "items": [
+      "Fútbol", "Tenis", "Golf", "Escalada", "Deportes de combate", "Vóley",
+      "Hockey Césped", "Baloncesto", "Atletismo", "Deporte Olímpico y Paralímpico", "Deportes de Motor"
+    ],
+    "otherLabel": "Otro deporte →"
+  },
+  "fitness": {
+    "eyebrow": "/ centros fitness",
+    "title": "Servicios para gimnasios y centros de entrenamiento.",
+    "paragraph": "Trabajo psicológico aplicado a espacios de entrenamiento orientados al rendimiento, la adherencia y el bienestar deportivo. Sin precios publicados — cotización a medida.",
+    "bullets": [
+      "Talleres psicológicos para usuarios",
+      "Motivación y adherencia al entrenamiento",
+      "Manejo de ansiedad y frustración deportiva",
+      "Capacitaciones para staff y entrenadores"
+    ]
+  },
+  "tools": {
+    "eyebrow": "/ metodología",
+    "title": "Herramientas que usamos.",
+    "items": [
+      { "title": "Evaluación psicológica deportiva", "desc": "Instrumentos validados para medir concentración, ansiedad, motivación y rendimiento mental." },
+      { "title": "Biorretroalimentación", "desc": "Monitoreo de señales fisiológicas para entrenar la autorregulación bajo presión competitiva." },
+      { "title": "Coaching Deportivo", "desc": "Acompañamiento orientado a metas y autoconocimiento para la toma de decisiones deportivas." },
+      { "title": "PNL aplicada al deporte", "desc": "Reprogramación de patrones mentales que limitan el rendimiento deportivo." }
+    ]
+  },
+  "services": {
+    "eyebrow": "/ servicios · solo deportistas individuales",
+    "title": "Empieza por donde corresponde.",
+    "subtitle": "Los valores mostrados corresponden exclusivamente a atenciones individuales de deportistas. Para entrenadores, equipos y organizaciones, consulta directamente.",
+    "items": [
+      {
+        "label": "Evaluación inicial",
+        "title": "Evaluación en Psicología Deportiva",
+        "duration": "45–55 min",
+        "mode": "Online / Presencial",
+        "desc": "Primera sesión para conocer en profundidad tu contexto deportivo, objetivos y desafíos. Incluye retroalimentación y recomendaciones.",
+        "bullets": ["Análisis del contexto deportivo", "Definición de objetivos de trabajo", "Retroalimentación e informe opcional"],
+        "price": "$25.000"
+      },
+      {
+        "label": "Sesión individual",
+        "title": "Sesión de Psicología Deportiva",
+        "duration": "45–55 min",
+        "mode": "Online / Presencial",
+        "desc": "Sesión focalizada en una necesidad específica. Ideal como intervención puntual o complemento a un proceso continuo.",
+        "bullets": ["Manejo emocional y regulación", "Concentración y motivación", "Preparación para competencia"],
+        "price": "$30.000"
+      }
+    ]
+  },
+  "programs": {
+    "eyebrow": "/ compromiso mensual",
+    "title": "Programas de acompañamiento.",
+    "subtitle": "Para deportistas que quieren un proceso continuo, estructurado y con seguimiento real.",
+    "items": [
+      { "label": "Plan base", "title": "Evaluación y Bases", "price": "$115.000", "bullets": ["Hasta 4 sesiones mensuales", "Definición de objetivos psicológicos", "Ejercicios entre sesiones", "Revisión y ajuste de progreso"] },
+      { "label": "Plan desarrollo", "title": "Desarrollo Psicológico", "price": "$210.000", "bullets": ["Hasta 8 sesiones mensuales", "Plan progresivo por etapa competitiva", "Seguimiento entre sesiones", "1 observación mensual"] },
+      { "label": "Más completo", "title": "Intervención en Competencia", "price": "$300.000", "highlighted": true, "bullets": ["Hasta 12 sesiones mensuales", "Rutinas precompetitivas", "Control de presión y decisiones", "1 a 2 observaciones mensuales", "Ajuste continuo de estrategias"] }
+    ]
+  },
+  "cta": {
+    "eyebrow": "/ siguiente paso",
+    "title": "El rendimiento mental también se entrena.",
+    "proRoleLabel": "Psicólogo Deportivo — Moment",
+    "proTagline": "Programas personalizados para el rendimiento psicológico.",
+    "caption": "Atención online y presencial · Isla de Maipo"
+  }
+};
+
 const NOSOTROS_COPY = {
   "team": {
     "eyebrow": "/ equipo",
@@ -697,7 +824,7 @@ const FOOTER_COPY = {
 Object.assign(window, {
   BRAND, TEAM, CAROUSEL_ITEMS, MEDIOS, SHOP, JOBS,
   OPENING_HOURS_FULL, CLASS_SCHEDULE, SERVICES_GRID,
-  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA, PAGE_NUTRICION,
+  PAGE_CLASES_ESCALADA, PAGE_ENTRENAMIENTO_FUNCIONAL, PAGE_MURO_ESCALADA, PAGE_KINESIOLOGIA, PAGE_NUTRICION, PAGE_PSICOLOGIA,
   HOME_COPY, NOSOTROS_COPY, SHOP_COPY, JOBS_COPY, CONTACT_COPY, FOOTER_COPY,
-  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink
+  WA_NUM, WA_PRETTY, waLink, waGeneralLink, waBuyLink, waReservarLink, waPsicologiaSportLink
 });

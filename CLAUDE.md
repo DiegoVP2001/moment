@@ -24,7 +24,7 @@ index.html                    ← Entry point principal (GitHub Pages / HostGato
 Quienes Somos.html            ← Sesión C — mini-app React (Equipo + En medios + Misión/Visión/Historia)
 tienda.html                   ← Sesión C — mini-app React (reusa ShopSection tal cual)
 contacto.html                 ← Sesión C — mini-app React (banner 3 íconos + JobsSection)
-psicologia-deportiva.html     ← Subpágina HTML/JS puro (no React), ver sección propia abajo
+psicologia-deportiva.html     ← Sesión B/panel-cliente (agosto 2026) — mini-app React, ver sección propia abajo
 clases-escalada.html          ← Sesión B — mini-app React
 entrenamiento-funcional.html  ← Sesión B — mini-app React
 muro-escalada.html            ← Sesión B — mini-app React
@@ -41,6 +41,7 @@ src/
     sections-bottom.jsx ← ShopSection + JobsSection + ContactBannerSection (Sesión C)
     sections-home.jsx   ← InfoSection + LocationSection + ServicesGridSection (secciones nuevas del home: #informacion, #ubicacion, #servicios)
     sections-escalada.jsx ← Sesión B: PageHero/PriceRows/PriceSections/MuroPricingTable/ProCard (compartidos) + contenido de las 5 páginas nuevas de Clases/Entrenamiento/Muro/Kinesiología/Nutrición
+    sections-psicologia.jsx ← migración de Psicología Deportiva (agosto 2026): PsicologiaContent + 10 sub-componentes propios (no reusa PageHero — hero con foto propia)
     sections-nosotros.jsx ← Sesión C: MissionValuesSection + HistorySection + WhyMomentSection (contenido migrado tal cual de la vieja Quienes Somos.html, ver PLAN-rediseno.md 7.1)
     app.jsx             ← Root component + hash scroll handler
   (raíz src/)           ← Legacy v1, ignorar
@@ -124,6 +125,7 @@ Todo el contenido editable está en `src/v2/data.jsx`:
 - `BRAND` — nombre, teléfono, email, dirección, horarios, Instagram
 - `CLASS_SCHEDULE` / `OPENING_HOURS_FULL` — horarios semanales, fuente única para el home y las páginas de Clases/Entrenamiento/Muro
 - `PAGE_CLASES_ESCALADA` / `PAGE_ENTRENAMIENTO_FUNCIONAL` / `PAGE_MURO_ESCALADA` / `PAGE_KINESIOLOGIA` — precios de cada página nueva
+- `PAGE_PSICOLOGIA` — las 12 secciones de Psicología Deportiva (copy + precios en un solo objeto, a diferencia de las demás `PAGE_*` que separan precios en la tabla operativa). El generador del panel de cliente todavía no la lee (pendiente, sesión siguiente).
 - `TEAM` — 3 profesionales con foto, rol, bio y LinkedIn
 - `CAROUSEL_ITEMS` — imágenes y videos del carrusel
 - `MEDIOS` — videos de YouTube (youtubeId)
@@ -142,12 +144,22 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 
 ## Subpágina: Psicología Deportiva
 - Archivo: `psicologia-deportiva.html` (raíz del repo, mismo nivel que `index.html`)
-- No usa React — es HTML/CSS/JS puro (igual que `Quienes Somos.html`)
+- Migrada a React en agosto 2026 (panel-cliente/sesiones/notas-sesion-psicologia-react.md) — mismo
+  patrón mini-app que Kinesiología/Nutrición. Componentes propios en `src/v2/sections-psicologia.jsx`
+  (no sumados a `sections-escalada.jsx` por el tamaño: 12 secciones), contenido en `PAGE_PSICOLOGIA`
+  de `data.jsx`. Usa Nav/Footer **compartidos** de `shared.jsx` — dejó de tener copia propia.
 - Hero con `assets/hero-psicologia.jpg` (imagen royalty-free, Unsplash)
-- Acento de color: `--blue: #6aa6da`
+- Acento de color: `--blue: #6aa6da` (y `--blue-dark`/`--blue-light`, sumadas al `:root` de esta
+  página en la migración — antes solo vivía `--blue`)
 - Agendamiento: botón "Agenda tu hora" → WhatsApp (la integración con TUU Reserva se eliminó en junio 2026)
 - WhatsApp interceptor idéntico al de las otras páginas
-- Nav y footer son HTML/JS propios (no comparten `shared.jsx`) pero replican la misma estructura que el resto del sitio — incluido el dropdown "Especialidades" — para que no se desalineen. Si cambia el Nav o el Footer de React, replicar el cambio a mano aquí (ver "Notas de desarrollo").
+- El nav de esta página ahora muestra el CTA genérico "Reservar" (teal) del `Nav` compartido, no el
+  "Agenda tu hora" (azul, mensaje propio) que tenía en su versión HTML — mismo trade-off ya aceptado
+  al migrar Kinesiología/Nutrición. El botón "Agenda tu hora" azul se mantiene en el Hero y en el CTA
+  final de la página misma.
+- **Panel de cliente todavía no la puede editar**: `PAGE_PSICOLOGIA` existe en `data.jsx` pero
+  `Manifest.gs`/`Code.gs` no la leen aún — es la sesión siguiente (ver
+  `panel-cliente/sesiones/notas-sesion-psicologia-react.md`).
 
 ### Agendamiento — solo WhatsApp
 - Se eliminó la integración con TUU Reserva (`tuu.cl/centrodeportivomoment`) en junio 2026. Todos los CTA de agendamiento (main y subpágina de psicología) usan únicamente links `wa.me` con texto **"Agenda tu hora"**.
@@ -290,6 +302,5 @@ publicar desde el Sheet primero y subir el código después "cuando se pueda".
 - **Dropdowns con `onMouseLeave` en un wrapper `position:relative`**: si el menú desplegado tiene `marginTop` para separarse visualmente del botón, ese hueco debe ir como `paddingTop` en el contenedor absoluto (no como `marginTop` en la tarjeta visible) — si no, el hueco queda fuera del área que escucha el hover y el menú se cierra solo al cruzarlo. Ver `NavDropdown` en `shared.jsx`.
 - **"Grid blowout" con tablas/contenido ancho dentro de un CSS grid** (agosto 2026): un `overflow-x:auto` en un div no sirve de nada si algún ancestro es un item de grid o flex sin `min-width:0` — por default el item se niega a encogerse por debajo del ancho mínimo de su contenido (la tabla), así que en vez de scrollear internamente, TODA la sección se desborda del viewport. Con `body{overflow-x:hidden}` (global en todas las páginas) eso deja contenido invisible y sin scroll posible, no solo "feo". Si se agrega una tabla/tarjeta ancha dentro de un `display:grid` o `display:flex`, siempre sumar `min-width:0` al item del grid/flex, y envolver el contenido scrolleable con `ScrollHintCard` (`shared.jsx`) para que además quede visualmente claro que hay más para el lado. Ver fix completo en el commit `13e841a`.
 - **Nav de 5 links de escritorio (agosto 2026)**: con el dropdown "Especialidades" agregado junto a "Clases, Entrenamiento y Muro", el nav de escritorio pasa al menú hamburguesa en `max-width:1080px` (no `768px` como el resto del layout) — ver el bloque `@media(max-width:1080px)` en `SHARED_CSS`. Si se agrega o saca un ítem del nav, revisar si ese breakpoint sigue siendo el correcto.
-- **`psicologia-deportiva.html` no comparte Nav/Footer de React**: es la única página con nav y footer escritos a mano (HTML/CSS/JS puro, ver sección propia arriba). Cualquier cambio a la estructura del `Nav` o `Footer` de `shared.jsx` (agregar/sacar un link, un dropdown, una columna) hay que replicarlo a mano en esta página o queda desalineada — ya pasó una vez (menú y footer quedaron con contenido de mayo 2026 hasta la corrección de agosto 2026).
 - **`git status` marca archivos como "modified" sin diff real** — el repo vive bajo Google Drive ("Mi unidad"), cuyo sync de archivos altera mtimes sin tocar contenido. Reaparece cada pocas sesiones al hacer `checkout`/`merge`. Confirmar siempre con `git diff --quiet <archivo>` antes de asumir que hay un cambio real; si es falso positivo, resolver con `git add`/`git restore` (nunca `reset --hard`, que si hay un falso positivo mezclado con cambios reales sin commitear los descarta a ambos).
 - **`git merge` con cambios sin commitear en el working tree es peligroso, incluso con `--no-commit`** (agosto 2026): si el merge falla por "local changes would be overwritten", el mensaje dice "Aborting" pero en la práctica puede dejar algunos archivos ya revertidos a `HEAD` en vez de restaurar limpio — pasó en esta sesión, se perdieron 3 de 5 archivos editados (se reconstruyeron a mano desde el historial de la conversación, sin daño final, pero fue evitable). Regla: **siempre `git commit` (o `git stash`) los cambios reales antes de cualquier `git merge`/`git checkout <otra-rama>`** — nunca confiar en que el merge aborta limpio con working tree sucio.

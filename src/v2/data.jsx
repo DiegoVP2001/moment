@@ -1,7 +1,7 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-09-25 11:50
+// Última actualización: 2026-09-25 11:54
 const WA_NUM = '56998928078';
 const WA_PRETTY = '+56 9 9892 8078';
 
@@ -109,11 +109,11 @@ const CLASS_SCHEDULE = [
   },
   {
     "time": "17:30–18:30",
-    "mon": "Clase escalada infantojuvenil",
+    "mon": null,
     "tue": null,
     "wed": "Clase escalada infantojuvenil",
     "thu": null,
-    "fri": "Clase escalada infantojuvenil"
+    "fri": null
   },
   {
     "time": "19:00–20:30",

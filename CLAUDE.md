@@ -177,7 +177,7 @@ La tienda usa **tabs por categoría** (botones-pill en la parte superior) en vez
 ---
 
 ## Contacto / WhatsApp
-- Número: `56998928078`
+- Número: `56939575810`
 - Links `wa.me` nativos con `target="_blank"` (el modal interceptor se eliminó en mayo 2026 — ver sección "WA links — sin interceptor")
 
 ---

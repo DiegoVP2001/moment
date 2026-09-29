@@ -1,9 +1,9 @@
 // ============ DATA V2 ============
 // Generado automáticamente por el panel de cliente (Google Sheets → Apps Script).
 // No editar a mano — los cambios se pierden en la próxima publicación desde el Sheet.
-// Última actualización: 2026-09-25 11:54
-const WA_NUM = '56998928078';
-const WA_PRETTY = '+56 9 9892 8078';
+// Última actualización: 2026-09-29 20:07
+const WA_NUM = '56939575810';
+const WA_PRETTY = '+56 9 3957 5810';
 
 function waLink(serviceTitle, itemName) {
   return `https://wa.me/${WA_NUM}?text=${encodeURIComponent(`¡Hola! Me gustaría saber la disponibilidad para agendar ${itemName} de ${serviceTitle}.`)}`;
@@ -23,7 +23,7 @@ function waPsicologiaSportLink(sport) {
 
 const BRAND = {
   "name": "Moment",
-  "phone": "+56 9 9892 8078",
+  "phone": "+56 9 3957 5810",
   "email": "momentcentrodeportivo@gmail.com",
   "address": "Calle Cortes 41, Isla de Maipo",
   "region": "Región Metropolitana",
